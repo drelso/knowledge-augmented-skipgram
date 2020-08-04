@@ -1,0 +1,404 @@
+nohup: ignoring input
+
+=================== MODEL PARAMETERS: =================== 
+
+general_data_dir:                /home/diegor/data/
+data_dir:                        data/
+train_dataset_dir:               data/train/
+val_dataset_dir:                 data/validate/
+vocabulary_dir:                  data/vocabulary/
+word_embeddings_dir:             data/word_embeddings/
+vocab_cutoff:                    5
+vocab_file:                      data/vocabulary/vocabulary.csv
+dataset_file:                    /home/diegor/knowledge-augmented-skipgram/data/train/dataset_vocab5.csv
+syn_file:                        /home/diegor/knowledge-augmented-skipgram/data/train/syn_dataset_vocab5.csv
+validation_file:                 /home/diegor/knowledge-augmented-skipgram/data/validate/dataset_vocab5.csv
+w2v_path:                        /home/diegor/knowledge-augmented-skipgram/data/word_embeddings/word2vec-google-news-300_voc5.csv
+data_augmentation_ratio:         0.02
+w2v_init:                        True
+syn_augm:                        True
+embedding_size:                  300
+epochs:                          10
+batch_size:                      10
+num_neg_samples:                 5
+learning_rate:                   0.01
+model_name:                      w2v_init-syns-02r-10e-voc5-emb300
+all_models_dir:                  model/
+model_dir:                       model/w2v_init-syns-02r-10e-voc5-emb300/
+model_file:                      /home/diegor/knowledge-augmented-skipgram/model/w2v_init-syns-02r-10e-voc5-emb300/w2v_init-syns-02r-10e-voc5-emb300.pth
+checkpoints_dir:                 /home/diegor/knowledge-augmented-skipgram/model/w2v_init-syns-02r-10e-voc5-emb300/checkpoints
+input_emb_file:                  /home/diegor/knowledge-augmented-skipgram/model/w2v_init-syns-02r-10e-voc5-emb300/w2v_init-syns-02r-10e-voc5-emb300
+gutenberg_dir:                   data/Gutenberg/
+processed_books_path:            data/list_processed_books.txt
+syn_sel_file:                    data/train/synonyms_vocab5.csv
+bnc_data_name:                   bnc_full_proc_data
+bnc_data:                        /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data.txt
+bnc_data_tags:                   /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_tags.txt
+bnc_skipgram_data:               data/skipgram_bnc_full_proc_data.txt
+bnc_skipgram_augm_data:          data/skipgram_augm_bnc_full_proc_data.txt
+
+=================== / MODEL PARAMETERS: =================== 
+
+Cleaning and processing  /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data.txt
+0 sentences processed, adding 141 new rows to data/skipgram_bnc_full_proc_data.txt
+0 sentences processed, adding 479 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+10000 sentences processed, adding 1515601 new rows to data/skipgram_bnc_full_proc_data.txt
+10000 sentences processed, adding 6157452 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+20000 sentences processed, adding 1332241 new rows to data/skipgram_bnc_full_proc_data.txt
+20000 sentences processed, adding 5494228 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+30000 sentences processed, adding 1429797 new rows to data/skipgram_bnc_full_proc_data.txt
+30000 sentences processed, adding 5677398 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+40000 sentences processed, adding 698021 new rows to data/skipgram_bnc_full_proc_data.txt
+40000 sentences processed, adding 3220784 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+50000 sentences processed, adding 1056253 new rows to data/skipgram_bnc_full_proc_data.txt
+50000 sentences processed, adding 4447871 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+60000 sentences processed, adding 1932109 new rows to data/skipgram_bnc_full_proc_data.txt
+60000 sentences processed, adding 5661577 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+70000 sentences processed, adding 1937935 new rows to data/skipgram_bnc_full_proc_data.txt
+70000 sentences processed, adding 5693989 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+80000 sentences processed, adding 1544493 new rows to data/skipgram_bnc_full_proc_data.txt
+80000 sentences processed, adding 5510372 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+90000 sentences processed, adding 1227199 new rows to data/skipgram_bnc_full_proc_data.txt
+90000 sentences processed, adding 5100581 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+100000 sentences processed, adding 1629623 new rows to data/skipgram_bnc_full_proc_data.txt
+100000 sentences processed, adding 6324475 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+110000 sentences processed, adding 988853 new rows to data/skipgram_bnc_full_proc_data.txt
+110000 sentences processed, adding 4232226 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+120000 sentences processed, adding 1502189 new rows to data/skipgram_bnc_full_proc_data.txt
+120000 sentences processed, adding 6298119 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+130000 sentences processed, adding 1512551 new rows to data/skipgram_bnc_full_proc_data.txt
+130000 sentences processed, adding 6378718 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+140000 sentences processed, adding 1399151 new rows to data/skipgram_bnc_full_proc_data.txt
+140000 sentences processed, adding 5825641 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+150000 sentences processed, adding 1842653 new rows to data/skipgram_bnc_full_proc_data.txt
+150000 sentences processed, adding 7404766 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+160000 sentences processed, adding 1516357 new rows to data/skipgram_bnc_full_proc_data.txt
+160000 sentences processed, adding 6192333 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+170000 sentences processed, adding 1312997 new rows to data/skipgram_bnc_full_proc_data.txt
+170000 sentences processed, adding 5333124 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+180000 sentences processed, adding 1165423 new rows to data/skipgram_bnc_full_proc_data.txt
+180000 sentences processed, adding 5023204 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+190000 sentences processed, adding 1391147 new rows to data/skipgram_bnc_full_proc_data.txt
+190000 sentences processed, adding 5653053 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+200000 sentences processed, adding 1682801 new rows to data/skipgram_bnc_full_proc_data.txt
+200000 sentences processed, adding 6622525 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+210000 sentences processed, adding 1259187 new rows to data/skipgram_bnc_full_proc_data.txt
+210000 sentences processed, adding 5190378 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+220000 sentences processed, adding 1153525 new rows to data/skipgram_bnc_full_proc_data.txt
+220000 sentences processed, adding 4849523 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+230000 sentences processed, adding 1187213 new rows to data/skipgram_bnc_full_proc_data.txt
+230000 sentences processed, adding 4968045 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+240000 sentences processed, adding 1347871 new rows to data/skipgram_bnc_full_proc_data.txt
+240000 sentences processed, adding 5646696 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+250000 sentences processed, adding 1456603 new rows to data/skipgram_bnc_full_proc_data.txt
+250000 sentences processed, adding 5977799 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+260000 sentences processed, adding 1594781 new rows to data/skipgram_bnc_full_proc_data.txt
+260000 sentences processed, adding 6381562 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+270000 sentences processed, adding 1665425 new rows to data/skipgram_bnc_full_proc_data.txt
+270000 sentences processed, adding 6813881 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+280000 sentences processed, adding 1765981 new rows to data/skipgram_bnc_full_proc_data.txt
+280000 sentences processed, adding 6927390 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+290000 sentences processed, adding 1165379 new rows to data/skipgram_bnc_full_proc_data.txt
+290000 sentences processed, adding 4912286 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+300000 sentences processed, adding 1591639 new rows to data/skipgram_bnc_full_proc_data.txt
+300000 sentences processed, adding 6806501 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+310000 sentences processed, adding 752555 new rows to data/skipgram_bnc_full_proc_data.txt
+310000 sentences processed, adding 3281916 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+320000 sentences processed, adding 1330445 new rows to data/skipgram_bnc_full_proc_data.txt
+320000 sentences processed, adding 5488621 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+330000 sentences processed, adding 1356267 new rows to data/skipgram_bnc_full_proc_data.txt
+330000 sentences processed, adding 5456708 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+340000 sentences processed, adding 857593 new rows to data/skipgram_bnc_full_proc_data.txt
+340000 sentences processed, adding 3906627 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+350000 sentences processed, adding 1824559 new rows to data/skipgram_bnc_full_proc_data.txt
+350000 sentences processed, adding 7499154 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+360000 sentences processed, adding 1664321 new rows to data/skipgram_bnc_full_proc_data.txt
+360000 sentences processed, adding 6937651 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+370000 sentences processed, adding 1446755 new rows to data/skipgram_bnc_full_proc_data.txt
+370000 sentences processed, adding 6227730 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+380000 sentences processed, adding 1704867 new rows to data/skipgram_bnc_full_proc_data.txt
+380000 sentences processed, adding 6825205 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+390000 sentences processed, adding 1974149 new rows to data/skipgram_bnc_full_proc_data.txt
+390000 sentences processed, adding 7695545 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+400000 sentences processed, adding 2189205 new rows to data/skipgram_bnc_full_proc_data.txt
+400000 sentences processed, adding 8123497 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+410000 sentences processed, adding 1880921 new rows to data/skipgram_bnc_full_proc_data.txt
+410000 sentences processed, adding 7417402 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+420000 sentences processed, adding 2018949 new rows to data/skipgram_bnc_full_proc_data.txt
+420000 sentences processed, adding 7630022 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+430000 sentences processed, adding 2207889 new rows to data/skipgram_bnc_full_proc_data.txt
+430000 sentences processed, adding 8792011 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+440000 sentences processed, adding 2477205 new rows to data/skipgram_bnc_full_proc_data.txt
+440000 sentences processed, adding 9028371 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+450000 sentences processed, adding 1549245 new rows to data/skipgram_bnc_full_proc_data.txt
+450000 sentences processed, adding 6549690 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+460000 sentences processed, adding 1623469 new rows to data/skipgram_bnc_full_proc_data.txt
+460000 sentences processed, adding 6801787 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+470000 sentences processed, adding 1684761 new rows to data/skipgram_bnc_full_proc_data.txt
+470000 sentences processed, adding 7027977 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+480000 sentences processed, adding 980753 new rows to data/skipgram_bnc_full_proc_data.txt
+480000 sentences processed, adding 4444129 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+490000 sentences processed, adding 1315671 new rows to data/skipgram_bnc_full_proc_data.txt
+490000 sentences processed, adding 5586541 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+500000 sentences processed, adding 1072711 new rows to data/skipgram_bnc_full_proc_data.txt
+500000 sentences processed, adding 4768155 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+510000 sentences processed, adding 1578845 new rows to data/skipgram_bnc_full_proc_data.txt
+510000 sentences processed, adding 6305053 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+520000 sentences processed, adding 1371189 new rows to data/skipgram_bnc_full_proc_data.txt
+520000 sentences processed, adding 5364370 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+530000 sentences processed, adding 1612491 new rows to data/skipgram_bnc_full_proc_data.txt
+530000 sentences processed, adding 6379839 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+540000 sentences processed, adding 2025341 new rows to data/skipgram_bnc_full_proc_data.txt
+540000 sentences processed, adding 8200621 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+550000 sentences processed, adding 1289431 new rows to data/skipgram_bnc_full_proc_data.txt
+550000 sentences processed, adding 5393822 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+560000 sentences processed, adding 1388197 new rows to data/skipgram_bnc_full_proc_data.txt
+560000 sentences processed, adding 6029111 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+570000 sentences processed, adding 1097505 new rows to data/skipgram_bnc_full_proc_data.txt
+570000 sentences processed, adding 4724377 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+580000 sentences processed, adding 1450619 new rows to data/skipgram_bnc_full_proc_data.txt
+580000 sentences processed, adding 5798874 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+590000 sentences processed, adding 1379551 new rows to data/skipgram_bnc_full_proc_data.txt
+590000 sentences processed, adding 5710611 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+600000 sentences processed, adding 1728083 new rows to data/skipgram_bnc_full_proc_data.txt
+600000 sentences processed, adding 7039953 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+610000 sentences processed, adding 2030217 new rows to data/skipgram_bnc_full_proc_data.txt
+610000 sentences processed, adding 8018346 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+620000 sentences processed, adding 1668201 new rows to data/skipgram_bnc_full_proc_data.txt
+620000 sentences processed, adding 6870885 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+630000 sentences processed, adding 1454329 new rows to data/skipgram_bnc_full_proc_data.txt
+630000 sentences processed, adding 6242596 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+640000 sentences processed, adding 1730835 new rows to data/skipgram_bnc_full_proc_data.txt
+640000 sentences processed, adding 7126749 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+650000 sentences processed, adding 1449919 new rows to data/skipgram_bnc_full_proc_data.txt
+650000 sentences processed, adding 6218859 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+660000 sentences processed, adding 1684513 new rows to data/skipgram_bnc_full_proc_data.txt
+660000 sentences processed, adding 6798860 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+670000 sentences processed, adding 1632167 new rows to data/skipgram_bnc_full_proc_data.txt
+670000 sentences processed, adding 6631074 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+680000 sentences processed, adding 1685061 new rows to data/skipgram_bnc_full_proc_data.txt
+680000 sentences processed, adding 7089850 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+690000 sentences processed, adding 1576961 new rows to data/skipgram_bnc_full_proc_data.txt
+690000 sentences processed, adding 6520324 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+700000 sentences processed, adding 1846993 new rows to data/skipgram_bnc_full_proc_data.txt
+700000 sentences processed, adding 7611977 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+710000 sentences processed, adding 1772315 new rows to data/skipgram_bnc_full_proc_data.txt
+710000 sentences processed, adding 7106176 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+720000 sentences processed, adding 1680995 new rows to data/skipgram_bnc_full_proc_data.txt
+720000 sentences processed, adding 7118297 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+730000 sentences processed, adding 1415149 new rows to data/skipgram_bnc_full_proc_data.txt
+730000 sentences processed, adding 6051942 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+740000 sentences processed, adding 1294499 new rows to data/skipgram_bnc_full_proc_data.txt
+740000 sentences processed, adding 5406624 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+750000 sentences processed, adding 1635905 new rows to data/skipgram_bnc_full_proc_data.txt
+750000 sentences processed, adding 6660508 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+760000 sentences processed, adding 1588975 new rows to data/skipgram_bnc_full_proc_data.txt
+760000 sentences processed, adding 6345808 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+770000 sentences processed, adding 1606751 new rows to data/skipgram_bnc_full_proc_data.txt
+770000 sentences processed, adding 6225920 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+780000 sentences processed, adding 1231829 new rows to data/skipgram_bnc_full_proc_data.txt
+780000 sentences processed, adding 5187061 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+790000 sentences processed, adding 1669897 new rows to data/skipgram_bnc_full_proc_data.txt
+790000 sentences processed, adding 6783700 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+800000 sentences processed, adding 2154107 new rows to data/skipgram_bnc_full_proc_data.txt
+800000 sentences processed, adding 8353934 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+810000 sentences processed, adding 1997049 new rows to data/skipgram_bnc_full_proc_data.txt
+810000 sentences processed, adding 6863382 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+820000 sentences processed, adding 1962093 new rows to data/skipgram_bnc_full_proc_data.txt
+820000 sentences processed, adding 7468705 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+830000 sentences processed, adding 2404857 new rows to data/skipgram_bnc_full_proc_data.txt
+830000 sentences processed, adding 8504998 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+840000 sentences processed, adding 1689571 new rows to data/skipgram_bnc_full_proc_data.txt
+840000 sentences processed, adding 6684266 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+850000 sentences processed, adding 1397807 new rows to data/skipgram_bnc_full_proc_data.txt
+850000 sentences processed, adding 5479815 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+860000 sentences processed, adding 1647517 new rows to data/skipgram_bnc_full_proc_data.txt
+860000 sentences processed, adding 6771522 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+870000 sentences processed, adding 1721093 new rows to data/skipgram_bnc_full_proc_data.txt
+870000 sentences processed, adding 6968004 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+880000 sentences processed, adding 1588821 new rows to data/skipgram_bnc_full_proc_data.txt
+880000 sentences processed, adding 6856158 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+890000 sentences processed, adding 1465237 new rows to data/skipgram_bnc_full_proc_data.txt
+890000 sentences processed, adding 6350107 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+900000 sentences processed, adding 1612837 new rows to data/skipgram_bnc_full_proc_data.txt
+900000 sentences processed, adding 6997061 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+910000 sentences processed, adding 1148467 new rows to data/skipgram_bnc_full_proc_data.txt
+910000 sentences processed, adding 4870699 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+920000 sentences processed, adding 1696911 new rows to data/skipgram_bnc_full_proc_data.txt
+920000 sentences processed, adding 6576067 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+930000 sentences processed, adding 1879157 new rows to data/skipgram_bnc_full_proc_data.txt
+930000 sentences processed, adding 7441508 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+940000 sentences processed, adding 1176147 new rows to data/skipgram_bnc_full_proc_data.txt
+940000 sentences processed, adding 4712197 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+950000 sentences processed, adding 1507985 new rows to data/skipgram_bnc_full_proc_data.txt
+950000 sentences processed, adding 6052694 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+960000 sentences processed, adding 1598757 new rows to data/skipgram_bnc_full_proc_data.txt
+960000 sentences processed, adding 6199049 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+970000 sentences processed, adding 1276923 new rows to data/skipgram_bnc_full_proc_data.txt
+970000 sentences processed, adding 5425244 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+980000 sentences processed, adding 1287227 new rows to data/skipgram_bnc_full_proc_data.txt
+980000 sentences processed, adding 5410489 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+990000 sentences processed, adding 1291989 new rows to data/skipgram_bnc_full_proc_data.txt
+990000 sentences processed, adding 5489232 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1000000 sentences processed, adding 1553737 new rows to data/skipgram_bnc_full_proc_data.txt
+1000000 sentences processed, adding 6602415 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1010000 sentences processed, adding 1362197 new rows to data/skipgram_bnc_full_proc_data.txt
+1010000 sentences processed, adding 5800415 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1020000 sentences processed, adding 1537105 new rows to data/skipgram_bnc_full_proc_data.txt
+1020000 sentences processed, adding 6517359 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1030000 sentences processed, adding 1486323 new rows to data/skipgram_bnc_full_proc_data.txt
+1030000 sentences processed, adding 6218638 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1040000 sentences processed, adding 1280273 new rows to data/skipgram_bnc_full_proc_data.txt
+1040000 sentences processed, adding 5509462 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1050000 sentences processed, adding 1340619 new rows to data/skipgram_bnc_full_proc_data.txt
+1050000 sentences processed, adding 5694933 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1060000 sentences processed, adding 1224259 new rows to data/skipgram_bnc_full_proc_data.txt
+1060000 sentences processed, adding 5169484 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1070000 sentences processed, adding 1559377 new rows to data/skipgram_bnc_full_proc_data.txt
+1070000 sentences processed, adding 5922667 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1080000 sentences processed, adding 1424251 new rows to data/skipgram_bnc_full_proc_data.txt
+1080000 sentences processed, adding 5420783 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1090000 sentences processed, adding 1754119 new rows to data/skipgram_bnc_full_proc_data.txt
+1090000 sentences processed, adding 7664389 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1100000 sentences processed, adding 1721139 new rows to data/skipgram_bnc_full_proc_data.txt
+1100000 sentences processed, adding 7659484 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1110000 sentences processed, adding 1782119 new rows to data/skipgram_bnc_full_proc_data.txt
+1110000 sentences processed, adding 7761297 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1120000 sentences processed, adding 1712011 new rows to data/skipgram_bnc_full_proc_data.txt
+1120000 sentences processed, adding 7172586 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1130000 sentences processed, adding 1636137 new rows to data/skipgram_bnc_full_proc_data.txt
+1130000 sentences processed, adding 6588242 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1140000 sentences processed, adding 1603865 new rows to data/skipgram_bnc_full_proc_data.txt
+1140000 sentences processed, adding 6378077 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1150000 sentences processed, adding 1647271 new rows to data/skipgram_bnc_full_proc_data.txt
+1150000 sentences processed, adding 6484048 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1160000 sentences processed, adding 1198731 new rows to data/skipgram_bnc_full_proc_data.txt
+1160000 sentences processed, adding 5039572 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1170000 sentences processed, adding 341669 new rows to data/skipgram_bnc_full_proc_data.txt
+1170000 sentences processed, adding 1812859 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1180000 sentences processed, adding 482447 new rows to data/skipgram_bnc_full_proc_data.txt
+1180000 sentences processed, adding 2560276 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1190000 sentences processed, adding 593517 new rows to data/skipgram_bnc_full_proc_data.txt
+1190000 sentences processed, adding 3114042 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1200000 sentences processed, adding 483657 new rows to data/skipgram_bnc_full_proc_data.txt
+1200000 sentences processed, adding 2592820 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1210000 sentences processed, adding 577491 new rows to data/skipgram_bnc_full_proc_data.txt
+1210000 sentences processed, adding 2680192 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1220000 sentences processed, adding 413941 new rows to data/skipgram_bnc_full_proc_data.txt
+1220000 sentences processed, adding 2117935 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1230000 sentences processed, adding 397999 new rows to data/skipgram_bnc_full_proc_data.txt
+1230000 sentences processed, adding 2004316 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1240000 sentences processed, adding 402387 new rows to data/skipgram_bnc_full_proc_data.txt
+1240000 sentences processed, adding 2085331 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1250000 sentences processed, adding 468111 new rows to data/skipgram_bnc_full_proc_data.txt
+1250000 sentences processed, adding 2464737 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1260000 sentences processed, adding 393489 new rows to data/skipgram_bnc_full_proc_data.txt
+1260000 sentences processed, adding 2004031 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1270000 sentences processed, adding 554629 new rows to data/skipgram_bnc_full_proc_data.txt
+1270000 sentences processed, adding 2782922 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1280000 sentences processed, adding 425623 new rows to data/skipgram_bnc_full_proc_data.txt
+1280000 sentences processed, adding 2265903 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1290000 sentences processed, adding 419651 new rows to data/skipgram_bnc_full_proc_data.txt
+1290000 sentences processed, adding 2281655 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1300000 sentences processed, adding 319837 new rows to data/skipgram_bnc_full_proc_data.txt
+1300000 sentences processed, adding 1701714 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1310000 sentences processed, adding 483925 new rows to data/skipgram_bnc_full_proc_data.txt
+1310000 sentences processed, adding 2690993 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1320000 sentences processed, adding 372021 new rows to data/skipgram_bnc_full_proc_data.txt
+1320000 sentences processed, adding 2025494 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1330000 sentences processed, adding 646969 new rows to data/skipgram_bnc_full_proc_data.txt
+1330000 sentences processed, adding 3169829 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1340000 sentences processed, adding 1000875 new rows to data/skipgram_bnc_full_proc_data.txt
+1340000 sentences processed, adding 4608774 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1350000 sentences processed, adding 619045 new rows to data/skipgram_bnc_full_proc_data.txt
+1350000 sentences processed, adding 3009337 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1360000 sentences processed, adding 1029091 new rows to data/skipgram_bnc_full_proc_data.txt
+1360000 sentences processed, adding 4473510 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1370000 sentences processed, adding 1348267 new rows to data/skipgram_bnc_full_proc_data.txt
+1370000 sentences processed, adding 5558281 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1380000 sentences processed, adding 1643049 new rows to data/skipgram_bnc_full_proc_data.txt
+1380000 sentences processed, adding 6633071 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1390000 sentences processed, adding 1919013 new rows to data/skipgram_bnc_full_proc_data.txt
+1390000 sentences processed, adding 7624354 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1400000 sentences processed, adding 862847 new rows to data/skipgram_bnc_full_proc_data.txt
+1400000 sentences processed, adding 3814083 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1410000 sentences processed, adding 337045 new rows to data/skipgram_bnc_full_proc_data.txt
+1410000 sentences processed, adding 1816728 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1420000 sentences processed, adding 318915 new rows to data/skipgram_bnc_full_proc_data.txt
+1420000 sentences processed, adding 1677330 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1430000 sentences processed, adding 486429 new rows to data/skipgram_bnc_full_proc_data.txt
+1430000 sentences processed, adding 2555407 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1440000 sentences processed, adding 500805 new rows to data/skipgram_bnc_full_proc_data.txt
+1440000 sentences processed, adding 2638573 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1450000 sentences processed, adding 328287 new rows to data/skipgram_bnc_full_proc_data.txt
+1450000 sentences processed, adding 1729594 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1460000 sentences processed, adding 534571 new rows to data/skipgram_bnc_full_proc_data.txt
+1460000 sentences processed, adding 2706172 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1470000 sentences processed, adding 436853 new rows to data/skipgram_bnc_full_proc_data.txt
+1470000 sentences processed, adding 2238309 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1480000 sentences processed, adding 457189 new rows to data/skipgram_bnc_full_proc_data.txt
+1480000 sentences processed, adding 2299592 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1490000 sentences processed, adding 587821 new rows to data/skipgram_bnc_full_proc_data.txt
+1490000 sentences processed, adding 3065811 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1500000 sentences processed, adding 487327 new rows to data/skipgram_bnc_full_proc_data.txt
+1500000 sentences processed, adding 2514506 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1510000 sentences processed, adding 333179 new rows to data/skipgram_bnc_full_proc_data.txt
+1510000 sentences processed, adding 1783176 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1520000 sentences processed, adding 501891 new rows to data/skipgram_bnc_full_proc_data.txt
+1520000 sentences processed, adding 2606953 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1530000 sentences processed, adding 609671 new rows to data/skipgram_bnc_full_proc_data.txt
+1530000 sentences processed, adding 2803702 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1540000 sentences processed, adding 1642725 new rows to data/skipgram_bnc_full_proc_data.txt
+1540000 sentences processed, adding 6650710 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1550000 sentences processed, adding 1218357 new rows to data/skipgram_bnc_full_proc_data.txt
+1550000 sentences processed, adding 5177524 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1560000 sentences processed, adding 418465 new rows to data/skipgram_bnc_full_proc_data.txt
+1560000 sentences processed, adding 2133870 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1570000 sentences processed, adding 477939 new rows to data/skipgram_bnc_full_proc_data.txt
+1570000 sentences processed, adding 2467872 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1580000 sentences processed, adding 560879 new rows to data/skipgram_bnc_full_proc_data.txt
+1580000 sentences processed, adding 2877915 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1590000 sentences processed, adding 395217 new rows to data/skipgram_bnc_full_proc_data.txt
+1590000 sentences processed, adding 2148712 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1600000 sentences processed, adding 500433 new rows to data/skipgram_bnc_full_proc_data.txt
+1600000 sentences processed, adding 2684621 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1610000 sentences processed, adding 417357 new rows to data/skipgram_bnc_full_proc_data.txt
+1610000 sentences processed, adding 2111386 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1620000 sentences processed, adding 382715 new rows to data/skipgram_bnc_full_proc_data.txt
+1620000 sentences processed, adding 1963322 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1630000 sentences processed, adding 489371 new rows to data/skipgram_bnc_full_proc_data.txt
+1630000 sentences processed, adding 2538049 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1640000 sentences processed, adding 625191 new rows to data/skipgram_bnc_full_proc_data.txt
+1640000 sentences processed, adding 3172653 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1650000 sentences processed, adding 469449 new rows to data/skipgram_bnc_full_proc_data.txt
+1650000 sentences processed, adding 2426026 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1660000 sentences processed, adding 577097 new rows to data/skipgram_bnc_full_proc_data.txt
+1660000 sentences processed, adding 2966639 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1670000 sentences processed, adding 508175 new rows to data/skipgram_bnc_full_proc_data.txt
+1670000 sentences processed, adding 2620191 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1680000 sentences processed, adding 494005 new rows to data/skipgram_bnc_full_proc_data.txt
+1680000 sentences processed, adding 2551541 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1690000 sentences processed, adding 427553 new rows to data/skipgram_bnc_full_proc_data.txt
+1690000 sentences processed, adding 2236287 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1700000 sentences processed, adding 571423 new rows to data/skipgram_bnc_full_proc_data.txt
+1700000 sentences processed, adding 2803306 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1710000 sentences processed, adding 377227 new rows to data/skipgram_bnc_full_proc_data.txt
+1710000 sentences processed, adding 1926826 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1720000 sentences processed, adding 557809 new rows to data/skipgram_bnc_full_proc_data.txt
+1720000 sentences processed, adding 2930904 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1730000 sentences processed, adding 459283 new rows to data/skipgram_bnc_full_proc_data.txt
+1730000 sentences processed, adding 2455758 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1740000 sentences processed, adding 311953 new rows to data/skipgram_bnc_full_proc_data.txt
+1740000 sentences processed, adding 1671485 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1750000 sentences processed, adding 1696573 new rows to data/skipgram_bnc_full_proc_data.txt
+1750000 sentences processed, adding 6771871 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1760000 sentences processed, adding 1252895 new rows to data/skipgram_bnc_full_proc_data.txt
+1760000 sentences processed, adding 5240840 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1770000 sentences processed, adding 1469481 new rows to data/skipgram_bnc_full_proc_data.txt
+1770000 sentences processed, adding 6161552 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1780000 sentences processed, adding 468251 new rows to data/skipgram_bnc_full_proc_data.txt
+1780000 sentences processed, adding 2325936 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1790000 sentences processed, adding 385067 new rows to data/skipgram_bnc_full_proc_data.txt
+1790000 sentences processed, adding 2067547 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt
+1800000 sentences processed, adding 482465 new rows to data/skipgram_bnc_full_proc_data.txt
+1800000 sentences processed, adding 2440711 new augmented rows to data/skipgram_augm_bnc_full_proc_data.txt

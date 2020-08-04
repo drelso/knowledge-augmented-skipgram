@@ -1,0 +1,9 @@
+# Ignore datasets and models
+/data
+/model
+
+# Ignore pycache
+# from https://github.com/martinohanlon/flightlight/issues/1
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
