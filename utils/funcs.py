@@ -22,6 +22,57 @@ from nltk.corpus import wordnet as wn # process_data
 
 from collections import Counter # process_data
 
+def dir_validation(dir_path):
+    '''
+    Model directory housekeeping: make sure
+    directory exists, if not create it and make
+    sure the path to the directory ends with '/'
+    to allow correct path concatenation
+
+    Requirements
+    ------------
+    import os
+
+    Parameters
+    ----------
+    dir_path : str
+        directory path to validate or correct
+    
+    Returns
+    -------
+    str
+        validated directory path
+    '''
+    if not os.path.isdir(dir_path):
+        print(f'{dir_path} directory does not exist, making directory')
+        os.mkdir(dir_path)
+    if not dir_path.endswith('/'): dir_path += '/'
+    return dir_path
+
+
+def print_parameters(parameters):
+    '''
+    Pretty print all model parameters
+
+    Parameters
+    ----------
+    parameters : {str : X }
+        parameter dictionary, where the keys are
+        the parameter names with their corresponding
+        values
+    '''
+    
+    # PRINT PARAMETERS
+    print('\n=================== MODEL PARAMETERS: =================== \n')
+    for name, value in parameters.items():
+        # num_tabs = int((32 - len(name))/8) + 1
+        # tabs = '\t' * num_tabs
+        num_spaces = 30 - len(name)
+        spaces = ' ' * num_spaces
+        print(f'{name}: {spaces} {value}')
+    print('\n=================== / MODEL PARAMETERS: =================== \n')
+
+
 def get_stop_words():
     """
     Get list of stop words from the
@@ -567,327 +618,6 @@ def get_word_knowledge(word, verbose=False):
         print('Synsets: ', synsets)
     
     return frames, synsets
-
-
-def dataset_sampling(data_file, augm_data_file, dataset_file, augm_dataset_file, max_context=5):
-    """
-    From existing SkipGram word pair dataset
-    sample through the context position, align
-    sampled pairs with augmented pairs and sample
-    a single synonym from this alignment
-    
-    Input files are expected to be CSV files with
-    the following format, where the first row is
-    the header:
-        Natural dataset:
-        - 0 : focus_word
-        - 1 : context_word
-        - 2 : sent_num
-        - 3 : focus_index
-        - 4 : context_position
-        - 5 : book_number
-        
-        Augmented dataset:
-        - 0 : synonym
-        - 1 : context_word
-        - 2 : sent_num
-        - 3 : focus_index
-        - 4 : context_position
-        - 5 : focus_word
-        - 6 : book_number
-    
-    Requirements
-    ------------
-    import csv
-    import re
-    import random
-    
-    Parameters
-    ----------
-    data_file : str
-        path to source dataset file
-    augm_data_file : str
-        path to source augmented dataset
-        file
-    dataset_file : str
-        path to write sampled dataset file to 
-    augm_dataset_file : str
-        path to write sampled augmented dataset
-        file to
-    max_context : int, optional
-        maximum size of the context window, all
-        samples will be taken by sampling from 1
-        to this number (default: 5)
-    """
-    # Open the two files at once: unaltered dataset
-    # and augmented dataset
-    with open(data_file, 'r', encoding='utf-8', errors='replace') as d_file, \
-        open(augm_data_file, 'r', encoding='utf-8', errors='replace') as a_file, \
-        open(dataset_file, 'w+', encoding='utf-8', errors='replace', newline='') as s_file, \
-        open(augm_dataset_file, 'w+', encoding='utf-8', errors='replace', newline='') as a_s_file:
-        
-        print('Data file: ', data_file)
-        print('Augmented data file: ', augm_data_file)
-        data = csv.reader(d_file)
-        a_data = csv.reader(a_file)
-        
-        # Create two CSV writer objects: one for
-        # original data and another for augmented data
-        sample_file = csv.writer(s_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_ALL)
-        a_sample_file = csv.writer(a_s_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_ALL)
-        
-        # Get the columns from the dataset
-        header = next(data)
-        cols = {name : i for i, name in enumerate(header)}
-        
-        # Get the columns from the augmented dataset
-        a_header = next(a_data)
-        a_cols = {name : i for i, name in enumerate(a_header)}
-        
-        i = 0
-        
-        print('Columns: ', cols)
-        print('Augmented Columns: ', a_cols)
-        
-        # Initialise data arrays with the header information
-        sample_file.writerow(header)
-        a_sample_file.writerow(a_header)
-        
-        # Read the first row in the augmented dataset
-        a_row = next(a_data, False)
-        
-        # Get the index columns
-        a_book_num = int(a_row[a_cols['book_number']])
-        a_sent_num = int(a_row[a_cols['sent_num']])
-        a_focus_i = int(a_row[a_cols['focus_index']])
-        a_ctx_pos = int(a_row[a_cols['context_position']])
-        
-        # Iterate through the dataset
-        for row in data:
-            # If the row is a header skip it
-            if re.search('[A-Za-z]+', row[cols['context_position']]): continue
-            
-            # Sample a random number between 1 and the
-            # full context size
-            rand_ctx = random.randint(1, max_context)
-            
-            # If sampled number is smaller than context position
-            # add row to dataset
-            if rand_ctx >= abs(int(row[cols['context_position']])):
-                sample_file.writerow(row)
-                
-                book_num = int(row[cols['book_number']])
-                sent_num = int(row[cols['sent_num']])
-                focus_i = int(row[cols['focus_index']])
-                ctx_pos = int(row[cols['context_position']])
-                
-                # Cycle through the augmented set while its
-                # indices are smaller or equal to the ones
-                # in the full dataset, or while there are
-                # more rows
-                while(
-                    book_num >= a_book_num and
-                    sent_num >= a_sent_num and
-                    focus_i >= a_focus_i and
-                    #ctx_pos >= a_ctx_pos and
-                    a_row != False
-                    ):
-                    
-                    # If all indices are the same, add the
-                    # synonym row to the sampled augmented
-                    # dataset
-                    if(
-                        book_num == a_book_num and
-                        sent_num == a_sent_num and
-                        focus_i == a_focus_i and
-                        #ctx_pos == a_ctx_pos
-                        rand_ctx >= abs(a_ctx_pos)
-                        ):
-                        a_sample_file.writerow(a_row)
-                    
-                    # Get the next row in the augmented data
-                    a_row = next(a_data, False)
-                    
-                    # If more rows, update the dataset indices
-                    if a_row != False:
-                        # If the row is a header skip it
-                        if re.search('[A-Za-z]+', a_row[cols['context_position']]):
-                            a_row = next(a_data, False)
-                            print('Bad row: ', a_row)
-                        
-                        if a_row != False:
-                            a_book_num = int(a_row[a_cols['book_number']])
-                            a_sent_num = int(a_row[a_cols['sent_num']])
-                            a_focus_i = int(a_row[a_cols['focus_index']])
-                            a_ctx_pos = int(a_row[a_cols['context_position']])
-
-
-
-def select_synonyms(data_file, save_file, vocab_file, syn_selection='ml'):
-    """
-    Find synonyms in the dataset,
-    check whether they appear in the
-    vocabulary. If multiple synonyms
-    for a word appear in the vocabulary,
-    randomly sample one. Alternatively,
-    the synonym that appears the most in
-    the data can be selected.
-    
-    The source data should have the
-    augmented dataset format:
-        - 0 : synonym
-        - 1 : context_word
-        - 2 : sent_num
-        - 3 : focus_index
-        - 4 : context_position
-        - 5 : focus_word
-        - 6 : book_number
-    
-    Requirements
-    ------------
-    import numpy as np
-    import random
-    import csv
-    
-    Parameters
-    ----------
-    data_file : str
-        path to source (augmented) dataset file
-    save_file : str
-        path to write selected synonym dataset
-        file to
-    vocab_file : str
-        path to canonical dictionary file
-    syn_selection : str, optional
-        synonym selection strategy, possible
-        values are:
-        - ml - maximum likelihood
-        - s1 - randomly sample one
-        - sw - randomly sample one (weighted by freq) #TODO
-        - sn - randomly sample any number of syns
-    """
-    
-    with open(data_file, 'r') as d, \
-        open(vocab_file, 'r') as v, \
-        open(save_file, 'w+', newline='') as syn_file:
-        
-        temp = []
-        syns_temp = []
-        
-        data = csv.reader(d)
-        v_data = csv.reader(v)
-        
-        writer = csv.writer(syn_file, quoting=csv.QUOTE_ALL)
-        
-        # Read full vocabulary file, keep a list
-        # of only the words
-        voc_full = [i for i in v_data]
-        vocabulary = [i[0] for i in voc_full]
-        vocabulary_counts = [i[1] for i in voc_full]
-        del voc_full
-        
-        # Get the columns from the dataset
-        header = next(data)
-        cols = {name : i for i, name in enumerate(header)}
-        
-        writer.writerow(header)
-        
-        for row in data:
-            if len(temp) == 0:
-                temp.append(row)
-            else:
-                last_row = temp[-1:][0]
-                
-                if(row[cols['book_number']] == last_row[cols['book_number']] and
-                    row[cols['sent_num']] == last_row[cols['sent_num']] and
-                    row[cols['focus_index']] == last_row[cols['focus_index']]):
-                    # If book, sentence, and focus is the same
-                    # store as possible synonym
-                    temp.append(row)
-                else:
-                    # When different, we finished processing
-                    # the synonyms. Next step is selecting the
-                    # final synonyms
-                    syns = [i[cols['synonym']] for i in temp]
-                    # Get onl
-                    syns = np.unique(syns)
-                    
-                    syns_temp = []
-                    
-                    # For every unique synonym, check if it is
-                    # in the vocabulary, if it isn't skip it
-                    for syn in syns:
-                        if syn in vocabulary:
-                            syns_temp.append(syn)
-                        #else:
-                            #print('\t\t', syn, ' is not in the vocabulary')
-                    
-                    # If at least one synonym is in the vocabulary
-                    if len(syns_temp) > 0:
-                        # If multiple synonyms, look for the one
-                        # that appears most frequently
-                        # TODO: change this, so it doesn't alter
-                        # the word distributions (i.e. gives too
-                        # much weight to frequent synonyms). Consider
-                        # random sampling
-                        if len(syns_temp) > 1:
-                            retained_syn = ''
-                            
-                            if syn_selection == 'ml':
-                                smallest_i = len(vocabulary)
-                                for syn in syns_temp:
-                                    index = vocabulary.index(syn)
-                                    if index < smallest_i:
-                                        smallest_i = index
-                                retained_syn = vocabulary[smallest_i]
-                            elif syn_selection == 's1':
-                                retained_syn = np.random.choice(syns_temp)
-                            elif syn_selection == 'sn':
-                                num_syns = np.random.randint(1, len(syns_temp)+1)
-                                retained_syn = np.random.choice(syns_temp, num_syns, replace=False)
-                            elif syn_selection == 'sw' or syn_selection == 'swn':
-                                # List the indices for the synonyms
-                                indices = [vocabulary.index(syn) for syn in syns_temp]
-                                # Get the counts for each synonym
-                                # collect them in a list
-                                counts = [int(vocabulary_counts[i]) for i in indices]
-                                # Add up all counts
-                                normaliser = np.sum(counts)
-                                # Calculate weights by dividing
-                                # counts by the normaliser
-                                weights = counts / normaliser
-                                # Randomly sample from list of synonyms
-                                # weighted by the normalised counts
-                                if syn_selection == 'swn':
-                                    num_syns = np.random.randint(1, len(syns_temp)+1)
-                                else:
-                                    num_syns = 1
-                                retained_syn = np.random.choice(syns_temp, num_syns, replace=False, p=weights)
-                            else:
-                                raise ValueError("unrecognised syn_selection %r" % syn_selection)
-                                
-                            # Check if retained_syn (string or list)
-                            # is empty
-                            if len(retained_syn) > 0:
-                                # Changed syntax form '==' to 'in' to
-                                # solve the case of multiple retained
-                                # synonyms (i.e. deal with lists, not
-                                # only strings)
-                                temp = [i for i in temp if i[cols['synonym']] in retained_syn]
-                                #print(retained_syn, ' retained syn')
-                                writer.writerows(temp)
-                                #print(temp)
-                        else:
-                            temp = [i for i in temp if i[cols['synonym']] == syns_temp[0]]
-                            #print('Only syn: ', temp[0])
-                            writer.writerows(temp)
-                            #print(temp)
-                    
-                    # After processing the synonyms, restart
-                    # the temp variable with the current row
-                    temp = [row]
-                
-                #temp.append(row)
 
 
 def lightweight_dataset(data_file, vocab_file, save_file):
