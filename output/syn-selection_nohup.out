@@ -1,0 +1,20 @@
+nohup: ignoring input
+Using data subset: 50.0% of full dataset
+Found existing dataset subset at /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_shffl_sub-5.txt and /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_shffl_sub-5_tags.txt 
+
+Found existing word counts file at /home/diegor/data/British_National_Corpus/bnc_full_processed_data/counts_bnc_full_proc_data_shffl_sub-5.csv
+
+Found existing train/validation datasets at: 
+ - data/bnc_full_proc_data_shffl_sub-5_train.txt 
+ - data/bnc_full_proc_data_shffl_sub-5_train_tags.txt 
+ - data/bnc_full_proc_data_shffl_sub-5_val.txt 
+ - data/bnc_full_proc_data_shffl_sub-5_val_tags.txt
+Processing with synonym augmented data
+Skip gram training data file found at data/skipgram_bnc_full_proc_data_shffl_sub-5_train.csv
+Skip gram validation data file found at data/skipgram_bnc_full_proc_data_shffl_sub-5_val.csv
+Context-sampled skip gram training data file found at data/sampled_skipgram_bnc_full_proc_data_shffl_sub-5_train.csv
+Context-sampled skip gram validation data file found at data/sampled_skipgram_bnc_full_proc_data_shffl_sub-5_val.csv
+Constructing vocabulary from counts file in /home/diegor/data/British_National_Corpus/bnc_full_processed_data/counts_bnc_full_proc_data_shffl_sub-5.csv
+98253 unique tokens in vocabulary with (with minimum frequency 5)
+Constructing single synonym skip gram training dataset at data/syns-sw_sampled_skipgram_bnc_full_proc_data_shffl_sub-5_train.csv
+Constructing single synonym skip gram validation dataset at data/syns-sw_sampled_skipgram_bnc_full_proc_data_shffl_sub-5_val.csv

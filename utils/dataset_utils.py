@@ -9,6 +9,7 @@ import datetime
 import random
 import csv
 import re
+from collections import Counter
 
 import contextlib
 
@@ -379,6 +380,8 @@ def dataset_sampling(data_file, augm_data_file, dataset_file, augm_dataset_file,
         
         # Iterate through the dataset
         for row in data:
+            # if row is empty, skip
+            if not row: continue
             # If the row is a header skip it
             if re.search('[A-Za-z]+', row[cols['context_position']]): continue
             
@@ -422,22 +425,23 @@ def dataset_sampling(data_file, augm_data_file, dataset_file, augm_dataset_file,
                     
                     # Get the next row in the augmented data
                     a_row = next(a_data, False)
-                    
                     # If more rows, update the dataset indices
-                    if a_row != False:
+                    # if a_row != False:
+                    if a_row:
                         # If the row is a header skip it
                         if re.search('[A-Za-z]+', a_row[cols['context_position']]):
                             a_row = next(a_data, False)
                             print('Bad row: ', a_row)
                         
-                        if a_row != False:
+                        # if a_row != False:
+                        if a_row:
                             a_book_num = int(a_row[a_cols['book_number']]) if has_book_num else 0
                             a_sent_num = int(a_row[a_cols['sent_num']])
                             a_focus_i = int(a_row[a_cols['focus_index']])
                             a_ctx_pos = int(a_row[a_cols['context_position']])
 
 
-def select_synonyms(data_file, save_file, vocab_file, syn_selection='ml'):
+def select_synonyms(data_file, save_file, vocabulary, syn_selection='ml'):
     """
     Find synonyms in the dataset,
     check whether they appear in the
@@ -446,6 +450,8 @@ def select_synonyms(data_file, save_file, vocab_file, syn_selection='ml'):
     randomly sample one. Alternatively,
     the synonym that appears the most in
     the data can be selected.
+
+    NOTE: refactored to work with torchtext.Vocab
     
     The source data should have the
     augmented dataset format:
@@ -470,8 +476,8 @@ def select_synonyms(data_file, save_file, vocab_file, syn_selection='ml'):
     save_file : str
         path to write selected synonym dataset
         file to
-    vocab_file : str
-        path to canonical dictionary file
+    vocabulary : torchtext.Vocab
+        torchtext vocabulary object
     syn_selection : str, optional
         synonym selection strategy, possible
         values are:
@@ -482,37 +488,48 @@ def select_synonyms(data_file, save_file, vocab_file, syn_selection='ml'):
     """
     
     with open(data_file, 'r') as d, \
-        open(vocab_file, 'r') as v, \
         open(save_file, 'w+', newline='') as syn_file:
         
         temp = []
         syns_temp = []
         
         data = csv.reader(d)
-        v_data = csv.reader(v)
+        # v_data = csv.reader(v)
         
         writer = csv.writer(syn_file, quoting=csv.QUOTE_ALL)
         
         # Read full vocabulary file, keep a list
         # of only the words
-        voc_full = [i for i in v_data]
-        vocabulary = [i[0] for i in voc_full]
-        vocabulary_counts = [i[1] for i in voc_full]
-        del voc_full
+        # voc_full = [i for i in v_data]
+        # vocabulary = [i[0] for i in voc_full]
+        # vocabulary_counts = [i[1] for i in voc_full]
+        # del voc_full
         
         # Get the columns from the dataset
         header = next(data)
         cols = {name : i for i, name in enumerate(header)}
         
+        has_book_num = 'book_number' in cols.keys()
+        if has_book_num: print('Processing data with book numbers')
+
         writer.writerow(header)
         
         for row in data:
+            if not row: continue # Skip empty rows
+
             if len(temp) == 0:
                 temp.append(row)
             else:
                 last_row = temp[-1:][0]
                 
-                if(row[cols['book_number']] == last_row[cols['book_number']] and
+                if has_book_num:
+                    row_book_num = row[cols['book_number']]
+                    last_row_book_num = last_row[cols['book_number']]
+                else:
+                    row_book_num = 0
+                    last_row_book_num = 0
+
+                if(row_book_num == last_row_book_num and
                     row[cols['sent_num']] == last_row[cols['sent_num']] and
                     row[cols['focus_index']] == last_row[cols['focus_index']]):
                     # If book, sentence, and focus is the same
@@ -531,7 +548,8 @@ def select_synonyms(data_file, save_file, vocab_file, syn_selection='ml'):
                     # For every unique synonym, check if it is
                     # in the vocabulary, if it isn't skip it
                     for syn in syns:
-                        if syn in vocabulary:
+                        # if syn in vocabulary:
+                        if syn in vocabulary.stoi.keys():
                             syns_temp.append(syn)
                         #else:
                             #print('\t\t', syn, ' is not in the vocabulary')
@@ -550,10 +568,12 @@ def select_synonyms(data_file, save_file, vocab_file, syn_selection='ml'):
                             if syn_selection == 'ml':
                                 smallest_i = len(vocabulary)
                                 for syn in syns_temp:
-                                    index = vocabulary.index(syn)
+                                    # index = vocabulary.index(syn)
+                                    index = vocabulary.stoi[syn]
                                     if index < smallest_i:
                                         smallest_i = index
-                                retained_syn = vocabulary[smallest_i]
+                                # retained_syn = vocabulary[smallest_i]
+                                retained_syn = vocabulary.itos[smallest_i]
                             elif syn_selection == 's1':
                                 retained_syn = np.random.choice(syns_temp)
                             elif syn_selection == 'sn':
@@ -561,10 +581,12 @@ def select_synonyms(data_file, save_file, vocab_file, syn_selection='ml'):
                                 retained_syn = np.random.choice(syns_temp, num_syns, replace=False)
                             elif syn_selection == 'sw' or syn_selection == 'swn':
                                 # List the indices for the synonyms
-                                indices = [vocabulary.index(syn) for syn in syns_temp]
+                                # indices = [vocabulary.index(syn) for syn in syns_temp]
+                                indices = [vocabulary.stoi[syn] for syn in syns_temp]
                                 # Get the counts for each synonym
                                 # collect them in a list
-                                counts = [int(vocabulary_counts[i]) for i in indices]
+                                # counts = [int(vocabulary_counts[i]) for i in indices]
+                                counts = [vocabulary.freqs[vocabulary.itos[i]] for i in indices]
                                 # Add up all counts
                                 normaliser = np.sum(counts)
                                 # Calculate weights by dividing
@@ -830,6 +852,84 @@ def process_bnc_data(raw_data_file, dataset_file, tags_file=None, augm_dataset_f
     '''
 
 
+def basic_tokenise(datafile, preserve_sents=True):
+    """
+    Tokenise a raw text file by simply splitting
+    by white spaces
+    
+    Parameters
+    ----------
+    datafile : str
+        path to text file to tokenise
+    preserve_sents : bool, optional
+        whether to use preserve the sentence
+        separation by constructing a list of
+        lists, if false returns a single list
+        with all words in the text
+        (default: True)
+    
+    Returns
+    -------
+    [str] OR [[str]]
+        list, or list of lists, of tokenised text
+    """
+    tokenised_data = []
+    with open(datafile, 'r', encoding='utf-8') as d:
+        i = 0
+        j = 0
+        for line in d.readlines():
+            words = line.strip().split(' ')
+            if preserve_sents:
+                tokenised_data.append(words)
+            else:
+                tokenised_data.extend(words)
+            i += len(words)
+            j += 1
+        print('Num words ', i)
+        print('Num lines ', j)
+        print('Last words', words)
+    
+    return tokenised_data
+
+
+def word_counts(tokenised_data, save_file):
+    """
+    Given a list (or list of lists) of tokenised
+    text data calculates word counts and saves
+    a CSV file consisting of:
+    - word
+    - raw count
+    - frequency (normalised count)
+    
+    Requirements
+    ------------
+    from collections import Counter
+    import csv
+    
+    Parameters
+    ----------
+    tokenised_data : [str] OR [[str]]
+        list (or list of lists) of words to count
+    save_file : str
+        filepath to the data file to save counts to
+    """
+    
+    if isinstance(tokenised_data[0], list):
+        print('Data is multidimensional, flattening...')
+        tokenised_data = [item for sublist in tokenised_data for item in sublist]
+    
+    word_counts = Counter(tokenised_data)
+    total_words = sum(word_counts.values())
+    
+    counts_list = [[word, num, (float(num)/total_words)] for word, num in word_counts.items()]
+    
+    print(word_counts.most_common(10))
+    print('Number of words: ', total_words)
+    print('Number of distinct words: ', len(counts_list))
+    
+    with open(save_file, 'w+', encoding='utf-8', newline='') as s:
+        writer = csv.writer(s)
+        writer.writerows(counts_list)
 
 def sample_and_process_books(gutenberg_path, processed_books_path, num_books=10, verbose=True):
     """

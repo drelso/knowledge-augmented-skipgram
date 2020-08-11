@@ -1,0 +1,24 @@
+nohup: ignoring input
+Using data subset: 50.0% of full dataset
+Found existing dataset subset at /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_shffl_sub-5.txt and /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_shffl_sub-5_tags.txt 
+
+Found existing word counts file at /home/diegor/data/British_National_Corpus/bnc_full_processed_data/counts_bnc_full_proc_data_shffl_sub-5.csv
+
+Found existing train/validation datasets at: 
+ - data/bnc_full_proc_data_shffl_sub-5_train.txt 
+ - data/bnc_full_proc_data_shffl_sub-5_train_tags.txt 
+ - data/bnc_full_proc_data_shffl_sub-5_val.txt 
+ - data/bnc_full_proc_data_shffl_sub-5_val_tags.txt
+Processing with synonym augmented data
+Skip gram training data file found at data/skipgram_bnc_full_proc_data_shffl_sub-5_train.csv
+Skip gram validation data file found at data/skipgram_bnc_full_proc_data_shffl_sub-5_val.csv
+Constructing context-sampled skip gram training dataset at data/skipgram_bnc_full_proc_data_shffl_sub-5_train.csv
+Data file:  data/skipgram_bnc_full_proc_data_shffl_sub-5_train.csv
+Augmented data file:  data/skipgram_augm_bnc_full_proc_data_shffl_sub-5_train.csv
+Columns:  {'focus_word': 0, 'context_word': 1, 'sent_num': 2, 'focus_index': 3, 'context_position': 4}
+Augmented Columns:  {'synonym': 0, 'context_word': 1, 'sent_num': 2, 'focus_index': 3, 'context_position': 4, 'focus_word': 5, 'pos_tag': 6}
+Constructing context-sampled skip gram validation dataset at data/skipgram_bnc_full_proc_data_shffl_sub-5_val.csv
+Data file:  data/skipgram_bnc_full_proc_data_shffl_sub-5_val.csv
+Augmented data file:  data/skipgram_augm_bnc_full_proc_data_shffl_sub-5_val.csv
+Columns:  {'focus_word': 0, 'context_word': 1, 'sent_num': 2, 'focus_index': 3, 'context_position': 4}
+Augmented Columns:  {'synonym': 0, 'context_word': 1, 'sent_num': 2, 'focus_index': 3, 'context_position': 4, 'focus_word': 5, 'pos_tag': 6}
