@@ -44,14 +44,10 @@ if __name__ == '__main__':
 
     start_time = time.time()
     
-    memory_usage(legend=0) # MEMORY DEBUGGING
-
     # MEMORY-MAPPED DATASET READING 
     data        = np.load(parameters['num_train_skipgram_npy'], mmap_mode='r')
     syns        = np.load(parameters['num_train_skipgram_syns_npy'], mmap_mode='r')
     val_data    = np.load(parameters['num_val_skipgram_npy'], mmap_mode='r')
-
-    memory_usage(legend='Loading data (memmap)') # MEMORY DEBUGGING
 
     num_data = data.shape[0]
     num_syns = syns.shape[0]
@@ -66,8 +62,6 @@ if __name__ == '__main__':
         vocabulary = [w for w in vocab_reader]
     vocab_words = [w[0] for w in vocabulary]
     vocab_counts = [int(w[1]) for w in vocabulary]
-    
-    memory_usage(legend='Reading vocabulary') # MEMORY DEBUGGING
 
     # Calculate the vocabulary ratios
     # Elevate counts to the 3/4th power
@@ -76,10 +70,7 @@ if __name__ == '__main__':
     # Normalise the counts
     vocab_ratios = pow_counts / normaliser
     
-    memory_usage(legend='Vocab counts and ratios') # MEMORY DEBUGGING
-
     sample_table = init_sample_table(vocab_counts)
-    memory_usage(legend='Sample table') # MEMORY DEBUGGING
     
     print('Size of sample table: ', sample_table.size)
     print('Total distinct words: ', len(vocabulary))
@@ -98,7 +89,6 @@ if __name__ == '__main__':
 
     augmented_dataset_size = int(num_data + (num_data * parameters['data_augmentation_ratio']))
     augmentation_selector = np.random.choice([True,False], augmented_dataset_size, p=[parameters['data_augmentation_ratio'], natural_data_ratio])
-    memory_usage(legend=5) # MEMORY DEBUGGING
     
     FOCUS_COL = 0
     CONTEXT_COL = 1
@@ -124,18 +114,15 @@ if __name__ == '__main__':
 
         # RE-CALCULATE AT THE BEGINNING OF EACH EPOCH
         data_ixs = np.random.choice(num_data, num_data, replace=False)
-        memory_usage(legend='data ixs') # MEMORY DEBUGGING
         syns_ixs = np.random.choice(num_syns, num_syns, replace=False)
-        memory_usage(legend='syns ixs') # MEMORY DEBUGGING
         val_data_ixs = np.random.choice(num_val_data, num_val_data, replace=False)
-        memory_usage(legend='val ixs') # MEMORY DEBUGGING
         
         ## TRAINING PHASE
-        print('Training...')
+        print(f'Training ({augmented_dataset_size} word pairs)...')
         model.train()
         num_batches = 0
         batches_loss = 0.
-        for select_syn in augmentation_selector:
+        for i, select_syn in enumerate(augmentation_selector):
             if select_syn:
                 datapoint = syns[syns_ixs[ix_syn]]
                 # RESTART THE INDEX IF DATASET IS EXHAUSTED
@@ -148,32 +135,32 @@ if __name__ == '__main__':
             focus_ixs.append(datapoint[FOCUS_COL])
             context_ixs.append(datapoint[CONTEXT_COL])
             
+            if not i % int(augmented_dataset_size / 5):
+                print(f'{i}/{augmented_dataset_size} lines processed')
+
             if len(focus_ixs) == parameters['batch_size']:
                 batches_loss += process_word_pair_batch(focus_ixs, context_ixs, model, optimiser, sample_table, parameters['num_neg_samples'], parameters['batch_size'], phase='train')
                 
                 num_batches += 1
                 focus_ixs = []
                 context_ixs = []
-
-                if ix_syn > 10: break # REMOVE
         epoch_loss = batches_loss / num_batches
         losses.append(epoch_loss)
         
-        memory_usage(legend='After training') # MEMORY DEBUGGING
-
         ## VALIDATION PHASE
-        print('Validation...')
+        print(f'Validation ({num_val_data} word pairs)...')
         model.eval()
         num_batches = 0
         batches_loss = 0.
         with torch.no_grad():
-            i_break = 0 # REMOVE
-            for ix in val_data_ixs:
-                i_break += 1
+            for i, ix in enumerate(val_data_ixs):
                 datapoint = val_data[ix]
                 
                 focus_ixs.append(datapoint[FOCUS_COL])
                 context_ixs.append(datapoint[CONTEXT_COL])
+                
+                if not i % int(num_val_data / 5):
+                    print(f'{i}/{num_val_data} lines processed')
                 
                 if len(focus_ixs) == parameters['batch_size']:
                     batches_loss += process_word_pair_batch(focus_ixs, context_ixs, model, optimiser, sample_table, parameters['num_neg_samples'], parameters['batch_size'], phase='validate')
@@ -181,20 +168,15 @@ if __name__ == '__main__':
                     num_batches += 1
                     focus_ixs = []
                     context_ixs = []
-                if i_break > 10: break # REMOVE
         val_loss = batches_loss / num_batches
         val_losses.append(val_loss)
         print(f'\n {">" * 16} \t EPOCH LOSS: {epoch_loss} \t VAL LOSS: {val_loss} {"<" * 16} \n')
         
-        memory_usage(legend='After validation') # MEMORY DEBUGGING
-        
         # FREE-UP SOME MEMORY
-        memory_usage(legend='before freeing memory') # MEMORY DEBUGGING
         del data_ixs
         del syns_ixs
         del val_data_ixs
-        gc.collect()
-        memory_usage(legend='after freeing memory') # MEMORY DEBUGGING
+        gc.collect() # GARBAGE COLLECT THE DELETED VARIABLES
 
         elapsed_time = time.time() - start_time
         times.append(elapsed_time)
@@ -211,8 +193,6 @@ if __name__ == '__main__':
                 'loss': epoch_loss,
                 'val_loss': val_loss
                 }, checkpoints_file)
-
-        memory_usage(legend='After saving checkpoint') # MEMORY DEBUGGING
       
     print(f'\n\nSaving model to {parameters["model_file"]}')
     # A common PyTorch convention is to save models using
