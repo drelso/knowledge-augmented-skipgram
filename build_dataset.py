@@ -6,7 +6,7 @@
 
 import os
 from config import parameters
-from utils.dataset_utils import shuffle_and_subset_dataset, process_bnc_data, numericalise_dataset, train_validate_split, basic_tokenise, word_counts, dataset_sampling, select_synonyms
+from utils.dataset_utils import shuffle_and_subset_dataset, process_bnc_data, numericalise_dataset, train_validate_split, basic_tokenise, word_counts, dataset_sampling, select_synonyms, numeric_csv_to_npy
 from utils.funcs import dir_validation, print_parameters
 from utils.training_utils import build_vocabulary
 import time
@@ -163,3 +163,31 @@ if __name__ == '__main__':
         numericalise_dataset(parameters['val_skipgram_syns_data'], parameters['num_val_skipgram_syns_data'], VOCABULARY)
     else:
         print(f'Numericalised Skip gram validation augmented data file found at {parameters["num_val_skipgram_syns_data"]}')
+    
+    
+    ## CONVERT NUMERICALISED DATASETS TO NPY FORMAT
+    if parameters['convert_to_npy']:
+        # TRAIN DATA
+        if not os.path.exists(parameters['num_train_skipgram_npy']):
+            print(f'Saving numericalised dataset to NPY file at {parameters["num_train_skipgram_npy"]}')
+            numeric_csv_to_npy(parameters['num_train_skipgram_syns_data'], parameters['num_train_skipgram_npy'])
+        else:
+            print(f'Numericalised Skip gram training data NPY file found at {parameters["num_train_skipgram_npy"]}')
+        # TRAIN SYNS DATA
+        if not os.path.exists(parameters['num_train_skipgram_syns_npy']):
+            print(f'Saving numericalised dataset to NPY file at {parameters["num_train_skipgram_syns_npy"]}')
+            numeric_csv_to_npy(parameters['num_train_skipgram_syns_data'], parameters["num_train_skipgram_syns_npy"])
+        else:
+            print(f'Numericalised Skip gram training augmented data NPY file found at {parameters["num_train_skipgram_syns_npy"]}')
+        # VAL DATA
+        if not os.path.exists(parameters['num_val_skipgram_npy']):
+            print(f'Saving numericalised dataset to NPY file at {parameters["num_val_skipgram_npy"]}')
+            numeric_csv_to_npy(parameters['num_val_skipgram_data'], parameters['num_val_skipgram_npy'])
+        else:
+            print(f'Numericalised Skip gram validation data NPY file found at {parameters["num_val_skipgram_npy"]}')
+        # VAL SYNS DATA
+        if not os.path.exists(parameters['num_val_skipgram_syns_npy']):
+            print(f'Saving numericalised dataset to NPY file at {parameters["num_val_skipgram_syns_npy"]}')
+            numeric_csv_to_npy(parameters['num_val_skipgram_syns_data'], parameters['num_val_skipgram_syns_npy'])
+        else:
+            print(f'Numericalised Skip gram validation augmented data NPY file found at {parameters["num_val_skipgram_syns_npy"]}')

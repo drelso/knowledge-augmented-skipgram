@@ -8,6 +8,59 @@ import numpy as np
 import csv
 import torch
 
+
+def process_word_pair_batch(focus_ixs, context_ixs, model, optimiser, sample_table, num_neg_samples, batch_size, phase='train'):
+    """
+    Construct the negative sampling batch and run
+    model on the resulting batch, return the average
+    loss per datapoint, calculates the gradients and
+    updates the parameters (only when in training mode)
+
+    Requirements
+    ------------
+    new_neg_sampling (local function)
+    dummy_context_mgr (local function)
+
+    Parameters
+    ----------
+    focus_ixs : [int] * (batch_size)
+        list of focus word indices, the number of
+        elements is determined by the batch size
+    context_ixs : [int] * (batch_size)
+        list of context word indices, the number of
+        elements is determined by the batch size
+    sample_table : [int]
+        list containing word indices repeated
+        according to their frequencies
+    num_neg_samples : int
+        number of negative samples to include per
+        word pair
+    batch_size : int
+        size of the word pair batches to process
+    phase : 'str', optional
+        whether to process the word pair in training
+        or validation mode (default: 'train')
+    
+    Returns
+    -------
+    float
+        the batch loss averaged over the number of
+        word pairs in the batch
+    """
+    neg_samples = new_neg_sampling(sample_table, num_samples=num_neg_samples, batch_size=batch_size)
+                
+    loss = model(focus_ixs, context_ixs, neg_samples)
+    
+    batch_loss = loss.item() / batch_size
+    
+    if phase == 'train':
+        optimiser.zero_grad()
+        loss.backward()
+        optimiser.step()
+    
+    return batch_loss
+
+
 # Negative Sampling auxiliary function
 def init_sample_table(vocab_counts):
     """

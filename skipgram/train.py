@@ -7,9 +7,165 @@ import random
 import numpy as np
 import csv
 import sys
+import contextlib
 
 from .nn import SkipGram
 from .utils import init_sample_table, new_neg_sampling, save_param_to_npy
+
+
+
+@contextlib.contextmanager
+def dummy_context_mgr():
+    '''
+    Code required for conditional "with"
+
+    Requirements
+    ------------
+    import contextlib
+    '''
+    yield None
+
+
+def run_model(data_iter, model, optimizer, criterion, vocabulary, device=torch.device('cpu'), phase='train', print_epoch=True):
+    '''
+    Run training or validation processes given a 
+    model and a data iterator.
+
+    Requirements
+    ------------
+    import utils.new_neg_sampling as new_neg_sampling
+    dummy_context_mgr (local function)
+
+    Parameters
+    ----------
+    data_iter : torchtext.data.Iterator
+        data iterator to go through
+    model : torch.nn.Module
+        PyTorch model to train
+    optimizer : torch.optim.Optimizer
+        PyTorch optimizer object to use
+    criterion : torch.nn.###Loss
+        PyTorch loss function to use
+    vocabulary : torchtext.Vocab
+        vocabulary object to use
+    device : torch.device or int
+        device to run the model on
+        (default: torch.device('cpu'))
+    phase : str, optional
+        whether to run a 'train' or 'validation'
+        process (default: 'train')
+    print_epoch : bool, optional
+        whether to produce output in this epoch
+        (default: True)
+    
+    Returns
+    -------
+    float
+        full epoch loss (total loss for all batches
+        divided by the number of datapoints)
+    '''
+    if phase == 'train':
+        model.train()
+        optimizer.zero_grad()
+        grad_ctx_manager = dummy_context_mgr()
+    else: # No gradient calculations for validation
+        model.eval()
+        grad_ctx_manager = torch.no_grad()
+    
+    epoch_loss = 0.0
+    i = 0
+    vocab_size = len(vocabulary) # ALSO input_dim
+    
+    # HACKISH SOLUTION TO MANUALLY CONSTRUCT THE BATCHES
+    # SINCE GOING THROUGH THE ITERATORS DIRECTLY FORCES
+    # THE 'numericalize()' FUNCTION ON THE DATA, WHICH
+    # WE NUMERICALISED PRIOR TO TRAINING TO SPEED UP
+    # PERFORMANCE
+    # RESTART BATCHES IN EVERY EPOCH
+    # TODO: REMOVE 'numericalize()' FUNCTION TO USE 
+    #       ITERATORS DIRECTLY
+    data_batches = torchtext.data.batch(data_iter.data(), data_iter.batch_size, data_iter.batch_size_fn)
+
+    start_time = time.time()
+    
+    with grad_ctx_manager:
+        for batch in data_batches:
+            batch_input_list = []
+            batch_target = []
+            largest_seq = 0
+            batch_size = len(batch)
+
+            while len(batch):
+                sample = batch.pop()
+
+                batch_input_list.append(treedict_to_tensor(sample.tree, device=device))
+                
+                proc_seq = [vocabulary.stoi['<sos>']] + sample.seq + [vocabulary.stoi['<eos>']]
+                if len(proc_seq) > largest_seq: largest_seq = len(proc_seq)
+                batch_target.append(proc_seq)
+                i += 1
+
+            # if there is more than one element in the batch input
+            # process the batch with the treelstm.util.batch_tree_input
+            # utility function, else return the single element
+            if len(batch_input_list) > 1:
+                batch_input = batch_tree_input(batch_input_list)
+            else:
+            #     # PREVIOUS IMPLEMENTATION, USED WITH TREE PREPROCESSING
+                batch_input = batch_input_list[0] 
+                # batch_input = treedict_to_tensor(sample.tree, device=device)
+
+            for seq in batch_target:
+                # PAD THE SEQUENCES IN THE BATCH SO ALL OF THEM
+                # HAVE THE SAME LENGTH
+                len_diff = largest_seq - len(seq)
+                seq.extend([vocabulary.stoi['<pad>']] * len_diff)
+
+            batch_target_tensor = torch.tensor(batch_target, device=device, dtype=torch.long).transpose(0, 1)
+            
+            if print_epoch and i == 1:
+                print_preds = True
+            else:
+                print_preds = False
+
+            checkpoint_sample = not i % math.ceil(len(data_iter) / 10)
+            if print_epoch and checkpoint_sample:
+                elapsed_time = time.time() - start_time
+                print(f'\nElapsed time after {i} samples: {elapsed_time}', flush=True)
+                mem_check(device, num=i) # MEM DEBUGGING
+            
+            output = model(batch_input, batch_target_tensor, print_preds=print_preds)
+            
+            ## seq2seq.py
+            # "as the loss function only works on 2d inputs
+            # with 1d targets we need to flatten each of them
+            # with .view"
+            # "we slice off the first column of the output
+            # and target tensors (<sos>)"
+            # print(f'\n\n ^^^^^^^^^^^^ \t PRE output.size() {output.size()}')
+            # TODO: SLICE OFF ALL <sos> TOKENS IN BATCH
+            # (REMOVE IXS RELATED TO batch_input['tree_sizes'])
+            
+            if batch_size == 1:
+                output = output.view(-1, vocab_size)[1:]#.view(-1)#, output_dim)
+                batch_target_tensor = batch_target_tensor.view(-1)[1:]
+            else:
+                output = output[1:].view(-1, vocab_size)
+                # RESHAPING FUNCTION:
+                # 1. REMOVE FIRST ROW OF ELEMENTS (<sos> TOKENS)
+                # 2. TRANSPOSE TO GET CONCATENATION OF SEQUENCES
+                # 3. FLATTEN INTO A SINGLE DIMENSION (.view(-1) DOES NOT WORK
+                #    DUE TO THE TENSOR BEING NON-CONTIGUOUS)
+                batch_target_tensor = batch_target_tensor[1:].T.reshape(-1)
+
+            loss = criterion(output, batch_target_tensor)
+            epoch_loss += loss.item()
+            
+            if phase == 'train':
+                loss.backward()
+                optimizer.step()
+            
+    return epoch_loss / i
 
 
 def train_augm_w2v(data_file, vocab_file, syns_file, model_file, checkpoints_folder, validation_file, embedding_size=300, epochs=10, batch_size=10, num_neg_samples=5, learning_rate=0.01, w2v_init=True, w2v_path=None, syn_augm=True, emb_npy_file=None, data_augmentation_ratio=.25):

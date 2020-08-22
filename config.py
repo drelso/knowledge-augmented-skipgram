@@ -30,7 +30,7 @@ parameters['split_ratio'] = .9
 
 # WORD2VEC VARIABLES
 parameters['embedding_size'] = 300
-parameters['epochs'] = 1 #10
+parameters['epochs'] = 10
 parameters['batch_size'] = 10
 parameters['ctx_size'] = 5
 parameters['num_neg_samples'] = 5
@@ -114,6 +114,12 @@ parameters['num_train_skipgram_syns_data'] = parameters['data_dir'] + num_skipgr
 parameters['num_val_skipgram_data'] = parameters['data_dir'] + num_skipgram_name + '_val.csv'
 parameters['num_val_skipgram_syns_data'] = parameters['data_dir'] + num_skipgram_syns_name + '_val.csv'
 
-bnc_counts = parameters['bnc_data_dir'] + 'counts_bnc_full_seqlist_deptree.csv'
-bnc_subset_counts = parameters['bnc_data_dir'] + 'counts_' + bnc_subset_data_name + '.csv'
+parameters['convert_to_npy'] = True
+parameters['num_train_skipgram_npy'] = parameters['data_dir'] + num_skipgram_name + '_train.npy'
+parameters['num_train_skipgram_syns_npy'] = parameters['data_dir'] + num_skipgram_syns_name + '_train.npy'
+parameters['num_val_skipgram_npy'] = parameters['data_dir'] + num_skipgram_name + '_val.npy'
+parameters['num_val_skipgram_syns_npy'] = parameters['data_dir'] + num_skipgram_syns_name + '_val.npy'
+
+bnc_counts = parameters['data_dir'] + 'counts_bnc_full_seqlist_deptree.csv'
+bnc_subset_counts = parameters['data_dir'] + 'counts_' + bnc_subset_data_name + '.csv'
 parameters['counts_file'] = bnc_subset_counts if parameters['use_data_subset'] else bnc_counts

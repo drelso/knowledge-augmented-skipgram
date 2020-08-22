@@ -5,11 +5,15 @@
 ###
 
 import os
+import sys
 import time
+import csv
+import random
+import numpy as np
 
 from config import parameters
-from utils.funcs import print_parameters, dir_validation
-from utils.training_utils import build_vocabulary, construct_dataset_splits
+from utils.funcs import print_parameters, dir_validation, memory_usage
+from utils.dataset_utils import csv_reader_check_header
 
 import torch
 import torch.nn as nn
@@ -17,10 +21,10 @@ import torch.optim as optim
 
 from skipgram.train import train_augm_w2v
 from skipgram.nn import SkipGram
-from skipgram.utils import init_sample_table, new_neg_sampling, save_param_to_npy
+from skipgram.utils import init_sample_table, new_neg_sampling, save_param_to_npy, process_word_pair_batch
 
-import torchtext
-from torchtext.data import Dataset, Field, Iterator, BucketIterator
+import gc
+
 
 
 if __name__ == '__main__':
@@ -33,180 +37,202 @@ if __name__ == '__main__':
     
     print_parameters(parameters)
     
-    # DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    DEVICE = torch.device('cpu') # TODO REMOVE THIS LINE, ONLY FOR DEBUGGING
+    DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"Running on device: {DEVICE}")
-    # if torch.cuda.is_available():
-    #     torch.set_default_tensor_type(torch.cuda.FloatTensor)
+    if torch.cuda.is_available():
+        torch.set_default_tensor_type(torch.cuda.FloatTensor)
 
-    ## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    ## VOCABULARY CONSTRUCTION AND DATASET NUMERICALISATION
-    ##
-    # CONSTRUCT VOCABULARY
-    vocabulary = build_vocabulary(parameters['bnc_counts'], min_freq=parameters['vocab_cutoff'])
-    # parameters['input_dim'] = len(vocabulary)
-    input_dim = len(vocabulary)
-
-    # ## ONLY NUMERICALISE THE DATA RIGHT IF NO EXISTING FILE IS FOUND
-    # if not os.path.exists(parameters['bnc_num_skipgram_data']):
-    #     print(f'No numericalised file found at {parameters["bnc_num_skipgram_data"]}, creating numericalised file from dataset at {parameters["bnc_skipgram_data"]}')
-    #     numericalise_dataset(parameters['bnc_skipgram_data'], parameters['bnc_num_skipgram_data'], vocabulary)
-    # else:
-    #     print(f'Numericalised file found at {parameters["bnc_num_skipgram_data"]}')
-    # ## NUMERICALISE AUGMENTED DATA
-    # if not os.path.exists(parameters['bnc_num_skipgram_augm_data']):
-    #     print(f'No numericalised file found at {parameters["bnc_num_skipgram_augm_data"]}, creating numericalised file from dataset at {parameters["bnc_skipgram_data"]}')
-    #     numericalise_dataset(parameters['bnc_skipgram_data'], parameters['bnc_num_skipgram_augm_data'], vocabulary)
-    # else:
-    #     print(f'Numericalised file found at {parameters["bnc_num_skipgram_augm_data"]}')
+    start_time = time.time()
     
-    ## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    ## MODEL AND TRAINING INITIALISATION
-    model = SkipGram(input_dim, parameters['embedding_size'], w2v_init=parameters['w2v_init'], w2v_path=parameters['w2v_path'])
-    
-    print(f'\n {"=" * 25} \n TRAINABLE PARAMETERS \n {"=" * 25} \n ')
-    for name, param in model.named_parameters():
-        print(name)
-        if param.requires_grad:
-            print('\t -> requires grad')
-        else:
-            print('\t -> NO grad')
-    
-    optimiser = optim.SGD(model.parameters(), lr=parameters['learning_rate'])
+    memory_usage(legend=0) # MEMORY DEBUGGING
 
-    print(f'vocabulary length: {len(vocabulary)} \t first word: {vocabulary.itos[0]}')
-    
-    ## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    ## LOAD AND SPLIT DATASET
-    # 'SAMPLE_bnc_full_seqlist_deptree_numeric_voc-1.json'
-    # train_data, test_data, val_data = construct_dataset_splits(parameters['num_data_save_path'], vocabulary, split_ratios=parameters['split_ratios'])
-    # train_data, val_data = construct_dataset_splits(parameters['bnc_skipgram_data'], vocabulary, split_ratio=parameters['split_ratio'])
-    
-    # print(f'\nFirst example train: {train_data.examples[0].focus_word} \t {train_data.examples[0].context_word}')
+    # MEMORY-MAPPED DATASET READING 
+    data        = np.load(parameters['num_train_skipgram_npy'], mmap_mode='r')
+    syns        = np.load(parameters['num_train_skipgram_syns_npy'], mmap_mode='r')
+    val_data    = np.load(parameters['num_val_skipgram_npy'], mmap_mode='r')
 
-    # train_iter, val_iter = Iterator(
-    #     (train_data, val_data),
-    #     # sort=False,
-    #     sort_key=lambda x: len(x.focus_word),
-    #     shuffle=True,
-    #     batch_size=(parameters['batch_size'], parameters['batch_size']),
-    #     device=DEVICE
-    # )
+    memory_usage(legend='Loading data (memmap)') # MEMORY DEBUGGING
 
-    # for epoch in range(parameters['epochs']):
-    #     for i, sample in enumerate(train_data):
-    #         print(sample)
-    #         print(sample.focus_word, sample.context_word)
-    #         if i > 4: break
+    num_data = data.shape[0]
+    num_syns = syns.shape[0]
+    num_val_data = val_data.shape[0]
+    print("Data dims:", data.shape)
+    print("Syns dims:", syns.shape)
+    print("Val:", val_data.shape)
 
-
-    '''
-    ## %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    ## BUILD DATA BATCHES
-    train_iter, val_iter = BucketIterator.splits(
-        (train_data, val_data),
-        batch_sizes=(parameters['batch_size'], parameters['batch_size']),
-        # device=parameters['device'],
-        device=DEVICE,
-        sort=parameters['sort_train_val_data'],
-        # sort_within_batch=True,
-        sort_key=lambda x: len(x.seq),
-        shuffle=parameters['shuffle_train_val_data'],
-        repeat=parameters['repeat_train_val_iter']
-    )
-
-    test_iter = Iterator(
-        test_data,
-        batch_size=parameters['batch_size'],
-        # device=parameters['device'],
-        device=DEVICE,
-        repeat=parameters['repeat_train_val_iter']
-    )
-    
-    for epoch in range(parameters['num_epochs']):
-        print(f'\n\n &&&&&&&&&&&&& \n ############# \n \t\t\t EPOCH ======> {epoch} \n &&&&&&&&&&&&& \n ############# \n\n')
-
-        print_epoch = not epoch % math.ceil(parameters['num_epochs'] / 10)
+    with open(parameters['counts_file'], 'r', encoding='utf-8', errors='replace') as v:
+        vocab_reader    = csv_reader_check_header(v)
         
-        epoch_start_time = time.time()
+        vocabulary = [w for w in vocab_reader]
+    vocab_words = [w[0] for w in vocabulary]
+    vocab_counts = [int(w[1]) for w in vocabulary]
+    
+    memory_usage(legend='Reading vocabulary') # MEMORY DEBUGGING
 
-        # print(f'{"-" *30} \n MEMORY STATS EPOCH {epoch} **PRE RUN** \n {"-" *30} \n ')
-        # memory_stats(device=DEVICE)
+    # Calculate the vocabulary ratios
+    # Elevate counts to the 3/4th power
+    pow_counts = np.array(vocab_counts)**0.75
+    normaliser = sum(pow_counts)
+    # Normalise the counts
+    vocab_ratios = pow_counts / normaliser
+    
+    memory_usage(legend='Vocab counts and ratios') # MEMORY DEBUGGING
 
-        print(f'\n Epoch {epoch} training... \n')
-        epoch_loss = run_model(train_iter, model, optimizer, criterion, vocabulary, device=DEVICE, phase='train', print_epoch=print_epoch)
+    sample_table = init_sample_table(vocab_counts)
+    memory_usage(legend='Sample table') # MEMORY DEBUGGING
+    
+    print('Size of sample table: ', sample_table.size)
+    print('Total distinct words: ', len(vocabulary))
+    print('Samples from vocab: ', vocabulary[:5])
+
+    # SYNONYM SWITCH LIST: BOOLEAN LIST TO RANDOMLY DETERMINE
+    # WHEN TO PROCESS SYNONYMS AND WHEN TO PROCESS NATURAL
+    # WORD PAIRS
+    # Rough ratio of "natural" vs. augmented examples
+    # Current dataset sizes:
+    #   2.2G num_voc-5_skipgram_bnc_full_proc_data_shffl_sub-5_train.csv
+    #   278,999,805 word pairs (69.715% of the combined dataset)
+    #   970M num_voc-5_syns-sw_sampled_skipgram_bnc_full_proc_data_shffl_sub-5_train.csv
+    #   112,200,002 word pairs (30.285% of the combined dataset)
+    natural_data_ratio = 1 - parameters['data_augmentation_ratio']
+
+    augmented_dataset_size = int(num_data + (num_data * parameters['data_augmentation_ratio']))
+    augmentation_selector = np.random.choice([True,False], augmented_dataset_size, p=[parameters['data_augmentation_ratio'], natural_data_ratio])
+    memory_usage(legend=5) # MEMORY DEBUGGING
+    
+    FOCUS_COL = 0
+    CONTEXT_COL = 1
+
+    ix_data = 0
+    ix_syn = 0
+    batch = []
+    focus_ixs = []
+    context_ixs = []
+
+    model = SkipGram(len(vocabulary), parameters['embedding_size'], w2v_init=parameters['w2v_init'], w2v_path=parameters['w2v_path'])    
+    if DEVICE == torch.device('cuda'):
+        model.cuda()
         
-        checkpoints_file = parameters['checkpoints_path'] + '_epoch' + str(epoch) + '-chkpt.tar'
-        print('Saving checkpoint file: %r \n' % (checkpoints_file))
-        
-        # print(f'{"-" *30} \n MEMORY STATS EPOCH {epoch} **PRE SAVE** \n {"-" *30} \n ')
-        # memory_stats(device=DEVICE)
+    optimiser = optim.SGD(model.parameters(),lr=parameters['learning_rate'])
+    
+    losses = []
+    val_losses = []
+    times = []
 
+    for epoch in range(parameters['epochs']):
+        print(f'\n {"#" * 24} \n \t\t EPOCH NUMBER {epoch} \n {"#" * 24}')
+
+        # RE-CALCULATE AT THE BEGINNING OF EACH EPOCH
+        data_ixs = np.random.choice(num_data, num_data, replace=False)
+        memory_usage(legend='data ixs') # MEMORY DEBUGGING
+        syns_ixs = np.random.choice(num_syns, num_syns, replace=False)
+        memory_usage(legend='syns ixs') # MEMORY DEBUGGING
+        val_data_ixs = np.random.choice(num_val_data, num_val_data, replace=False)
+        memory_usage(legend='val ixs') # MEMORY DEBUGGING
+        
+        ## TRAINING PHASE
+        print('Training...')
+        model.train()
+        num_batches = 0
+        batches_loss = 0.
+        for select_syn in augmentation_selector:
+            if select_syn:
+                datapoint = syns[syns_ixs[ix_syn]]
+                # RESTART THE INDEX IF DATASET IS EXHAUSTED
+                ix_syn = ix_syn + 1 if ix_syn < num_syns else 0
+            else:
+                datapoint = data[data_ixs[ix_data]]
+                # RESTART THE INDEX IF DATASET IS EXHAUSTED
+                ix_data = ix_data + 1 if ix_data < num_data else 0
+            
+            focus_ixs.append(datapoint[FOCUS_COL])
+            context_ixs.append(datapoint[CONTEXT_COL])
+            
+            if len(focus_ixs) == parameters['batch_size']:
+                batches_loss += process_word_pair_batch(focus_ixs, context_ixs, model, optimiser, sample_table, parameters['num_neg_samples'], parameters['batch_size'], phase='train')
+                
+                num_batches += 1
+                focus_ixs = []
+                context_ixs = []
+
+                if ix_syn > 10: break # REMOVE
+        epoch_loss = batches_loss / num_batches
+        losses.append(epoch_loss)
+        
+        memory_usage(legend='After training') # MEMORY DEBUGGING
+
+        ## VALIDATION PHASE
+        print('Validation...')
+        model.eval()
+        num_batches = 0
+        batches_loss = 0.
+        with torch.no_grad():
+            i_break = 0 # REMOVE
+            for ix in val_data_ixs:
+                i_break += 1
+                datapoint = val_data[ix]
+                
+                focus_ixs.append(datapoint[FOCUS_COL])
+                context_ixs.append(datapoint[CONTEXT_COL])
+                
+                if len(focus_ixs) == parameters['batch_size']:
+                    batches_loss += process_word_pair_batch(focus_ixs, context_ixs, model, optimiser, sample_table, parameters['num_neg_samples'], parameters['batch_size'], phase='validate')
+
+                    num_batches += 1
+                    focus_ixs = []
+                    context_ixs = []
+                if i_break > 10: break # REMOVE
+        val_loss = batches_loss / num_batches
+        val_losses.append(val_loss)
+        print(f'\n {">" * 16} \t EPOCH LOSS: {epoch_loss} \t VAL LOSS: {val_loss} {"<" * 16} \n')
+        
+        memory_usage(legend='After validation') # MEMORY DEBUGGING
+        
+        # FREE-UP SOME MEMORY
+        memory_usage(legend='before freeing memory') # MEMORY DEBUGGING
+        del data_ixs
+        del syns_ixs
+        del val_data_ixs
+        gc.collect()
+        memory_usage(legend='after freeing memory') # MEMORY DEBUGGING
+
+        elapsed_time = time.time() - start_time
+        times.append(elapsed_time)
+        print(f'Elapsed time after epoch {epoch}: {elapsed_time}', flush=True)
+
+        # SAVING A CHECKPOINT
+        checkpoints_file = parameters['checkpoints_dir'] + str(epoch) + '-epoch-chkpt.tar'
+        print(f'Saving checkpoint file: {checkpoints_file} \n')
+        
         torch.save({
                 'epoch': epoch,
                 'model_state_dict': model.state_dict(),
-                'optimizer_state_dict': optimizer.state_dict(),
-                'loss': epoch_loss
+                'optimizer_state_dict': optimiser.state_dict(),
+                'loss': epoch_loss,
+                'val_loss': val_loss
                 }, checkpoints_file)
-        
-        # print(f'{"-" *30} \n MEMORY STATS EPOCH {epoch} **POST TRAIN** \n {"-" *30} \n ')
-        # memory_stats(device=DEVICE)
 
-        print(f'\n Epoch {epoch} validation... \n')
-        val_epoch_loss = run_model(val_iter, model, optimizer, criterion, vocabulary, device=DEVICE, phase='val', print_epoch=print_epoch)
-
-        # print(f'{"-" *30} \n MEMORY STATS EPOCH {epoch} **POST VAL** \n {"-" *30} \n ')
-        # memory_stats(device=DEVICE)
-
-        if print_epoch:
-            elapsed_time = time.time() - epoch_start_time
-            print(f'Elapsed time in epoch {epoch}: {elapsed_time}' )
-            print(f'Iteration {epoch} \t Loss: {epoch_loss} \t Validation loss: {val_epoch_loss}')
-    
-    print('\n\nSaving model to ', parameters['model_path'] )
+        memory_usage(legend='After saving checkpoint') # MEMORY DEBUGGING
+      
+    print(f'\n\nSaving model to {parameters["model_file"]}')
     # A common PyTorch convention is to save models using
     # either a .pt or .pth file extension.
-    torch.save(model.state_dict(), parameters['model_path'] )
-    #model.load_state_dict(torch.load(parameters['model_path'] ))
-
-    param_name = 'encoder.word_embedding'
-    save_param_to_npy(model, param_name, parameters['word_embs_path'])
+    torch.save(model.state_dict(), parameters['model_file'])
+    #model.load_state_dict(torch.load(parameters['model_file']))
     
-    '''
-
-
-    elapsed_time = time.time() - start_time
-    print(f'{"=" * 20} \n\t Total elapsed time: {elapsed_time} \n {"=" * 20} \n')
-
-
-
-
-
-
-
-
-
-
-
-
-    '''
-    train_augm_w2v( parameters['dataset_file'],
-                    parameters['vocab_file'], 
-                    parameters['syn_file'], 
-                    parameters['model_file'], 
-                    parameters['checkpoints_folder'], 
-                    parameters['validation_file'], 
-                    embedding_size=parameters['embedding_size'], 
-                    epochs=parameters['epochs'],
-                    batch_size=parameters['batch_size'], 
-                    num_neg_samples=parameters['num_neg_samples', 
-                    learning_rate=parameters['learning_rate'], 
-                    w2v_init=parameters['w2v_init'], 
-                    w2v_path=parameters['w2v_path'], 
-                    syn_augm=parameters['syn_augm'], 
-                    emb_npy_file=parameters['input_emb_file'], 
-                    data_augmentation_ratio=parameters['data_augmentation_ratio'])
+    if parameters['input_emb_file'] is not None:
+        # Save input embeddings to a NPY file
+        param_name = 'i_embedding'
+        save_param_to_npy(model, param_name, parameters['input_emb_file'])
+    avg_time = np.mean(times)
+    
+    print('Train losses:')
+    print(losses)
+    
+    print('Validation losses:')
+    print(val_losses)
+    
+    print('Average run time per epoch: ', avg_time)
 
     elapsed_time = time.time() - start_time
-    print('\nTotal elapsed time: ', elapsed_time)
-    '''
+    print(f' {"=" * 40} \n\t Total elapsed time: {elapsed_time} \n {"=" * 40} \n')

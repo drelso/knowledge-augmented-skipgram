@@ -17,7 +17,9 @@ import numpy as np
 
 from nltk.corpus import wordnet as wn
 
-from .funcs import sample_files, process_gutenberg_data, lightweight_dataset, lt_to_npy
+import torchtext
+
+from .funcs import sample_files, process_gutenberg_data, lightweight_dataset
 
 
 def shuffle_and_subset_dataset(data_path, tags_path, subset_data_path, subset_tags_path, data_size=0.5):
@@ -99,6 +101,50 @@ def shuffle_and_subset_dataset(data_path, tags_path, subset_data_path, subset_ta
         print(f'POS tags at line {random_ix}: \n {verification_tags}')
 
 
+def build_vocabulary(counts_file, min_freq=1):
+    ''''
+    Builds a torchtext.vocab object from a CSV file of word
+    counts and an optionally specified frequency threshold
+
+    Requirements
+    ------------
+    import csv
+    from collections import Counter
+    import torchtext
+    
+    Parameters
+    ----------
+    counts_file : str
+        path to counts CSV file
+    min_freq : int, optional
+        frequency threshold, words with counts lower
+        than this will not be included in the vocabulary
+        (default: 1)
+    
+    Returns
+    -------
+    torchtext.vocab.Vocab
+        torchtext Vocab object
+    '''
+    counts_dict = {}
+
+    print(f'Constructing vocabulary from counts file in {counts_file}')
+
+    with open(counts_file, 'r', encoding='utf-8') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            # FIRST COLUMN IS ASSUMED TO BE THE WORD AND
+            # THE SECOND COLUMN IS ASSUMED TO BE THE COUNT
+            counts_dict[row[0]] = int(row[1])
+
+    counts = Counter(counts_dict)
+    del counts_dict
+    
+    vocabulary = torchtext.vocab.Vocab(counts, min_freq=min_freq, specials=['<unk>', '<sos>', '<eos>', '<pad>'])
+    print(f'{len(vocabulary)} unique tokens in vocabulary with (with minimum frequency {min_freq})')
+    
+    return vocabulary
+
 
 def numericalise_dataset(data_path, save_path, vocabulary, write_batch=100000, has_header=True):
     '''
@@ -164,6 +210,73 @@ def numericalise_dataset(data_path, save_path, vocabulary, write_batch=100000, h
         
         print(f'Finished writing file: {i} lines')
 
+
+
+def csv_reader_check_header(file_pointer):
+    """
+    Check whether a CSV file has a header,
+    if it does skip it
+    NOTE: Assumes second column of CSV is
+    always numeric except for the header row
+
+    Requirements
+    ------------
+    import csv
+
+    Parameters
+    ----------
+    file_pointer : file object
+        open CSV file to read
+
+    Returns
+    -------
+    reader : csv.reader object
+    """
+
+    reader = csv.reader(file_pointer)
+    header = next(reader)
+    try:
+        int(header[1])
+    except:
+        print(f'File has header, skipping: {header}')
+    else:
+        file_pointer.seek(0)
+    
+    return reader
+
+
+def numeric_csv_to_npy(source_file, save_file):
+    """
+    Translate numericalised CSV dataset format
+    to NPY format.
+    
+    NOTE: this function loads the full source
+    file to memory, which might be problematic
+    for larger files
+    
+    Requirements
+    ------------
+    import numpy as np
+    import csv
+    csv_reader_check_header (local function) 
+    
+    Parameters
+    ----------
+    source_file : str
+        filepath to the source file, assumed
+        to be a CSV file with two columns (no
+        header) containing word indices (ints)
+    save_file : str
+        filepath to write the npy file to
+    """
+    with open(source_file, 'r') as f:
+        # data = csv.reader(f)
+        data = csv_reader_check_header(f)
+        i = 0
+        rows = []
+        for row in data:
+            rows.append([int(row[0]), int(row[1])])
+        np.save(save_file, rows)
 
 
 def train_validate_split(clean_data_file, train_savefile, val_savefile, tags_data_file=None, train_tags_savefile=None, val_tags_savefile=None, proportion=0.85):

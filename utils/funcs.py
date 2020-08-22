@@ -8,13 +8,16 @@
 Required imports
 """
 import re # doc_stats / gutenberg_spacing / process_data / dataset_sampling
-import csv # build_vocabulary / word_ID / word_zipf_distribution / dataset_sampling / select_synonyms / lightweight_dataset / lt_to_npy
+import csv # build_vocabulary / word_ID / word_zipf_distribution / dataset_sampling / select_synonyms / lightweight_dataset 
 from scipy import special # word_zipf_distribution / 
-import numpy as np # word_zipf_distribution / select_synonyms / lt_to_npy / save_param_to_npy
+import numpy as np # word_zipf_distribution / select_synonyms / save_param_to_npy
 from os import listdir # sample_files
 import os.path # process_data
 from random import choices # sample_files
 import random # dataset_sampling / select_synonyms
+
+import os
+import psutil
 
 import spacy # doc_stats / process_data
 from nltk import pos_tag # process_data
@@ -620,6 +623,26 @@ def get_word_knowledge(word, verbose=False):
     return frames, synsets
 
 
+def memory_usage(legend='Memory usage'):
+    '''
+    Prints present CPU memory usage in percentage
+
+    Requirements
+    ------------
+    import os
+    import psutil
+
+    Parameters
+    ----------
+    legend : str, optional
+        legend to print with the usage information
+    '''
+    process = psutil.Process(os.getpid())
+    print(f'\n{"=" * 16} {legend} {"=" * 16}')
+    print(process.memory_percent())
+    print(f'{"=" * 16} {legend} {"=" * 16}\n')
+
+
 def lightweight_dataset(data_file, vocab_file, save_file):
     """
     Transforms the current SkipGram CSV
@@ -688,37 +711,6 @@ def lightweight_dataset(data_file, vocab_file, save_file):
                 continue
         
         print('Processed %d word pairs. Missing %d pairs (not in vocabulary)' % (num_word_pairs, missing_word_pairs))
-
-def lt_to_npy(source_file, save_file):
-    """
-    Translate lightweight dataset format
-    to NPY format.
-    
-    NOTE: this function loads the full source
-    file to memory, which might be problematic
-    for larger files
-    
-    Requirements
-    ------------
-    import numpy as np
-    import csv
-    
-    Parameters
-    ----------
-    source_file : str
-        filepath to the source file, assumed
-        to be a CSV file with two columns (no
-        header) containing word indices (ints)
-    save_file : str
-        filepath to write the npy file to
-    """
-    with open(source_file, 'r') as f:
-        data = csv.reader(f)
-        i = 0
-        rows = []
-        for row in data:
-            rows.append([int(row[0]), int(row[1])])
-        np.save(save_file, rows)
 
 
 def save_param_to_npy(model, param_name, path):
