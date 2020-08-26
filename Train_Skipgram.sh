@@ -28,16 +28,16 @@ cd $TMPDIR
 echo 'JOB DETAILS:'
 echo '$PATH:'
 echo $PATH
-echo 'Available compilers'
-module avail compilers
+# echo 'Available compilers'
+# module avail compilers
 echo '$HOME'
 echo $HOME
 #export PYTHONPATH=/home/uczcdra/python_src/Python-3.7.4
 #export PATH=/home/uczcdra/python_src/Python-3.7.4:$PATH
-export PYTHONPATH=$HOME/python_src/bin
-export PATH=$HOME/python_src/bin:$PATH
+export PYTHONPATH=$HOME/Scratch/knowledge-augmented-skipgram/myriad_venv/bin/
+export PATH=$HOME/Scratch/knowledge-augmented-skipgram/myriad_venv/bin:$PATH
 #source $HOME/sculpting-word-embeddings/envs/skipgram_syns_env/bin/activate
-source "$HOME/Scratch/knowledge-augmented-skipgram/venv/skipgram_syns_env_Scratch/bin/activate" --always-copy
+source "$HOME/Scratch/knowledge-augmented-skipgram/myriad_venv/bin/activate" --always-copy
 #!/usr/bin/env python3
 /usr/bin/time --verbose python3 $HOME/Scratch/knowledge-augmented-skipgram/train_skipgram.py # this prints the usage of the program
 # 10. Preferably, tar-up (archive) all output files onto the shared scratch area

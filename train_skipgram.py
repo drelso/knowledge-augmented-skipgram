@@ -93,12 +93,6 @@ if __name__ == '__main__':
     FOCUS_COL = 0
     CONTEXT_COL = 1
 
-    ix_data = 0
-    ix_syn = 0
-    batch = []
-    focus_ixs = []
-    context_ixs = []
-
     model = SkipGram(len(vocabulary), parameters['embedding_size'], w2v_init=parameters['w2v_init'], w2v_path=parameters['w2v_path'])    
     if DEVICE == torch.device('cuda'):
         model.cuda()
@@ -112,6 +106,12 @@ if __name__ == '__main__':
     for epoch in range(parameters['epochs']):
         print(f'\n {"#" * 24} \n \t\t EPOCH NUMBER {epoch} \n {"#" * 24}')
 
+        ix_data = 0
+        ix_syn = 0
+        batch = []
+        focus_ixs = []
+        context_ixs = []
+        
         # RE-CALCULATE AT THE BEGINNING OF EACH EPOCH
         data_ixs = np.random.choice(num_data, num_data, replace=False)
         syns_ixs = np.random.choice(num_syns, num_syns, replace=False)
@@ -126,17 +126,17 @@ if __name__ == '__main__':
             if select_syn:
                 datapoint = syns[syns_ixs[ix_syn]]
                 # RESTART THE INDEX IF DATASET IS EXHAUSTED
-                ix_syn = ix_syn + 1 if ix_syn < num_syns else 0
+                ix_syn = ix_syn + 1 if ix_syn < num_syns-1 else 0
             else:
                 datapoint = data[data_ixs[ix_data]]
                 # RESTART THE INDEX IF DATASET IS EXHAUSTED
-                ix_data = ix_data + 1 if ix_data < num_data else 0
+                ix_data = ix_data + 1 if ix_data < num_data-1 else 0
             
             focus_ixs.append(datapoint[FOCUS_COL])
             context_ixs.append(datapoint[CONTEXT_COL])
             
             if not i % int(augmented_dataset_size / 5):
-                print(f'{i}/{augmented_dataset_size} lines processed')
+                print(f'{i}/{augmented_dataset_size} lines processed', flush=True)
 
             if len(focus_ixs) == parameters['batch_size']:
                 batches_loss += process_word_pair_batch(focus_ixs, context_ixs, model, optimiser, sample_table, parameters['num_neg_samples'], parameters['batch_size'], phase='train')
@@ -160,7 +160,7 @@ if __name__ == '__main__':
                 context_ixs.append(datapoint[CONTEXT_COL])
                 
                 if not i % int(num_val_data / 5):
-                    print(f'{i}/{num_val_data} lines processed')
+                    print(f'{i}/{num_val_data} lines processed', flush=True)
                 
                 if len(focus_ixs) == parameters['batch_size']:
                     batches_loss += process_word_pair_batch(focus_ixs, context_ixs, model, optimiser, sample_table, parameters['num_neg_samples'], parameters['batch_size'], phase='validate')

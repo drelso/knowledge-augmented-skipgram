@@ -747,7 +747,6 @@ def dummy_context_mgr():
     yield None
 
 def process_bnc_data(raw_data_file, dataset_file, tags_file=None, augm_dataset_file=None, ctx_size=5, write_batch=10000):
-    
     """
     ADAPTED FOR THE BNC DATASET
     
