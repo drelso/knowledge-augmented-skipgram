@@ -31,7 +31,7 @@ parameters['split_ratio'] = .9
 # WORD2VEC VARIABLES
 parameters['embedding_size'] = 300
 parameters['epochs'] = 10
-parameters['batch_size'] = 10
+parameters['batch_size'] = 20
 parameters['ctx_size'] = 5
 parameters['num_neg_samples'] = 5
 parameters['learning_rate'] = 0.01
@@ -48,6 +48,10 @@ parameters['model_dir'] = parameters['all_models_dir'] + parameters['model_name'
 parameters['model_file'] =  os.path.abspath(parameters['model_dir'] + parameters['model_name'] + '.pth')
 parameters['checkpoints_dir'] =  os.path.abspath(parameters['model_dir'] + 'checkpoints/')
 parameters['input_emb_file'] =  os.path.abspath(parameters['model_dir'] + parameters['model_name'])
+
+# LOAD MODEL PATH
+# parameters['load_model'] = parameters['all_models_dir'] + '20200825_' + parameters['model_name'] + '/checkpoints/0-epoch-chkpt.tar'
+parameters['load_model'] = False
 
 # GUTENBERG PARAMETERS
 # parameters['gutenberg_dir'] = parameters['data_dir'] + 'Gutenberg/'

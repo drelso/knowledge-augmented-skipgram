@@ -1,0 +1,76 @@
+nohup: ignoring input
+
+=================== MODEL PARAMETERS: =================== 
+
+general_data_dir:                /home/diegor/data/
+data_dir:                        data/
+word_embeddings_dir:             /home/diegor/data/word_embeddings/
+vocab_cutoff:                    5
+w2v_path:                        None
+data_augmentation_ratio:         0.25
+w2v_init:                        False
+syn_augm:                        True
+split_ratio:                     0.9
+embedding_size:                  300
+epochs:                          10
+batch_size:                      20
+ctx_size:                        5
+num_neg_samples:                 5
+learning_rate:                   0.01
+model_name:                      rand_init-syns-25r-10e-voc5-emb300
+all_models_dir:                  model/
+model_dir:                       model/rand_init-syns-25r-10e-voc5-emb300/
+model_file:                      /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/rand_init-syns-25r-10e-voc5-emb300.pth
+checkpoints_dir:                 /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/checkpoints/
+input_emb_file:                  /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/rand_init-syns-25r-10e-voc5-emb300
+load_model:                      model/20200825_rand_init-syns-25r-10e-voc5-emb300/checkpoints/0-epoch-chkpt.tar
+bnc_data_dir:                    /home/diegor/data/British_National_Corpus/bnc_full_processed_data/
+bnc_data:                        /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data.txt
+bnc_tags:                        /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_tags.txt
+use_data_subset:                 True
+data_subset_size:                0.5
+bnc_subset_data:                 /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_shffl_sub-5.txt
+bnc_subset_tags:                 /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_shffl_sub-5_tags.txt
+train_data:                      data/bnc_full_proc_data_shffl_sub-5_train.txt
+train_tags:                      data/bnc_full_proc_data_shffl_sub-5_train_tags.txt
+val_data:                        data/bnc_full_proc_data_shffl_sub-5_val.txt
+val_tags:                        data/bnc_full_proc_data_shffl_sub-5_val_tags.txt
+train_skipgram_data:             data/skipgram_bnc_full_proc_data_shffl_sub-5_train.csv
+train_skipgram_augm_data:        data/skipgram_augm_bnc_full_proc_data_shffl_sub-5_train.csv
+val_skipgram_data:               data/skipgram_bnc_full_proc_data_shffl_sub-5_val.csv
+val_skipgram_augm_data:          data/skipgram_augm_bnc_full_proc_data_shffl_sub-5_val.csv
+train_skipgram_sampled_data:     data/sampled_skipgram_bnc_full_proc_data_shffl_sub-5_train.csv
+train_skipgram_augm_sampled_data:  data/sampled_skipgram_augm_bnc_full_proc_data_shffl_sub-5_train.csv
+val_skipgram_sampled_data:       data/sampled_skipgram_bnc_full_proc_data_shffl_sub-5_val.csv
+val_skipgram_augm_sampled_data:  data/sampled_skipgram_augm_bnc_full_proc_data_shffl_sub-5_val.csv
+synonym_selection:               sw
+train_skipgram_syns_data:        data/syns-sw_sampled_skipgram_bnc_full_proc_data_shffl_sub-5_train.csv
+val_skipgram_syns_data:          data/syns-sw_sampled_skipgram_bnc_full_proc_data_shffl_sub-5_val.csv
+num_train_skipgram_data:         data/num_voc-5_skipgram_bnc_full_proc_data_shffl_sub-5_train.csv
+num_train_skipgram_syns_data:    data/num_voc-5_syns-sw_sampled_skipgram_bnc_full_proc_data_shffl_sub-5_train.csv
+num_val_skipgram_data:           data/num_voc-5_skipgram_bnc_full_proc_data_shffl_sub-5_val.csv
+num_val_skipgram_syns_data:      data/num_voc-5_syns-sw_sampled_skipgram_bnc_full_proc_data_shffl_sub-5_val.csv
+convert_to_npy:                  True
+num_train_skipgram_npy:          data/num_voc-5_skipgram_bnc_full_proc_data_shffl_sub-5_train.npy
+num_train_skipgram_syns_npy:     data/num_voc-5_syns-sw_sampled_skipgram_bnc_full_proc_data_shffl_sub-5_train.npy
+num_val_skipgram_npy:            data/num_voc-5_skipgram_bnc_full_proc_data_shffl_sub-5_val.npy
+num_val_skipgram_syns_npy:       data/num_voc-5_syns-sw_sampled_skipgram_bnc_full_proc_data_shffl_sub-5_val.npy
+counts_file:                     data/counts_bnc_full_proc_data_shffl_sub-5.csv
+
+=================== / MODEL PARAMETERS: =================== 
+
+Running on device: cuda
+Data dims: (112200001, 2)
+Syns dims: (112200001, 2)
+Val: (29799980, 2)
+Size of sample table:  100037543
+Total distinct words:  373561
+Samples from vocab:  [['she', '161260', '0.004309139702410695'], ['prefers', '193', '5.157286137698524e-06'], ['to', '990207', '0.02646000432410385'], ['remain', '3361', '8.98115995274857e-05'], ['in', '738390', '0.01973102855551924']]
+Loading checkpoint file from: model/20200825_rand_init-syns-25r-10e-voc5-emb300/checkpoints/0-epoch-chkpt.tar 
+
+
+ ######################## 
+ 		 EPOCH NUMBER 0 
+ ########################
+Training (140250001 word pairs)...
+0/140250001 lines processed

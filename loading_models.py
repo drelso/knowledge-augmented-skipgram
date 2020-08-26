@@ -13,7 +13,7 @@ import numpy as np
 
 from config import parameters
 from utils.funcs import print_parameters, dir_validation, memory_usage
-from utils.dataset_utils import build_vocabulary, csv_reader_check_header
+from utils.dataset_utils import csv_reader_check_header
 
 import torch
 import torch.nn as nn
@@ -42,7 +42,7 @@ if __name__ == '__main__':
     if torch.cuda.is_available():
         torch.set_default_tensor_type(torch.cuda.FloatTensor)
     
-    # MEMORY-MAPPED DATASET READING 
+    # MEMORY-MAPPED DATASET READING
     data        = np.load(parameters['num_train_skipgram_npy'], mmap_mode='r')
     syns        = np.load(parameters['num_train_skipgram_syns_npy'], mmap_mode='r')
     val_data    = np.load(parameters['num_val_skipgram_npy'], mmap_mode='r')
@@ -53,17 +53,13 @@ if __name__ == '__main__':
     print("Data dims:", data.shape)
     print("Syns dims:", syns.shape)
     print("Val:", val_data.shape)
-    
-    VOCABULARY = build_vocabulary(parameters['counts_file'], min_freq=parameters['vocab_cutoff'])
-    print(f'Constructed vocabulary with {len(VOCABULARY)} distinct tokens from file at {parameters["counts_file"]}')
 
-    vocab_words = VOCABULARY.itos
-    print('vocab_words[:10]:', vocab_words[:10])
-    
-    vocab_counts = [VOCABULARY.freqs[w] for w in vocab_words]
-    print('vocab_counts:', vocab_counts[:10])
-
-    print(f'checking frequencies: freqs["and"] ---> {VOCABULARY.freqs["and"]} == {vocab_counts[vocab_words.index("and")]}')
+    with open(parameters['counts_file'], 'r', encoding='utf-8', errors='replace') as v:
+        vocab_reader    = csv_reader_check_header(v)
+        
+        vocabulary = [w for w in vocab_reader]
+    vocab_words = [w[0] for w in vocabulary]
+    vocab_counts = [int(w[1]) for w in vocabulary]
 
     # Calculate the vocabulary ratios
     # Elevate counts to the 3/4th power
@@ -76,6 +72,7 @@ if __name__ == '__main__':
     
     print('Size of sample table: ', sample_table.size)
     print('Total distinct words: ', len(vocabulary))
+    print('Samples from vocab: ', vocabulary[:5])
 
     # SYNONYM SWITCH LIST: BOOLEAN LIST TO RANDOMLY DETERMINE
     # WHEN TO PROCESS SYNONYMS AND WHEN TO PROCESS NATURAL
@@ -100,24 +97,35 @@ if __name__ == '__main__':
         
     optimiser = optim.SGD(model.parameters(),lr=parameters['learning_rate'])
     
-    ## LOADING MODELS
     if parameters['load_model']:
+        ## LOADING MODELS
+
         if parameters['load_model'].find('checkpoints') > -1:
             # LOAD CHECKPOINT
-            print(f'Loading checkpoint file from: {parameters["load_model"]} \n')
+            print(f'Loading checkpoint file from: {parameters['load_model']} \n')
             checkpoint = torch.load(parameters['load_model'])
             model_sd = checkpoint['model_state_dict']
             # optim_sd = checkpoint['optimizer_state_dict']
         else:
-            print(f'Loading model file from: {parameters["load_model"]} \n')
+            print(f'Loading model file from: {parameters['load_model']} \n')
             model_sd = torch.load(parameters['model_file'])
 
         model.load_state_dict(model_sd)
+        # torch.save({
+        #             'epoch': epoch,
+        #             'model_state_dict': model.state_dict(),
+        #             'optimizer_state_dict': optimiser.state_dict(),
+        #             'loss': epoch_loss,
+        #             'val_loss': val_loss
+        #             }, checkpoints_file)
+        
+        # model.load_state_dict(torch.load(parameters['model_file']))
 
     losses = []
     val_losses = []
     times = []
 
+    '''
     for epoch in range(parameters['epochs']):
         print(f'\n {"#" * 24} \n \t\t EPOCH NUMBER {epoch} \n {"#" * 24}')
 
@@ -228,6 +236,7 @@ if __name__ == '__main__':
     print(val_losses)
     
     print('Average run time per epoch: ', avg_time)
+    '''
 
     elapsed_time = time.time() - start_time
     print(f' {"=" * 40} \n\t Total elapsed time: {elapsed_time} \n {"=" * 40} \n')
