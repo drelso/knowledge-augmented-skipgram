@@ -17,7 +17,7 @@
 # write to $HOME.
 # Replace "<your_UCL_id>" with your UCL user ID :)
 #$ -wd /home/uczcdra/Scratch/knowledge-augmented-skipgram
-# 7. Your work *must* be done in $TMPDIR 
+# 7. Your work *must* be done in $TMPDIR
 cd $TMPDIR
 # 8. load the cuda module (in case you are running a CUDA program
 module unload compilers mpi
@@ -31,7 +31,7 @@ echo 'JOB DETAILS:'
 echo '$PATH:'
 echo $PATH
 # echo 'Available compilers'
-echo module avail compilers
+module avail compilers
 echo '$HOME'
 echo $HOME
 #export PYTHONPATH=/home/uczcdra/python_src/Python-3.7.4

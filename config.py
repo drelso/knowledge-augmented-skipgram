@@ -7,12 +7,13 @@ import os
 from pathlib import Path
 
 home = str(Path.home())
+root_dir = home + '/Scratch/knowledge-augmented-skipgram/'
 
 parameters = {}
 
 parameters['general_data_dir'] = home + '/data/'
-parameters['data_dir'] = 'data/'
-parameters['word_embeddings_dir'] = parameters['general_data_dir'] + 'word_embeddings/'
+parameters['data_dir'] = os.path.abspath(root_dir + 'data/') + '/'
+parameters['word_embeddings_dir'] = os.path.abspath(parameters['general_data_dir'] + 'word_embeddings/') + '/'
 
 parameters['vocab_cutoff'] = 5
 
@@ -43,11 +44,11 @@ parameters['model_name'] =  ('w2v_init' if parameters['w2v_init'] else 'rand_ini
                             'voc' + str(parameters['vocab_cutoff']) + \
                             '-emb' + str(parameters['embedding_size'])
 
-parameters['all_models_dir'] = 'model/'
+parameters['all_models_dir'] = os.path.abspath(root_dir + 'model/')
 parameters['model_dir'] = parameters['all_models_dir'] + parameters['model_name'] + '/'
-parameters['model_file'] =  os.path.abspath(parameters['model_dir'] + parameters['model_name'] + '.pth')
-parameters['checkpoints_dir'] =  os.path.abspath(parameters['model_dir'] + 'checkpoints/')
-parameters['input_emb_file'] =  os.path.abspath(parameters['model_dir'] + parameters['model_name'])
+parameters['model_file'] =  parameters['model_dir'] + parameters['model_name'] + '.pth'
+parameters['checkpoints_dir'] =  parameters['model_dir'] + 'checkpoints/'
+parameters['input_emb_file'] =  parameters['model_dir'] + parameters['model_name']
 
 # LOAD MODEL PATH
 # parameters['load_model'] = parameters['all_models_dir'] + '20200825_' + parameters['model_name'] + '/checkpoints/0-epoch-chkpt.tar'
@@ -64,7 +65,7 @@ parameters['load_model'] = False
 # BNC DATA
 bnc_data_name = 'bnc_full_proc_data'
 # parameters['bnc_data_name'] = 'bnc_baby_proc_data'
-parameters['bnc_data_dir'] = parameters['general_data_dir'] + 'British_National_Corpus/bnc_full_processed_data/'
+parameters['bnc_data_dir'] = os.path.abspath(parameters['general_data_dir'] + 'British_National_Corpus/bnc_full_processed_data/')
 parameters['bnc_data'] = parameters['bnc_data_dir'] + bnc_data_name + '.txt'
 parameters['bnc_tags'] = parameters['bnc_data_dir'] + bnc_data_name + '_tags.txt'
 

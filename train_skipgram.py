@@ -75,7 +75,7 @@ if __name__ == '__main__':
     sample_table = init_sample_table(vocab_counts)
     
     print('Size of sample table: ', sample_table.size)
-    print('Total distinct words: ', len(vocabulary))
+    print('Total distinct words: ', len(VOCABULARY))
 
     # SYNONYM SWITCH LIST: BOOLEAN LIST TO RANDOMLY DETERMINE
     # WHEN TO PROCESS SYNONYMS AND WHEN TO PROCESS NATURAL
@@ -94,7 +94,7 @@ if __name__ == '__main__':
     FOCUS_COL = 0
     CONTEXT_COL = 1
 
-    model = SkipGram(len(vocabulary), parameters['embedding_size'], w2v_init=parameters['w2v_init'], w2v_path=parameters['w2v_path'])    
+    model = SkipGram(len(VOCABULARY), parameters['embedding_size'], w2v_init=parameters['w2v_init'], w2v_path=parameters['w2v_path'])    
     if DEVICE == torch.device('cuda'):
         model.cuda()
         
