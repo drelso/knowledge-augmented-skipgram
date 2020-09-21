@@ -6,6 +6,7 @@
 
 import os
 import sys
+import shutil
 import time
 import csv
 import random
@@ -33,6 +34,10 @@ if __name__ == '__main__':
     parameters['model_dir'] = dir_validation(parameters['model_dir'])
     parameters['checkpoints_dir'] = dir_validation(parameters['checkpoints_dir'])
 
+    CONFIG_FILE_PATH = 'config.py'
+    shutil.copy(CONFIG_FILE_PATH, parameters['model_dir'])
+    print(f'Copied config file {CONFIG_FILE_PATH} to {parameters["model_dir"]}')
+
     start_time = time.time()
     
     print_parameters(parameters)
@@ -54,7 +59,7 @@ if __name__ == '__main__':
     print("Syns dims:", syns.shape)
     print("Val:", val_data.shape)
     
-    VOCABULARY = build_vocabulary(parameters['counts_file'], min_freq=parameters['vocab_cutoff'])
+    VOCABULARY = build_vocabulary(parameters['counts_file'], parameters['vocabulary_indices'], min_freq=parameters['vocab_cutoff'])
     print(f'Constructed vocabulary with {len(VOCABULARY)} distinct tokens from file at {parameters["counts_file"]}')
 
     vocab_words = VOCABULARY.itos
@@ -91,6 +96,8 @@ if __name__ == '__main__':
     augmented_dataset_size = int(num_data + (num_data * parameters['data_augmentation_ratio']))
     augmentation_selector = np.random.choice([True,False], augmented_dataset_size, p=[parameters['data_augmentation_ratio'], natural_data_ratio])
     
+    augmented_dataset_num_batches = augmented_dataset_size / parameters['batch_size']
+
     FOCUS_COL = 0
     CONTEXT_COL = 1
 
@@ -117,7 +124,11 @@ if __name__ == '__main__':
     losses = []
     val_losses = []
     times = []
-
+    PRINT_INTERVAL = 20
+    
+    elapsed_time = time.time() - start_time
+    print(f'Elapsed time before training: {elapsed_time}', flush=True)
+    
     for epoch in range(parameters['epochs']):
         print(f'\n {"#" * 24} \n \t\t EPOCH NUMBER {epoch} \n {"#" * 24}')
 
@@ -150,15 +161,17 @@ if __name__ == '__main__':
             focus_ixs.append(datapoint[FOCUS_COL])
             context_ixs.append(datapoint[CONTEXT_COL])
             
-            if not i % int(augmented_dataset_size / 5):
-                print(f'{i}/{augmented_dataset_size} lines processed', flush=True)
-
             if len(focus_ixs) == parameters['batch_size']:
                 batches_loss += process_word_pair_batch(focus_ixs, context_ixs, model, optimiser, sample_table, parameters['num_neg_samples'], parameters['batch_size'], phase='train')
                 
+                if not num_batches % int(augmented_dataset_num_batches / PRINT_INTERVAL):
+                    elapsed_time = time.time() - start_time
+                    print(f'{num_batches}/{augmented_dataset_num_batches} batches processed (elapsed time: {elapsed_time})', flush=True)
+
                 num_batches += 1
                 focus_ixs = []
                 context_ixs = []
+                
         epoch_loss = batches_loss / num_batches
         losses.append(epoch_loss)
         
@@ -174,7 +187,7 @@ if __name__ == '__main__':
                 focus_ixs.append(datapoint[FOCUS_COL])
                 context_ixs.append(datapoint[CONTEXT_COL])
                 
-                if not i % int(num_val_data / 5):
+                if not i % int(num_val_data / PRINT_INTERVAL):
                     print(f'{i}/{num_val_data} lines processed', flush=True)
                 
                 if len(focus_ixs) == parameters['batch_size']:

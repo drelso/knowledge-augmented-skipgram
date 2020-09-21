@@ -7,7 +7,7 @@ import os
 from pathlib import Path
 
 home = str(Path.home())
-root_dir = home + '/Scratch/knowledge-augmented-skipgram/'
+root_dir = home + '/Scratch/knowledge-augmented-skipgram/' ## TODO: CHANGE FOR DIS FILE STRUCTURE
 
 parameters = {}
 
@@ -44,7 +44,7 @@ parameters['model_name'] =  ('w2v_init' if parameters['w2v_init'] else 'rand_ini
                             'voc' + str(parameters['vocab_cutoff']) + \
                             '-emb' + str(parameters['embedding_size'])
 
-parameters['all_models_dir'] = os.path.abspath(root_dir + 'model/')
+parameters['all_models_dir'] = os.path.abspath(root_dir + 'model/') + '/'
 parameters['model_dir'] = parameters['all_models_dir'] + parameters['model_name'] + '/'
 parameters['model_file'] =  parameters['model_dir'] + parameters['model_name'] + '.pth'
 parameters['checkpoints_dir'] =  parameters['model_dir'] + 'checkpoints/'
@@ -128,3 +128,5 @@ parameters['num_val_skipgram_syns_npy'] = parameters['data_dir'] + num_skipgram_
 bnc_counts = parameters['data_dir'] + 'counts_bnc_full_seqlist_deptree.csv'
 bnc_subset_counts = parameters['data_dir'] + 'counts_' + bnc_subset_data_name + '.csv'
 parameters['counts_file'] = bnc_subset_counts if parameters['use_data_subset'] else bnc_counts
+
+parameters['vocabulary_indices'] = parameters['model_dir'] + 'vocabulary-' + str(parameters['vocab_cutoff']) + '_wordixs_' + num_skipgram_syns_name + '.csv'
