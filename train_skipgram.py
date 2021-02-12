@@ -7,6 +7,7 @@
 import os
 import sys
 import shutil
+from pathlib import Path
 import time
 import csv
 import random
@@ -34,7 +35,8 @@ if __name__ == '__main__':
     parameters['model_dir'] = dir_validation(parameters['model_dir'])
     parameters['checkpoints_dir'] = dir_validation(parameters['checkpoints_dir'])
 
-    CONFIG_FILE_PATH = 'config.py'
+    home = str(Path.home())
+    CONFIG_FILE_PATH = home + '/Scratch/knowledge-augmented-skipgram/config.py' # TODO: CHANGE FOR DIS FILESYSTEM
     shutil.copy(CONFIG_FILE_PATH, parameters['model_dir'])
     print(f'Copied config file {CONFIG_FILE_PATH} to {parameters["model_dir"]}')
 
