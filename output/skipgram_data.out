@@ -1,0 +1,319 @@
+nohup: ignoring input
+
+=================== MODEL PARAMETERS: =================== 
+
+general_data_dir:                /home/diegor/data/
+data_dir:                        /home/diegor/knowledge-augmented-skipgram/data/
+word_embeddings_dir:             /home/diegor/data/word_embeddings/
+vocab_cutoff:                    5
+w2v_path:                        None
+data_augmentation_ratio:         0.25
+w2v_init:                        False
+syn_augm:                        True
+split_ratio:                     0.9
+embedding_size:                  300
+epochs:                          10
+batch_size:                      20
+ctx_size:                        5
+num_neg_samples:                 5
+learning_rate:                   0.01
+model_name:                      rand_init-syns-25r-10e-voc5-emb300
+all_models_dir:                  /home/diegor/knowledge-augmented-skipgram/model/
+model_dir:                       /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/
+model_file:                      /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/rand_init-syns-25r-10e-voc5-emb300.pth
+checkpoints_dir:                 /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/checkpoints/
+input_emb_file:                  /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/rand_init-syns-25r-10e-voc5-emb300
+load_model:                      False
+bnc_texts_dir:                   /home/diegor/data/British_National_Corpus/Texts/
+bnc_data_dir:                    /home/diegor/data/British_National_Corpus/bnc_full_processed_data/
+bnc_data:                        /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data.txt
+bnc_tags:                        /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_tags.txt
+use_data_subset:                 True
+data_subset_size:                0.1
+bnc_subset_data:                 /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_shffl_sub-1.txt
+bnc_subset_tags:                 /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_shffl_sub-1_tags.txt
+tokenised_data:                  /home/diegor/knowledge-augmented-skipgram/data/tok_bnc_full_proc_data_shffl_sub-1.npy
+counts_file:                     /home/diegor/knowledge-augmented-skipgram/data/counts_bnc_full_proc_data_shffl_sub-1.csv
+to_lower:                        True
+replace_num:                     True
+remove_punct:                    True
+train_data:                      /home/diegor/knowledge-augmented-skipgram/data/bnc_full_proc_data_shffl_sub-1_train.npy
+val_data:                        /home/diegor/knowledge-augmented-skipgram/data/bnc_full_proc_data_shffl_sub-1_val.npy
+train_skipgram_data:             /home/diegor/knowledge-augmented-skipgram/data/skipgram_bnc_full_proc_data_shffl_sub-1_train.csv
+train_skipgram_augm_data:        /home/diegor/knowledge-augmented-skipgram/data/skipgram_augm_bnc_full_proc_data_shffl_sub-1_train.csv
+val_skipgram_data:               /home/diegor/knowledge-augmented-skipgram/data/skipgram_bnc_full_proc_data_shffl_sub-1_val.csv
+val_skipgram_augm_data:          /home/diegor/knowledge-augmented-skipgram/data/skipgram_augm_bnc_full_proc_data_shffl_sub-1_val.csv
+train_skipgram_sampled_data:     /home/diegor/knowledge-augmented-skipgram/data/sampled_skipgram_bnc_full_proc_data_shffl_sub-1_train.csv
+train_skipgram_augm_sampled_data:  /home/diegor/knowledge-augmented-skipgram/data/sampled_skipgram_augm_bnc_full_proc_data_shffl_sub-1_train.csv
+val_skipgram_sampled_data:       /home/diegor/knowledge-augmented-skipgram/data/sampled_skipgram_bnc_full_proc_data_shffl_sub-1_val.csv
+val_skipgram_augm_sampled_data:  /home/diegor/knowledge-augmented-skipgram/data/sampled_skipgram_augm_bnc_full_proc_data_shffl_sub-1_val.csv
+synonym_selection:               sw
+train_skipgram_syns_data:        /home/diegor/knowledge-augmented-skipgram/data/syns-sw_sampled_skipgram_bnc_full_proc_data_shffl_sub-1_train.csv
+val_skipgram_syns_data:          /home/diegor/knowledge-augmented-skipgram/data/syns-sw_sampled_skipgram_bnc_full_proc_data_shffl_sub-1_val.csv
+num_train_skipgram_data:         /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_skipgram_bnc_full_proc_data_shffl_sub-1_train.csv
+num_train_skipgram_syns_data:    /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_syns-sw_sampled_skipgram_bnc_full_proc_data_shffl_sub-1_train.csv
+num_val_skipgram_data:           /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_skipgram_bnc_full_proc_data_shffl_sub-1_val.csv
+num_val_skipgram_syns_data:      /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_syns-sw_sampled_skipgram_bnc_full_proc_data_shffl_sub-1_val.csv
+convert_to_npy:                  True
+num_train_skipgram_npy:          /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_skipgram_bnc_full_proc_data_shffl_sub-1_train.npy
+num_train_skipgram_syns_npy:     /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_syns-sw_sampled_skipgram_bnc_full_proc_data_shffl_sub-1_train.npy
+num_val_skipgram_npy:            /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_skipgram_bnc_full_proc_data_shffl_sub-1_val.npy
+num_val_skipgram_syns_npy:       /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_syns-sw_sampled_skipgram_bnc_full_proc_data_shffl_sub-1_val.npy
+vocabulary_indices:              /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/vocabulary-5_wordixs_num_voc-5_syns-sw_sampled_skipgram_bnc_full_proc_data_shffl_sub-1.csv
+
+=================== / MODEL PARAMETERS: =================== 
+
+Processed simple text file found at /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data.txt
+Using data subset: 10.0% of full dataset
+Found existing dataset subset at /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_shffl_sub-1.txt and /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_shffl_sub-1_tags.txt 
+
+Found existing dependency trees and sequence lists dataset file at /home/diegor/knowledge-augmented-skipgram/data/tok_bnc_full_proc_data_shffl_sub-1.npy
+
+Found existing word counts file at /home/diegor/knowledge-augmented-skipgram/data/counts_bnc_full_proc_data_shffl_sub-1.csv
+
+Found existing train/validation datasets at: 
+ - /home/diegor/knowledge-augmented-skipgram/data/bnc_full_proc_data_shffl_sub-1_train.npy 
+ - /home/diegor/knowledge-augmented-skipgram/data/bnc_full_proc_data_shffl_sub-1_val.npy
+Constructing Skip gram training dataset at /home/diegor/knowledge-augmented-skipgram/data/skipgram_bnc_full_proc_data_shffl_sub-1_train.csv from tokenised training data at /home/diegor/knowledge-augmented-skipgram/data/bnc_full_proc_data_shffl_sub-1_train.npy
+First sentence: [['well', 'INTJ'], ['well', 'INTJ'], ['before', 'ADP'], ['they', 'PRON'], ['actually', 'ADV'], ['went', 'VERB'], ['out', 'ADV']] 
+Word pairs:
+[['focus_word', 'context_word', 'sent_num', 'focus_index', 'context_position'], [['well', 'INTJ'], ['well', 'INTJ'], 0, 0, 1], [['well', 'INTJ'], ['before', 'ADP'], 0, 0, 2], [['well', 'INTJ'], ['they', 'PRON'], 0, 0, 3], [['well', 'INTJ'], ['actually', 'ADV'], 0, 0, 4], [['well', 'INTJ'], ['went', 'VERB'], 0, 0, 5]]
+
+0 sentences processed
+First sentence: [['well', 'INTJ'], ['well', 'INTJ'], ['before', 'ADP'], ['they', 'PRON'], ['actually', 'ADV'], ['went', 'VERB'], ['out', 'ADV']] 
+Word pairs:
+[['focus_word', 'context_word', 'sent_num', 'focus_index', 'context_position'], [['well', 'INTJ'], ['well', 'INTJ'], 0, 0, 1], [['well', 'INTJ'], ['before', 'ADP'], 0, 0, 2], [['well', 'INTJ'], ['they', 'PRON'], 0, 0, 3], [['well', 'INTJ'], ['actually', 'ADV'], 0, 0, 4], [['well', 'INTJ'], ['went', 'VERB'], 0, 0, 5], [['well', 'INTJ'], ['well', 'INTJ'], 0, 1, -1], [['well', 'INTJ'], ['before', 'ADP'], 0, 1, 1], [['well', 'INTJ'], ['they', 'PRON'], 0, 1, 2], [['well', 'INTJ'], ['actually', 'ADV'], 0, 1, 3], [['well', 'INTJ'], ['went', 'VERB'], 0, 1, 4], [['well', 'INTJ'], ['out', 'ADV'], 0, 1, 5]]
+
+0 sentences processed
+First sentence: [['well', 'INTJ'], ['well', 'INTJ'], ['before', 'ADP'], ['they', 'PRON'], ['actually', 'ADV'], ['went', 'VERB'], ['out', 'ADV']] 
+Word pairs:
+[['focus_word', 'context_word', 'sent_num', 'focus_index', 'context_position'], [['well', 'INTJ'], ['well', 'INTJ'], 0, 0, 1], [['well', 'INTJ'], ['before', 'ADP'], 0, 0, 2], [['well', 'INTJ'], ['they', 'PRON'], 0, 0, 3], [['well', 'INTJ'], ['actually', 'ADV'], 0, 0, 4], [['well', 'INTJ'], ['went', 'VERB'], 0, 0, 5], [['well', 'INTJ'], ['well', 'INTJ'], 0, 1, -1], [['well', 'INTJ'], ['before', 'ADP'], 0, 1, 1], [['well', 'INTJ'], ['they', 'PRON'], 0, 1, 2], [['well', 'INTJ'], ['actually', 'ADV'], 0, 1, 3], [['well', 'INTJ'], ['went', 'VERB'], 0, 1, 4], [['well', 'INTJ'], ['out', 'ADV'], 0, 1, 5], [['before', 'ADP'], ['well', 'INTJ'], 0, 2, -2], [['before', 'ADP'], ['well', 'INTJ'], 0, 2, -1], [['before', 'ADP'], ['they', 'PRON'], 0, 2, 1], [['before', 'ADP'], ['actually', 'ADV'], 0, 2, 2], [['before', 'ADP'], ['went', 'VERB'], 0, 2, 3], [['before', 'ADP'], ['out', 'ADV'], 0, 2, 4]]
+
+0 sentences processed
+First sentence: [['well', 'INTJ'], ['well', 'INTJ'], ['before', 'ADP'], ['they', 'PRON'], ['actually', 'ADV'], ['went', 'VERB'], ['out', 'ADV']] 
+Word pairs:
+[['focus_word', 'context_word', 'sent_num', 'focus_index', 'context_position'], [['well', 'INTJ'], ['well', 'INTJ'], 0, 0, 1], [['well', 'INTJ'], ['before', 'ADP'], 0, 0, 2], [['well', 'INTJ'], ['they', 'PRON'], 0, 0, 3], [['well', 'INTJ'], ['actually', 'ADV'], 0, 0, 4], [['well', 'INTJ'], ['went', 'VERB'], 0, 0, 5], [['well', 'INTJ'], ['well', 'INTJ'], 0, 1, -1], [['well', 'INTJ'], ['before', 'ADP'], 0, 1, 1], [['well', 'INTJ'], ['they', 'PRON'], 0, 1, 2], [['well', 'INTJ'], ['actually', 'ADV'], 0, 1, 3], [['well', 'INTJ'], ['went', 'VERB'], 0, 1, 4], [['well', 'INTJ'], ['out', 'ADV'], 0, 1, 5], [['before', 'ADP'], ['well', 'INTJ'], 0, 2, -2], [['before', 'ADP'], ['well', 'INTJ'], 0, 2, -1], [['before', 'ADP'], ['they', 'PRON'], 0, 2, 1], [['before', 'ADP'], ['actually', 'ADV'], 0, 2, 2], [['before', 'ADP'], ['went', 'VERB'], 0, 2, 3], [['before', 'ADP'], ['out', 'ADV'], 0, 2, 4], [['they', 'PRON'], ['well', 'INTJ'], 0, 3, -3], [['they', 'PRON'], ['well', 'INTJ'], 0, 3, -2], [['they', 'PRON'], ['before', 'ADP'], 0, 3, -1], [['they', 'PRON'], ['actually', 'ADV'], 0, 3, 1], [['they', 'PRON'], ['went', 'VERB'], 0, 3, 2], [['they', 'PRON'], ['out', 'ADV'], 0, 3, 3]]
+
+0 sentences processed
+First sentence: [['well', 'INTJ'], ['well', 'INTJ'], ['before', 'ADP'], ['they', 'PRON'], ['actually', 'ADV'], ['went', 'VERB'], ['out', 'ADV']] 
+Word pairs:
+[['focus_word', 'context_word', 'sent_num', 'focus_index', 'context_position'], [['well', 'INTJ'], ['well', 'INTJ'], 0, 0, 1], [['well', 'INTJ'], ['before', 'ADP'], 0, 0, 2], [['well', 'INTJ'], ['they', 'PRON'], 0, 0, 3], [['well', 'INTJ'], ['actually', 'ADV'], 0, 0, 4], [['well', 'INTJ'], ['went', 'VERB'], 0, 0, 5], [['well', 'INTJ'], ['well', 'INTJ'], 0, 1, -1], [['well', 'INTJ'], ['before', 'ADP'], 0, 1, 1], [['well', 'INTJ'], ['they', 'PRON'], 0, 1, 2], [['well', 'INTJ'], ['actually', 'ADV'], 0, 1, 3], [['well', 'INTJ'], ['went', 'VERB'], 0, 1, 4], [['well', 'INTJ'], ['out', 'ADV'], 0, 1, 5], [['before', 'ADP'], ['well', 'INTJ'], 0, 2, -2], [['before', 'ADP'], ['well', 'INTJ'], 0, 2, -1], [['before', 'ADP'], ['they', 'PRON'], 0, 2, 1], [['before', 'ADP'], ['actually', 'ADV'], 0, 2, 2], [['before', 'ADP'], ['went', 'VERB'], 0, 2, 3], [['before', 'ADP'], ['out', 'ADV'], 0, 2, 4], [['they', 'PRON'], ['well', 'INTJ'], 0, 3, -3], [['they', 'PRON'], ['well', 'INTJ'], 0, 3, -2], [['they', 'PRON'], ['before', 'ADP'], 0, 3, -1], [['they', 'PRON'], ['actually', 'ADV'], 0, 3, 1], [['they', 'PRON'], ['went', 'VERB'], 0, 3, 2], [['they', 'PRON'], ['out', 'ADV'], 0, 3, 3], [['actually', 'ADV'], ['well', 'INTJ'], 0, 4, -4], [['actually', 'ADV'], ['well', 'INTJ'], 0, 4, -3], [['actually', 'ADV'], ['before', 'ADP'], 0, 4, -2], [['actually', 'ADV'], ['they', 'PRON'], 0, 4, -1], [['actually', 'ADV'], ['went', 'VERB'], 0, 4, 1], [['actually', 'ADV'], ['out', 'ADV'], 0, 4, 2]]
+
+0 sentences processed
+First sentence: [['well', 'INTJ'], ['well', 'INTJ'], ['before', 'ADP'], ['they', 'PRON'], ['actually', 'ADV'], ['went', 'VERB'], ['out', 'ADV']] 
+Word pairs:
+[['focus_word', 'context_word', 'sent_num', 'focus_index', 'context_position'], [['well', 'INTJ'], ['well', 'INTJ'], 0, 0, 1], [['well', 'INTJ'], ['before', 'ADP'], 0, 0, 2], [['well', 'INTJ'], ['they', 'PRON'], 0, 0, 3], [['well', 'INTJ'], ['actually', 'ADV'], 0, 0, 4], [['well', 'INTJ'], ['went', 'VERB'], 0, 0, 5], [['well', 'INTJ'], ['well', 'INTJ'], 0, 1, -1], [['well', 'INTJ'], ['before', 'ADP'], 0, 1, 1], [['well', 'INTJ'], ['they', 'PRON'], 0, 1, 2], [['well', 'INTJ'], ['actually', 'ADV'], 0, 1, 3], [['well', 'INTJ'], ['went', 'VERB'], 0, 1, 4], [['well', 'INTJ'], ['out', 'ADV'], 0, 1, 5], [['before', 'ADP'], ['well', 'INTJ'], 0, 2, -2], [['before', 'ADP'], ['well', 'INTJ'], 0, 2, -1], [['before', 'ADP'], ['they', 'PRON'], 0, 2, 1], [['before', 'ADP'], ['actually', 'ADV'], 0, 2, 2], [['before', 'ADP'], ['went', 'VERB'], 0, 2, 3], [['before', 'ADP'], ['out', 'ADV'], 0, 2, 4], [['they', 'PRON'], ['well', 'INTJ'], 0, 3, -3], [['they', 'PRON'], ['well', 'INTJ'], 0, 3, -2], [['they', 'PRON'], ['before', 'ADP'], 0, 3, -1], [['they', 'PRON'], ['actually', 'ADV'], 0, 3, 1], [['they', 'PRON'], ['went', 'VERB'], 0, 3, 2], [['they', 'PRON'], ['out', 'ADV'], 0, 3, 3], [['actually', 'ADV'], ['well', 'INTJ'], 0, 4, -4], [['actually', 'ADV'], ['well', 'INTJ'], 0, 4, -3], [['actually', 'ADV'], ['before', 'ADP'], 0, 4, -2], [['actually', 'ADV'], ['they', 'PRON'], 0, 4, -1], [['actually', 'ADV'], ['went', 'VERB'], 0, 4, 1], [['actually', 'ADV'], ['out', 'ADV'], 0, 4, 2], [['went', 'VERB'], ['well', 'INTJ'], 0, 5, -5], [['went', 'VERB'], ['well', 'INTJ'], 0, 5, -4], [['went', 'VERB'], ['before', 'ADP'], 0, 5, -3], [['went', 'VERB'], ['they', 'PRON'], 0, 5, -2], [['went', 'VERB'], ['actually', 'ADV'], 0, 5, -1], [['went', 'VERB'], ['out', 'ADV'], 0, 5, 1]]
+
+0 sentences processed
+First sentence: [['well', 'INTJ'], ['well', 'INTJ'], ['before', 'ADP'], ['they', 'PRON'], ['actually', 'ADV'], ['went', 'VERB'], ['out', 'ADV']] 
+Word pairs:
+[['focus_word', 'context_word', 'sent_num', 'focus_index', 'context_position'], [['well', 'INTJ'], ['well', 'INTJ'], 0, 0, 1], [['well', 'INTJ'], ['before', 'ADP'], 0, 0, 2], [['well', 'INTJ'], ['they', 'PRON'], 0, 0, 3], [['well', 'INTJ'], ['actually', 'ADV'], 0, 0, 4], [['well', 'INTJ'], ['went', 'VERB'], 0, 0, 5], [['well', 'INTJ'], ['well', 'INTJ'], 0, 1, -1], [['well', 'INTJ'], ['before', 'ADP'], 0, 1, 1], [['well', 'INTJ'], ['they', 'PRON'], 0, 1, 2], [['well', 'INTJ'], ['actually', 'ADV'], 0, 1, 3], [['well', 'INTJ'], ['went', 'VERB'], 0, 1, 4], [['well', 'INTJ'], ['out', 'ADV'], 0, 1, 5], [['before', 'ADP'], ['well', 'INTJ'], 0, 2, -2], [['before', 'ADP'], ['well', 'INTJ'], 0, 2, -1], [['before', 'ADP'], ['they', 'PRON'], 0, 2, 1], [['before', 'ADP'], ['actually', 'ADV'], 0, 2, 2], [['before', 'ADP'], ['went', 'VERB'], 0, 2, 3], [['before', 'ADP'], ['out', 'ADV'], 0, 2, 4], [['they', 'PRON'], ['well', 'INTJ'], 0, 3, -3], [['they', 'PRON'], ['well', 'INTJ'], 0, 3, -2], [['they', 'PRON'], ['before', 'ADP'], 0, 3, -1], [['they', 'PRON'], ['actually', 'ADV'], 0, 3, 1], [['they', 'PRON'], ['went', 'VERB'], 0, 3, 2], [['they', 'PRON'], ['out', 'ADV'], 0, 3, 3], [['actually', 'ADV'], ['well', 'INTJ'], 0, 4, -4], [['actually', 'ADV'], ['well', 'INTJ'], 0, 4, -3], [['actually', 'ADV'], ['before', 'ADP'], 0, 4, -2], [['actually', 'ADV'], ['they', 'PRON'], 0, 4, -1], [['actually', 'ADV'], ['went', 'VERB'], 0, 4, 1], [['actually', 'ADV'], ['out', 'ADV'], 0, 4, 2], [['went', 'VERB'], ['well', 'INTJ'], 0, 5, -5], [['went', 'VERB'], ['well', 'INTJ'], 0, 5, -4], [['went', 'VERB'], ['before', 'ADP'], 0, 5, -3], [['went', 'VERB'], ['they', 'PRON'], 0, 5, -2], [['went', 'VERB'], ['actually', 'ADV'], 0, 5, -1], [['went', 'VERB'], ['out', 'ADV'], 0, 5, 1], [['out', 'ADV'], ['well', 'INTJ'], 0, 6, -5], [['out', 'ADV'], ['before', 'ADP'], 0, 6, -4], [['out', 'ADV'], ['they', 'PRON'], 0, 6, -3], [['out', 'ADV'], ['actually', 'ADV'], 0, 6, -2], [['out', 'ADV'], ['went', 'VERB'], 0, 6, -1]]
+
+0 sentences processed
+100000 sentences processed
+100000 sentences processed
+100000 sentences processed
+100000 sentences processed
+100000 sentences processed
+100000 sentences processed
+100000 sentences processed
+100000 sentences processed
+100000 sentences processed
+100000 sentences processed
+100000 sentences processed
+100000 sentences processed
+100000 sentences processed
+100000 sentences processed
+100000 sentences processed
+100000 sentences processed
+150000 sentences processed
+150000 sentences processed
+150000 sentences processed
+150000 sentences processed
+150000 sentences processed
+150000 sentences processed
+150000 sentences processed
+150000 sentences processed
+150000 sentences processed
+150000 sentences processed
+150000 sentences processed
+150000 sentences processed
+150000 sentences processed
+150000 sentences processed
+150000 sentences processed
+150000 sentences processed
+150000 sentences processed
+150000 sentences processed
+150000 sentences processed
+150000 sentences processed
+150000 sentences processed
+150000 sentences processed
+150000 sentences processed
+150000 sentences processed
+150000 sentences processed
+150000 sentences processed
+150000 sentences processed
+200000 sentences processed
+200000 sentences processed
+200000 sentences processed
+200000 sentences processed
+200000 sentences processed
+200000 sentences processed
+200000 sentences processed
+200000 sentences processed
+250000 sentences processed
+250000 sentences processed
+250000 sentences processed
+250000 sentences processed
+250000 sentences processed
+250000 sentences processed
+250000 sentences processed
+250000 sentences processed
+250000 sentences processed
+250000 sentences processed
+250000 sentences processed
+250000 sentences processed
+250000 sentences processed
+250000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+300000 sentences processed
+350000 sentences processed
+350000 sentences processed
+350000 sentences processed
+400000 sentences processed
+400000 sentences processed
+400000 sentences processed
+400000 sentences processed
+400000 sentences processed
+400000 sentences processed
+450000 sentences processed
+450000 sentences processed
+450000 sentences processed
+450000 sentences processed
+450000 sentences processed
+450000 sentences processed
+450000 sentences processed
+450000 sentences processed
+450000 sentences processed
+450000 sentences processed
+450000 sentences processed
+450000 sentences processed
+450000 sentences processed
+450000 sentences processed
+450000 sentences processed
+450000 sentences processed
+450000 sentences processed
+450000 sentences processed
+450000 sentences processed
+450000 sentences processed
+450000 sentences processed
+450000 sentences processed
+450000 sentences processed
+450000 sentences processed
+500000 sentences processed
+500000 sentences processed
+500000 sentences processed
+500000 sentences processed
+500000 sentences processed
+500000 sentences processed
+500000 sentences processed
+500000 sentences processed
+500000 sentences processed
+500000 sentences processed
+500000 sentences processed
+500000 sentences processed
+500000 sentences processed
+500000 sentences processed
+500000 sentences processed
+500000 sentences processed
+500000 sentences processed
+Saving 73863801 Skip-gram datapoints to /home/diegor/knowledge-augmented-skipgram/data/skipgram_bnc_full_proc_data_shffl_sub-1_train.csv
+Constructing Skip gram validation dataset at /home/diegor/knowledge-augmented-skipgram/data/skipgram_bnc_full_proc_data_shffl_sub-1_val.csv from tokenised validation data at /home/diegor/knowledge-augmented-skipgram/data/bnc_full_proc_data_shffl_sub-1_val.npy
+First sentence: [['right', 'INTJ'], ['william', 'PROPN'], ['percivall', 'PROPN'], ['who', 'PRON'], ['founded', 'VERB'], ['the', 'DET'], ['in', 'ADP'], ['####', 'NUM']] 
+Word pairs:
+[['focus_word', 'context_word', 'sent_num', 'focus_index', 'context_position'], [['right', 'INTJ'], ['william', 'PROPN'], 0, 0, 1], [['right', 'INTJ'], ['percivall', 'PROPN'], 0, 0, 2], [['right', 'INTJ'], ['who', 'PRON'], 0, 0, 3], [['right', 'INTJ'], ['founded', 'VERB'], 0, 0, 4], [['right', 'INTJ'], ['the', 'DET'], 0, 0, 5]]
+
+0 sentences processed
+First sentence: [['right', 'INTJ'], ['william', 'PROPN'], ['percivall', 'PROPN'], ['who', 'PRON'], ['founded', 'VERB'], ['the', 'DET'], ['in', 'ADP'], ['####', 'NUM']] 
+Word pairs:
+[['focus_word', 'context_word', 'sent_num', 'focus_index', 'context_position'], [['right', 'INTJ'], ['william', 'PROPN'], 0, 0, 1], [['right', 'INTJ'], ['percivall', 'PROPN'], 0, 0, 2], [['right', 'INTJ'], ['who', 'PRON'], 0, 0, 3], [['right', 'INTJ'], ['founded', 'VERB'], 0, 0, 4], [['right', 'INTJ'], ['the', 'DET'], 0, 0, 5], [['william', 'PROPN'], ['right', 'INTJ'], 0, 1, -1], [['william', 'PROPN'], ['percivall', 'PROPN'], 0, 1, 1], [['william', 'PROPN'], ['who', 'PRON'], 0, 1, 2], [['william', 'PROPN'], ['founded', 'VERB'], 0, 1, 3], [['william', 'PROPN'], ['the', 'DET'], 0, 1, 4], [['william', 'PROPN'], ['in', 'ADP'], 0, 1, 5]]
+
+0 sentences processed
+First sentence: [['right', 'INTJ'], ['william', 'PROPN'], ['percivall', 'PROPN'], ['who', 'PRON'], ['founded', 'VERB'], ['the', 'DET'], ['in', 'ADP'], ['####', 'NUM']] 
+Word pairs:
+[['focus_word', 'context_word', 'sent_num', 'focus_index', 'context_position'], [['right', 'INTJ'], ['william', 'PROPN'], 0, 0, 1], [['right', 'INTJ'], ['percivall', 'PROPN'], 0, 0, 2], [['right', 'INTJ'], ['who', 'PRON'], 0, 0, 3], [['right', 'INTJ'], ['founded', 'VERB'], 0, 0, 4], [['right', 'INTJ'], ['the', 'DET'], 0, 0, 5], [['william', 'PROPN'], ['right', 'INTJ'], 0, 1, -1], [['william', 'PROPN'], ['percivall', 'PROPN'], 0, 1, 1], [['william', 'PROPN'], ['who', 'PRON'], 0, 1, 2], [['william', 'PROPN'], ['founded', 'VERB'], 0, 1, 3], [['william', 'PROPN'], ['the', 'DET'], 0, 1, 4], [['william', 'PROPN'], ['in', 'ADP'], 0, 1, 5], [['percivall', 'PROPN'], ['right', 'INTJ'], 0, 2, -2], [['percivall', 'PROPN'], ['william', 'PROPN'], 0, 2, -1], [['percivall', 'PROPN'], ['who', 'PRON'], 0, 2, 1], [['percivall', 'PROPN'], ['founded', 'VERB'], 0, 2, 2], [['percivall', 'PROPN'], ['the', 'DET'], 0, 2, 3], [['percivall', 'PROPN'], ['in', 'ADP'], 0, 2, 4], [['percivall', 'PROPN'], ['####', 'NUM'], 0, 2, 5]]
+
+0 sentences processed
+First sentence: [['right', 'INTJ'], ['william', 'PROPN'], ['percivall', 'PROPN'], ['who', 'PRON'], ['founded', 'VERB'], ['the', 'DET'], ['in', 'ADP'], ['####', 'NUM']] 
+Word pairs:
+[['focus_word', 'context_word', 'sent_num', 'focus_index', 'context_position'], [['right', 'INTJ'], ['william', 'PROPN'], 0, 0, 1], [['right', 'INTJ'], ['percivall', 'PROPN'], 0, 0, 2], [['right', 'INTJ'], ['who', 'PRON'], 0, 0, 3], [['right', 'INTJ'], ['founded', 'VERB'], 0, 0, 4], [['right', 'INTJ'], ['the', 'DET'], 0, 0, 5], [['william', 'PROPN'], ['right', 'INTJ'], 0, 1, -1], [['william', 'PROPN'], ['percivall', 'PROPN'], 0, 1, 1], [['william', 'PROPN'], ['who', 'PRON'], 0, 1, 2], [['william', 'PROPN'], ['founded', 'VERB'], 0, 1, 3], [['william', 'PROPN'], ['the', 'DET'], 0, 1, 4], [['william', 'PROPN'], ['in', 'ADP'], 0, 1, 5], [['percivall', 'PROPN'], ['right', 'INTJ'], 0, 2, -2], [['percivall', 'PROPN'], ['william', 'PROPN'], 0, 2, -1], [['percivall', 'PROPN'], ['who', 'PRON'], 0, 2, 1], [['percivall', 'PROPN'], ['founded', 'VERB'], 0, 2, 2], [['percivall', 'PROPN'], ['the', 'DET'], 0, 2, 3], [['percivall', 'PROPN'], ['in', 'ADP'], 0, 2, 4], [['percivall', 'PROPN'], ['####', 'NUM'], 0, 2, 5], [['who', 'PRON'], ['right', 'INTJ'], 0, 3, -3], [['who', 'PRON'], ['william', 'PROPN'], 0, 3, -2], [['who', 'PRON'], ['percivall', 'PROPN'], 0, 3, -1], [['who', 'PRON'], ['founded', 'VERB'], 0, 3, 1], [['who', 'PRON'], ['the', 'DET'], 0, 3, 2], [['who', 'PRON'], ['in', 'ADP'], 0, 3, 3], [['who', 'PRON'], ['####', 'NUM'], 0, 3, 4]]
+
+0 sentences processed
+First sentence: [['right', 'INTJ'], ['william', 'PROPN'], ['percivall', 'PROPN'], ['who', 'PRON'], ['founded', 'VERB'], ['the', 'DET'], ['in', 'ADP'], ['####', 'NUM']] 
+Word pairs:
+[['focus_word', 'context_word', 'sent_num', 'focus_index', 'context_position'], [['right', 'INTJ'], ['william', 'PROPN'], 0, 0, 1], [['right', 'INTJ'], ['percivall', 'PROPN'], 0, 0, 2], [['right', 'INTJ'], ['who', 'PRON'], 0, 0, 3], [['right', 'INTJ'], ['founded', 'VERB'], 0, 0, 4], [['right', 'INTJ'], ['the', 'DET'], 0, 0, 5], [['william', 'PROPN'], ['right', 'INTJ'], 0, 1, -1], [['william', 'PROPN'], ['percivall', 'PROPN'], 0, 1, 1], [['william', 'PROPN'], ['who', 'PRON'], 0, 1, 2], [['william', 'PROPN'], ['founded', 'VERB'], 0, 1, 3], [['william', 'PROPN'], ['the', 'DET'], 0, 1, 4], [['william', 'PROPN'], ['in', 'ADP'], 0, 1, 5], [['percivall', 'PROPN'], ['right', 'INTJ'], 0, 2, -2], [['percivall', 'PROPN'], ['william', 'PROPN'], 0, 2, -1], [['percivall', 'PROPN'], ['who', 'PRON'], 0, 2, 1], [['percivall', 'PROPN'], ['founded', 'VERB'], 0, 2, 2], [['percivall', 'PROPN'], ['the', 'DET'], 0, 2, 3], [['percivall', 'PROPN'], ['in', 'ADP'], 0, 2, 4], [['percivall', 'PROPN'], ['####', 'NUM'], 0, 2, 5], [['who', 'PRON'], ['right', 'INTJ'], 0, 3, -3], [['who', 'PRON'], ['william', 'PROPN'], 0, 3, -2], [['who', 'PRON'], ['percivall', 'PROPN'], 0, 3, -1], [['who', 'PRON'], ['founded', 'VERB'], 0, 3, 1], [['who', 'PRON'], ['the', 'DET'], 0, 3, 2], [['who', 'PRON'], ['in', 'ADP'], 0, 3, 3], [['who', 'PRON'], ['####', 'NUM'], 0, 3, 4], [['founded', 'VERB'], ['right', 'INTJ'], 0, 4, -4], [['founded', 'VERB'], ['william', 'PROPN'], 0, 4, -3], [['founded', 'VERB'], ['percivall', 'PROPN'], 0, 4, -2], [['founded', 'VERB'], ['who', 'PRON'], 0, 4, -1], [['founded', 'VERB'], ['the', 'DET'], 0, 4, 1], [['founded', 'VERB'], ['in', 'ADP'], 0, 4, 2], [['founded', 'VERB'], ['####', 'NUM'], 0, 4, 3]]
+
+0 sentences processed
+First sentence: [['right', 'INTJ'], ['william', 'PROPN'], ['percivall', 'PROPN'], ['who', 'PRON'], ['founded', 'VERB'], ['the', 'DET'], ['in', 'ADP'], ['####', 'NUM']] 
+Word pairs:
+[['focus_word', 'context_word', 'sent_num', 'focus_index', 'context_position'], [['right', 'INTJ'], ['william', 'PROPN'], 0, 0, 1], [['right', 'INTJ'], ['percivall', 'PROPN'], 0, 0, 2], [['right', 'INTJ'], ['who', 'PRON'], 0, 0, 3], [['right', 'INTJ'], ['founded', 'VERB'], 0, 0, 4], [['right', 'INTJ'], ['the', 'DET'], 0, 0, 5], [['william', 'PROPN'], ['right', 'INTJ'], 0, 1, -1], [['william', 'PROPN'], ['percivall', 'PROPN'], 0, 1, 1], [['william', 'PROPN'], ['who', 'PRON'], 0, 1, 2], [['william', 'PROPN'], ['founded', 'VERB'], 0, 1, 3], [['william', 'PROPN'], ['the', 'DET'], 0, 1, 4], [['william', 'PROPN'], ['in', 'ADP'], 0, 1, 5], [['percivall', 'PROPN'], ['right', 'INTJ'], 0, 2, -2], [['percivall', 'PROPN'], ['william', 'PROPN'], 0, 2, -1], [['percivall', 'PROPN'], ['who', 'PRON'], 0, 2, 1], [['percivall', 'PROPN'], ['founded', 'VERB'], 0, 2, 2], [['percivall', 'PROPN'], ['the', 'DET'], 0, 2, 3], [['percivall', 'PROPN'], ['in', 'ADP'], 0, 2, 4], [['percivall', 'PROPN'], ['####', 'NUM'], 0, 2, 5], [['who', 'PRON'], ['right', 'INTJ'], 0, 3, -3], [['who', 'PRON'], ['william', 'PROPN'], 0, 3, -2], [['who', 'PRON'], ['percivall', 'PROPN'], 0, 3, -1], [['who', 'PRON'], ['founded', 'VERB'], 0, 3, 1], [['who', 'PRON'], ['the', 'DET'], 0, 3, 2], [['who', 'PRON'], ['in', 'ADP'], 0, 3, 3], [['who', 'PRON'], ['####', 'NUM'], 0, 3, 4], [['founded', 'VERB'], ['right', 'INTJ'], 0, 4, -4], [['founded', 'VERB'], ['william', 'PROPN'], 0, 4, -3], [['founded', 'VERB'], ['percivall', 'PROPN'], 0, 4, -2], [['founded', 'VERB'], ['who', 'PRON'], 0, 4, -1], [['founded', 'VERB'], ['the', 'DET'], 0, 4, 1], [['founded', 'VERB'], ['in', 'ADP'], 0, 4, 2], [['founded', 'VERB'], ['####', 'NUM'], 0, 4, 3], [['the', 'DET'], ['right', 'INTJ'], 0, 5, -5], [['the', 'DET'], ['william', 'PROPN'], 0, 5, -4], [['the', 'DET'], ['percivall', 'PROPN'], 0, 5, -3], [['the', 'DET'], ['who', 'PRON'], 0, 5, -2], [['the', 'DET'], ['founded', 'VERB'], 0, 5, -1], [['the', 'DET'], ['in', 'ADP'], 0, 5, 1], [['the', 'DET'], ['####', 'NUM'], 0, 5, 2]]
+
+0 sentences processed
+First sentence: [['right', 'INTJ'], ['william', 'PROPN'], ['percivall', 'PROPN'], ['who', 'PRON'], ['founded', 'VERB'], ['the', 'DET'], ['in', 'ADP'], ['####', 'NUM']] 
+Word pairs:
+[['focus_word', 'context_word', 'sent_num', 'focus_index', 'context_position'], [['right', 'INTJ'], ['william', 'PROPN'], 0, 0, 1], [['right', 'INTJ'], ['percivall', 'PROPN'], 0, 0, 2], [['right', 'INTJ'], ['who', 'PRON'], 0, 0, 3], [['right', 'INTJ'], ['founded', 'VERB'], 0, 0, 4], [['right', 'INTJ'], ['the', 'DET'], 0, 0, 5], [['william', 'PROPN'], ['right', 'INTJ'], 0, 1, -1], [['william', 'PROPN'], ['percivall', 'PROPN'], 0, 1, 1], [['william', 'PROPN'], ['who', 'PRON'], 0, 1, 2], [['william', 'PROPN'], ['founded', 'VERB'], 0, 1, 3], [['william', 'PROPN'], ['the', 'DET'], 0, 1, 4], [['william', 'PROPN'], ['in', 'ADP'], 0, 1, 5], [['percivall', 'PROPN'], ['right', 'INTJ'], 0, 2, -2], [['percivall', 'PROPN'], ['william', 'PROPN'], 0, 2, -1], [['percivall', 'PROPN'], ['who', 'PRON'], 0, 2, 1], [['percivall', 'PROPN'], ['founded', 'VERB'], 0, 2, 2], [['percivall', 'PROPN'], ['the', 'DET'], 0, 2, 3], [['percivall', 'PROPN'], ['in', 'ADP'], 0, 2, 4], [['percivall', 'PROPN'], ['####', 'NUM'], 0, 2, 5], [['who', 'PRON'], ['right', 'INTJ'], 0, 3, -3], [['who', 'PRON'], ['william', 'PROPN'], 0, 3, -2], [['who', 'PRON'], ['percivall', 'PROPN'], 0, 3, -1], [['who', 'PRON'], ['founded', 'VERB'], 0, 3, 1], [['who', 'PRON'], ['the', 'DET'], 0, 3, 2], [['who', 'PRON'], ['in', 'ADP'], 0, 3, 3], [['who', 'PRON'], ['####', 'NUM'], 0, 3, 4], [['founded', 'VERB'], ['right', 'INTJ'], 0, 4, -4], [['founded', 'VERB'], ['william', 'PROPN'], 0, 4, -3], [['founded', 'VERB'], ['percivall', 'PROPN'], 0, 4, -2], [['founded', 'VERB'], ['who', 'PRON'], 0, 4, -1], [['founded', 'VERB'], ['the', 'DET'], 0, 4, 1], [['founded', 'VERB'], ['in', 'ADP'], 0, 4, 2], [['founded', 'VERB'], ['####', 'NUM'], 0, 4, 3], [['the', 'DET'], ['right', 'INTJ'], 0, 5, -5], [['the', 'DET'], ['william', 'PROPN'], 0, 5, -4], [['the', 'DET'], ['percivall', 'PROPN'], 0, 5, -3], [['the', 'DET'], ['who', 'PRON'], 0, 5, -2], [['the', 'DET'], ['founded', 'VERB'], 0, 5, -1], [['the', 'DET'], ['in', 'ADP'], 0, 5, 1], [['the', 'DET'], ['####', 'NUM'], 0, 5, 2], [['in', 'ADP'], ['william', 'PROPN'], 0, 6, -5], [['in', 'ADP'], ['percivall', 'PROPN'], 0, 6, -4], [['in', 'ADP'], ['who', 'PRON'], 0, 6, -3], [['in', 'ADP'], ['founded', 'VERB'], 0, 6, -2], [['in', 'ADP'], ['the', 'DET'], 0, 6, -1], [['in', 'ADP'], ['####', 'NUM'], 0, 6, 1]]
+
+0 sentences processed
+First sentence: [['right', 'INTJ'], ['william', 'PROPN'], ['percivall', 'PROPN'], ['who', 'PRON'], ['founded', 'VERB'], ['the', 'DET'], ['in', 'ADP'], ['####', 'NUM']] 
+Word pairs:
+[['focus_word', 'context_word', 'sent_num', 'focus_index', 'context_position'], [['right', 'INTJ'], ['william', 'PROPN'], 0, 0, 1], [['right', 'INTJ'], ['percivall', 'PROPN'], 0, 0, 2], [['right', 'INTJ'], ['who', 'PRON'], 0, 0, 3], [['right', 'INTJ'], ['founded', 'VERB'], 0, 0, 4], [['right', 'INTJ'], ['the', 'DET'], 0, 0, 5], [['william', 'PROPN'], ['right', 'INTJ'], 0, 1, -1], [['william', 'PROPN'], ['percivall', 'PROPN'], 0, 1, 1], [['william', 'PROPN'], ['who', 'PRON'], 0, 1, 2], [['william', 'PROPN'], ['founded', 'VERB'], 0, 1, 3], [['william', 'PROPN'], ['the', 'DET'], 0, 1, 4], [['william', 'PROPN'], ['in', 'ADP'], 0, 1, 5], [['percivall', 'PROPN'], ['right', 'INTJ'], 0, 2, -2], [['percivall', 'PROPN'], ['william', 'PROPN'], 0, 2, -1], [['percivall', 'PROPN'], ['who', 'PRON'], 0, 2, 1], [['percivall', 'PROPN'], ['founded', 'VERB'], 0, 2, 2], [['percivall', 'PROPN'], ['the', 'DET'], 0, 2, 3], [['percivall', 'PROPN'], ['in', 'ADP'], 0, 2, 4], [['percivall', 'PROPN'], ['####', 'NUM'], 0, 2, 5], [['who', 'PRON'], ['right', 'INTJ'], 0, 3, -3], [['who', 'PRON'], ['william', 'PROPN'], 0, 3, -2], [['who', 'PRON'], ['percivall', 'PROPN'], 0, 3, -1], [['who', 'PRON'], ['founded', 'VERB'], 0, 3, 1], [['who', 'PRON'], ['the', 'DET'], 0, 3, 2], [['who', 'PRON'], ['in', 'ADP'], 0, 3, 3], [['who', 'PRON'], ['####', 'NUM'], 0, 3, 4], [['founded', 'VERB'], ['right', 'INTJ'], 0, 4, -4], [['founded', 'VERB'], ['william', 'PROPN'], 0, 4, -3], [['founded', 'VERB'], ['percivall', 'PROPN'], 0, 4, -2], [['founded', 'VERB'], ['who', 'PRON'], 0, 4, -1], [['founded', 'VERB'], ['the', 'DET'], 0, 4, 1], [['founded', 'VERB'], ['in', 'ADP'], 0, 4, 2], [['founded', 'VERB'], ['####', 'NUM'], 0, 4, 3], [['the', 'DET'], ['right', 'INTJ'], 0, 5, -5], [['the', 'DET'], ['william', 'PROPN'], 0, 5, -4], [['the', 'DET'], ['percivall', 'PROPN'], 0, 5, -3], [['the', 'DET'], ['who', 'PRON'], 0, 5, -2], [['the', 'DET'], ['founded', 'VERB'], 0, 5, -1], [['the', 'DET'], ['in', 'ADP'], 0, 5, 1], [['the', 'DET'], ['####', 'NUM'], 0, 5, 2], [['in', 'ADP'], ['william', 'PROPN'], 0, 6, -5], [['in', 'ADP'], ['percivall', 'PROPN'], 0, 6, -4], [['in', 'ADP'], ['who', 'PRON'], 0, 6, -3], [['in', 'ADP'], ['founded', 'VERB'], 0, 6, -2], [['in', 'ADP'], ['the', 'DET'], 0, 6, -1], [['in', 'ADP'], ['####', 'NUM'], 0, 6, 1], [['####', 'NUM'], ['percivall', 'PROPN'], 0, 7, -5], [['####', 'NUM'], ['who', 'PRON'], 0, 7, -4], [['####', 'NUM'], ['founded', 'VERB'], 0, 7, -3], [['####', 'NUM'], ['the', 'DET'], 0, 7, -2], [['####', 'NUM'], ['in', 'ADP'], 0, 7, -1]]
+
+0 sentences processed
+50000 sentences processed
+50000 sentences processed
+50000 sentences processed
+50000 sentences processed
+50000 sentences processed
+50000 sentences processed
+50000 sentences processed
+50000 sentences processed
+50000 sentences processed
+50000 sentences processed
+50000 sentences processed
+50000 sentences processed
+Saving 8149519 Skip-gram datapoints to /home/diegor/knowledge-augmented-skipgram/data/skipgram_bnc_full_proc_data_shffl_sub-1_val.csv

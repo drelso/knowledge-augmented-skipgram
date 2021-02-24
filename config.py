@@ -7,7 +7,8 @@ import os
 from pathlib import Path
 
 home = str(Path.home())
-root_dir = home + '/Scratch/knowledge-augmented-skipgram/' ## TODO: CHANGE FOR DIS FILE STRUCTURE
+# root_dir = home + '/Scratch/knowledge-augmented-skipgram/' ## TODO: CHANGE FOR DIS FILE STRUCTURE
+root_dir = home + '/knowledge-augmented-skipgram/' ## TODO: CHANGE FOR DIS FILE STRUCTURE
 
 parameters = {}
 
@@ -63,14 +64,16 @@ parameters['load_model'] = False
 
 
 # BNC DATA
+parameters['bnc_texts_dir'] = parameters['general_data_dir'] + 'British_National_Corpus/Texts/'
+
 bnc_data_name = 'bnc_full_proc_data'
 # parameters['bnc_data_name'] = 'bnc_baby_proc_data'
-parameters['bnc_data_dir'] = os.path.abspath(parameters['general_data_dir'] + 'British_National_Corpus/bnc_full_processed_data/')
+parameters['bnc_data_dir'] = os.path.abspath(parameters['general_data_dir'] + 'British_National_Corpus/bnc_full_processed_data/') + '/'
 parameters['bnc_data'] = parameters['bnc_data_dir'] + bnc_data_name + '.txt'
 parameters['bnc_tags'] = parameters['bnc_data_dir'] + bnc_data_name + '_tags.txt'
 
 parameters['use_data_subset'] = True
-parameters['data_subset_size'] = 0.5
+parameters['data_subset_size'] = 0.1
 bnc_subset_data_name = bnc_data_name + '_shffl_sub-' + str(parameters['data_subset_size']).strip("0").strip(".")
 parameters['bnc_subset_data'] = parameters['bnc_data_dir'] + bnc_subset_data_name + '.txt'
 parameters['bnc_subset_tags'] = parameters['bnc_data_dir'] + bnc_subset_data_name + '_tags.txt'
@@ -79,54 +82,66 @@ parameters['bnc_subset_tags'] = parameters['bnc_data_dir'] + bnc_subset_data_nam
 # parameters['raw_tags'] = bnc_subset_tags if parameters['use_data_subset'] else bnc_tags
 
 data_name = bnc_subset_data_name if parameters['use_data_subset'] else bnc_data_name
+
+parameters['tokenised_data'] = parameters['data_dir'] + 'tok_' + data_name + '.npy'
+
+parameters['counts_file'] = parameters['data_dir'] + 'counts_' + data_name + '.csv'
+
+parameters['to_lower'] = True
+parameters['replace_num'] = True
+parameters['remove_punct'] = True
+
 skipgram_name = 'skipgram_' + data_name
 skipgram_augm_name = 'skipgram_augm_' + data_name
 
-parameters['train_data'] = parameters['data_dir'] + data_name + '_train.txt'
-parameters['train_tags'] = parameters['data_dir'] + data_name + '_train_tags.txt'
-parameters['val_data'] = parameters['data_dir'] + data_name + '_val.txt'
-parameters['val_tags'] = parameters['data_dir'] + data_name + '_val_tags.txt'
+parameters['train_data'] = parameters['data_dir'] + data_name + '_train.npy'
+# parameters['train_tags'] = parameters['data_dir'] + data_name + '_train_tags.txt'
+parameters['val_data'] = parameters['data_dir'] + data_name + '_val.npy'
+# parameters['val_tags'] = parameters['data_dir'] + data_name + '_val_tags.txt'
 
 # parameters['bnc_skipgram_data'] = parameters['bnc_data_dir'] + skipgram_name + '.csv'
 # parameters['bnc_skipgram_augm_data'] = parameters['bnc_data_dir'] + skipgram_augm_name + '.csv'
 
-parameters['train_skipgram_data'] = parameters['data_dir'] + skipgram_name + '_train.csv'
-parameters['train_skipgram_augm_data'] = parameters['data_dir'] + skipgram_augm_name + '_train.csv'
-parameters['val_skipgram_data'] = parameters['data_dir'] + skipgram_name + '_val.csv'
-parameters['val_skipgram_augm_data'] = parameters['data_dir'] + skipgram_augm_name + '_val.csv'
+parameters['train_skipgram_data'] = parameters['data_dir'] + skipgram_name + '_train.npy'
+parameters['train_skipgram_augm_data'] = parameters['data_dir'] + skipgram_augm_name + '_train.npy'
+parameters['val_skipgram_data'] = parameters['data_dir'] + skipgram_name + '_val.npy'
+parameters['val_skipgram_augm_data'] = parameters['data_dir'] + skipgram_augm_name + '_val.npy'
 
 skipgram_sampled_name = 'sampled_' + skipgram_name
 skipgram_augm_sampled_name = 'sampled_' + skipgram_augm_name
 
-parameters['train_skipgram_sampled_data'] = parameters['data_dir'] + skipgram_sampled_name + '_train.csv'
-parameters['train_skipgram_augm_sampled_data'] = parameters['data_dir'] + skipgram_augm_sampled_name + '_train.csv'
-parameters['val_skipgram_sampled_data'] = parameters['data_dir'] + skipgram_sampled_name + '_val.csv'
-parameters['val_skipgram_augm_sampled_data'] = parameters['data_dir'] + skipgram_augm_sampled_name + '_val.csv'
+parameters['train_skipgram_sampled_data'] = parameters['data_dir'] + skipgram_sampled_name + '_train.npy'
+parameters['train_skipgram_augm_sampled_data'] = parameters['data_dir'] + skipgram_augm_sampled_name + '_train.npy'
+parameters['val_skipgram_sampled_data'] = parameters['data_dir'] + skipgram_sampled_name + '_val.npy'
+parameters['val_skipgram_augm_sampled_data'] = parameters['data_dir'] + skipgram_augm_sampled_name + '_val.npy'
 
-parameters['synonym_selection'] = 'sw'
+parameters['synonym_selection'] = 's1'
 skipgram_syns_name = 'syns-' + parameters['synonym_selection'] + '_'+ skipgram_sampled_name
 
-parameters['train_skipgram_syns_data'] = parameters['data_dir'] + skipgram_syns_name + '_train.csv'
-parameters['val_skipgram_syns_data'] = parameters['data_dir'] + skipgram_syns_name + '_val.csv'
+# parameters['train_skipgram_syns_data'] = parameters['data_dir'] + skipgram_syns_name + '_train.csv'
+# parameters['val_skipgram_syns_data'] = parameters['data_dir'] + skipgram_syns_name + '_val.csv'
 # parameters['bnc_skipgram_data'] = parameters['data_dir'] + 'skipgram_bnc_baby_proc_data_1.csv'
 # parameters['bnc_skipgram_augm_data'] = parameters['data_dir'] + 'skipgram_augm_bnc_baby_proc_data_1.csv'
 
-num_skipgram_name = 'num_voc-' + str(parameters['vocab_cutoff']) + '_' + skipgram_name
+num_skipgram_name = 'num_voc-' + str(parameters['vocab_cutoff']) + '_' + skipgram_sampled_name
 num_skipgram_syns_name = 'num_voc-' + str(parameters['vocab_cutoff']) + '_' + skipgram_syns_name
 
-parameters['num_train_skipgram_data'] = parameters['data_dir'] + num_skipgram_name + '_train.csv'
-parameters['num_train_skipgram_syns_data'] = parameters['data_dir'] + num_skipgram_syns_name + '_train.csv'
-parameters['num_val_skipgram_data'] = parameters['data_dir'] + num_skipgram_name + '_val.csv'
-parameters['num_val_skipgram_syns_data'] = parameters['data_dir'] + num_skipgram_syns_name + '_val.csv'
+parameters['num_to_tensor'] = True
+num_data_suffix = 'pt'
 
-parameters['convert_to_npy'] = True
-parameters['num_train_skipgram_npy'] = parameters['data_dir'] + num_skipgram_name + '_train.npy'
-parameters['num_train_skipgram_syns_npy'] = parameters['data_dir'] + num_skipgram_syns_name + '_train.npy'
-parameters['num_val_skipgram_npy'] = parameters['data_dir'] + num_skipgram_name + '_val.npy'
-parameters['num_val_skipgram_syns_npy'] = parameters['data_dir'] + num_skipgram_syns_name + '_val.npy'
+parameters['num_train_skipgram_sampled_data'] = parameters['data_dir'] + num_skipgram_name + '_train.' + num_data_suffix
+parameters['num_train_skipgram_augm_data'] = parameters['data_dir'] + num_skipgram_syns_name + '_train.' + num_data_suffix
+parameters['num_val_skipgram_sampled_data'] = parameters['data_dir'] + num_skipgram_name + '_val.' + num_data_suffix
+parameters['num_val_skipgram_augm_data'] = parameters['data_dir'] + num_skipgram_syns_name + '_val.' + num_data_suffix
 
-bnc_counts = parameters['data_dir'] + 'counts_bnc_full_seqlist_deptree.csv'
-bnc_subset_counts = parameters['data_dir'] + 'counts_' + bnc_subset_data_name + '.csv'
-parameters['counts_file'] = bnc_subset_counts if parameters['use_data_subset'] else bnc_counts
+# parameters['convert_to_npy'] = True
+# parameters['num_train_skipgram_npy'] = parameters['data_dir'] + num_skipgram_name + '_train.npy'
+# parameters['num_train_skipgram_syns_npy'] = parameters['data_dir'] + num_skipgram_syns_name + '_train.npy'
+# parameters['num_val_skipgram_npy'] = parameters['data_dir'] + num_skipgram_name + '_val.npy'
+# parameters['num_val_skipgram_syns_npy'] = parameters['data_dir'] + num_skipgram_syns_name + '_val.npy'
+
+# bnc_counts = parameters['data_dir'] + 'counts_bnc_full_seqlist_deptree.csv'
+# bnc_subset_counts = parameters['data_dir'] + 'counts_' + bnc_subset_data_name + '.csv'
+# parameters['counts_file'] = bnc_subset_counts if parameters['use_data_subset'] else bnc_counts
 
 parameters['vocabulary_indices'] = parameters['model_dir'] + 'vocabulary-' + str(parameters['vocab_cutoff']) + '_wordixs_' + num_skipgram_syns_name + '.csv'

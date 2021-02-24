@@ -1,0 +1,74 @@
+nohup: ignoring input
+
+=================== MODEL PARAMETERS: =================== 
+
+general_data_dir:                /home/diegor/data/
+data_dir:                        /home/diegor/knowledge-augmented-skipgram/data/
+word_embeddings_dir:             /home/diegor/data/word_embeddings/
+vocab_cutoff:                    5
+w2v_path:                        None
+data_augmentation_ratio:         0.25
+w2v_init:                        False
+syn_augm:                        True
+split_ratio:                     0.9
+embedding_size:                  300
+epochs:                          10
+batch_size:                      20
+ctx_size:                        5
+num_neg_samples:                 5
+learning_rate:                   0.01
+model_name:                      rand_init-syns-25r-10e-voc5-emb300
+all_models_dir:                  /home/diegor/knowledge-augmented-skipgram/model/
+model_dir:                       /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/
+model_file:                      /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/rand_init-syns-25r-10e-voc5-emb300.pth
+checkpoints_dir:                 /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/checkpoints/
+input_emb_file:                  /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/rand_init-syns-25r-10e-voc5-emb300
+load_model:                      False
+bnc_texts_dir:                   /home/diegor/data/British_National_Corpus/Texts/
+bnc_data_dir:                    /home/diegor/data/British_National_Corpus/bnc_full_processed_data/
+bnc_data:                        /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data.txt
+bnc_tags:                        /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_tags.txt
+use_data_subset:                 True
+data_subset_size:                0.5
+bnc_subset_data:                 /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_shffl_sub-5.txt
+bnc_subset_tags:                 /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_shffl_sub-5_tags.txt
+tokenised_data:                  /home/diegor/knowledge-augmented-skipgram/data/tok_bnc_full_proc_data_shffl_sub-5.npy
+counts_file:                     /home/diegor/knowledge-augmented-skipgram/data/counts_bnc_full_proc_data_shffl_sub-5.csv
+to_lower:                        True
+replace_num:                     True
+remove_punct:                    True
+train_data:                      /home/diegor/knowledge-augmented-skipgram/data/bnc_full_proc_data_shffl_sub-5_train.npy
+val_data:                        /home/diegor/knowledge-augmented-skipgram/data/bnc_full_proc_data_shffl_sub-5_val.npy
+train_skipgram_data:             /home/diegor/knowledge-augmented-skipgram/data/skipgram_bnc_full_proc_data_shffl_sub-5_train.csv
+train_skipgram_augm_data:        /home/diegor/knowledge-augmented-skipgram/data/skipgram_augm_bnc_full_proc_data_shffl_sub-5_train.csv
+val_skipgram_data:               /home/diegor/knowledge-augmented-skipgram/data/skipgram_bnc_full_proc_data_shffl_sub-5_val.csv
+val_skipgram_augm_data:          /home/diegor/knowledge-augmented-skipgram/data/skipgram_augm_bnc_full_proc_data_shffl_sub-5_val.csv
+train_skipgram_sampled_data:     /home/diegor/knowledge-augmented-skipgram/data/sampled_skipgram_bnc_full_proc_data_shffl_sub-5_train.csv
+train_skipgram_augm_sampled_data:  /home/diegor/knowledge-augmented-skipgram/data/sampled_skipgram_augm_bnc_full_proc_data_shffl_sub-5_train.csv
+val_skipgram_sampled_data:       /home/diegor/knowledge-augmented-skipgram/data/sampled_skipgram_bnc_full_proc_data_shffl_sub-5_val.csv
+val_skipgram_augm_sampled_data:  /home/diegor/knowledge-augmented-skipgram/data/sampled_skipgram_augm_bnc_full_proc_data_shffl_sub-5_val.csv
+synonym_selection:               sw
+train_skipgram_syns_data:        /home/diegor/knowledge-augmented-skipgram/data/syns-sw_sampled_skipgram_bnc_full_proc_data_shffl_sub-5_train.csv
+val_skipgram_syns_data:          /home/diegor/knowledge-augmented-skipgram/data/syns-sw_sampled_skipgram_bnc_full_proc_data_shffl_sub-5_val.csv
+num_train_skipgram_data:         /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_skipgram_bnc_full_proc_data_shffl_sub-5_train.csv
+num_train_skipgram_syns_data:    /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_syns-sw_sampled_skipgram_bnc_full_proc_data_shffl_sub-5_train.csv
+num_val_skipgram_data:           /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_skipgram_bnc_full_proc_data_shffl_sub-5_val.csv
+num_val_skipgram_syns_data:      /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_syns-sw_sampled_skipgram_bnc_full_proc_data_shffl_sub-5_val.csv
+convert_to_npy:                  True
+num_train_skipgram_npy:          /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_skipgram_bnc_full_proc_data_shffl_sub-5_train.npy
+num_train_skipgram_syns_npy:     /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_syns-sw_sampled_skipgram_bnc_full_proc_data_shffl_sub-5_train.npy
+num_val_skipgram_npy:            /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_skipgram_bnc_full_proc_data_shffl_sub-5_val.npy
+num_val_skipgram_syns_npy:       /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_syns-sw_sampled_skipgram_bnc_full_proc_data_shffl_sub-5_val.npy
+vocabulary_indices:              /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/vocabulary-5_wordixs_num_voc-5_syns-sw_sampled_skipgram_bnc_full_proc_data_shffl_sub-5.csv
+
+=================== / MODEL PARAMETERS: =================== 
+
+Processed simple text file found at /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data.txt
+Using data subset: 50.0% of full dataset
+Found existing dataset subset at /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_shffl_sub-5.txt and /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_shffl_sub-5_tags.txt 
+
+Processing sequence lists for dataset at /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_shffl_sub-5.txt, saving to /home/diegor/knowledge-augmented-skipgram/data/tok_bnc_full_proc_data_shffl_sub-5.npy
+Reading data in /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_shffl_sub-5.txt
+Data size: 3009094
+0 sentences processed
+Saving data (3009094 sentences) to /home/diegor/knowledge-augmented-skipgram/data/tok_bnc_full_proc_data_shffl_sub-5.npy

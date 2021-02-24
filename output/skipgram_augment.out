@@ -1,0 +1,598 @@
+nohup: ignoring input
+
+=================== MODEL PARAMETERS: =================== 
+
+general_data_dir:                /home/diegor/data/
+data_dir:                        /home/diegor/knowledge-augmented-skipgram/data/
+word_embeddings_dir:             /home/diegor/data/word_embeddings/
+vocab_cutoff:                    5
+w2v_path:                        None
+data_augmentation_ratio:         0.25
+w2v_init:                        False
+syn_augm:                        True
+split_ratio:                     0.9
+embedding_size:                  300
+epochs:                          10
+batch_size:                      20
+ctx_size:                        5
+num_neg_samples:                 5
+learning_rate:                   0.01
+model_name:                      rand_init-syns-25r-10e-voc5-emb300
+all_models_dir:                  /home/diegor/knowledge-augmented-skipgram/model/
+model_dir:                       /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/
+model_file:                      /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/rand_init-syns-25r-10e-voc5-emb300.pth
+checkpoints_dir:                 /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/checkpoints/
+input_emb_file:                  /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/rand_init-syns-25r-10e-voc5-emb300
+load_model:                      False
+bnc_texts_dir:                   /home/diegor/data/British_National_Corpus/Texts/
+bnc_data_dir:                    /home/diegor/data/British_National_Corpus/bnc_full_processed_data/
+bnc_data:                        /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data.txt
+bnc_tags:                        /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_tags.txt
+use_data_subset:                 True
+data_subset_size:                0.1
+bnc_subset_data:                 /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_shffl_sub-1.txt
+bnc_subset_tags:                 /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_shffl_sub-1_tags.txt
+tokenised_data:                  /home/diegor/knowledge-augmented-skipgram/data/tok_bnc_full_proc_data_shffl_sub-1.npy
+counts_file:                     /home/diegor/knowledge-augmented-skipgram/data/counts_bnc_full_proc_data_shffl_sub-1.csv
+to_lower:                        True
+replace_num:                     True
+remove_punct:                    True
+train_data:                      /home/diegor/knowledge-augmented-skipgram/data/bnc_full_proc_data_shffl_sub-1_train.npy
+val_data:                        /home/diegor/knowledge-augmented-skipgram/data/bnc_full_proc_data_shffl_sub-1_val.npy
+train_skipgram_data:             /home/diegor/knowledge-augmented-skipgram/data/skipgram_bnc_full_proc_data_shffl_sub-1_train.npy
+train_skipgram_augm_data:        /home/diegor/knowledge-augmented-skipgram/data/skipgram_augm_bnc_full_proc_data_shffl_sub-1_train.npy
+val_skipgram_data:               /home/diegor/knowledge-augmented-skipgram/data/skipgram_bnc_full_proc_data_shffl_sub-1_val.npy
+val_skipgram_augm_data:          /home/diegor/knowledge-augmented-skipgram/data/skipgram_augm_bnc_full_proc_data_shffl_sub-1_val.npy
+train_skipgram_sampled_data:     /home/diegor/knowledge-augmented-skipgram/data/sampled_skipgram_bnc_full_proc_data_shffl_sub-1_train.npy
+train_skipgram_augm_sampled_data:  /home/diegor/knowledge-augmented-skipgram/data/sampled_skipgram_augm_bnc_full_proc_data_shffl_sub-1_train.npy
+val_skipgram_sampled_data:       /home/diegor/knowledge-augmented-skipgram/data/sampled_skipgram_bnc_full_proc_data_shffl_sub-1_val.npy
+val_skipgram_augm_sampled_data:  /home/diegor/knowledge-augmented-skipgram/data/sampled_skipgram_augm_bnc_full_proc_data_shffl_sub-1_val.npy
+synonym_selection:               s1
+train_skipgram_syns_data:        /home/diegor/knowledge-augmented-skipgram/data/syns-s1_sampled_skipgram_bnc_full_proc_data_shffl_sub-1_train.csv
+val_skipgram_syns_data:          /home/diegor/knowledge-augmented-skipgram/data/syns-s1_sampled_skipgram_bnc_full_proc_data_shffl_sub-1_val.csv
+num_train_skipgram_data:         /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_skipgram_bnc_full_proc_data_shffl_sub-1_train.csv
+num_train_skipgram_syns_data:    /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_syns-s1_sampled_skipgram_bnc_full_proc_data_shffl_sub-1_train.csv
+num_val_skipgram_data:           /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_skipgram_bnc_full_proc_data_shffl_sub-1_val.csv
+num_val_skipgram_syns_data:      /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_syns-s1_sampled_skipgram_bnc_full_proc_data_shffl_sub-1_val.csv
+convert_to_npy:                  True
+num_train_skipgram_npy:          /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_skipgram_bnc_full_proc_data_shffl_sub-1_train.npy
+num_train_skipgram_syns_npy:     /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_syns-s1_sampled_skipgram_bnc_full_proc_data_shffl_sub-1_train.npy
+num_val_skipgram_npy:            /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_skipgram_bnc_full_proc_data_shffl_sub-1_val.npy
+num_val_skipgram_syns_npy:       /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_syns-s1_sampled_skipgram_bnc_full_proc_data_shffl_sub-1_val.npy
+vocabulary_indices:              /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/vocabulary-5_wordixs_num_voc-5_syns-s1_sampled_skipgram_bnc_full_proc_data_shffl_sub-1.csv
+
+=================== / MODEL PARAMETERS: =================== 
+
+Processed simple text file found at /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data.txt
+Using data subset: 10.0% of full dataset
+Found existing dataset subset at /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_shffl_sub-1.txt and /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_shffl_sub-1_tags.txt 
+
+Found existing dependency trees and sequence lists dataset file at /home/diegor/knowledge-augmented-skipgram/data/tok_bnc_full_proc_data_shffl_sub-1.npy
+
+Found existing word counts file at /home/diegor/knowledge-augmented-skipgram/data/counts_bnc_full_proc_data_shffl_sub-1.csv
+
+Found existing train/validation datasets at: 
+ - /home/diegor/knowledge-augmented-skipgram/data/bnc_full_proc_data_shffl_sub-1_train.npy 
+ - /home/diegor/knowledge-augmented-skipgram/data/bnc_full_proc_data_shffl_sub-1_val.npy
+Context-sampled skip gram training data file found at /home/diegor/knowledge-augmented-skipgram/data/sampled_skipgram_bnc_full_proc_data_shffl_sub-1_train.npy
+Context-sampled Skip-gram validation data file found at /home/diegor/knowledge-augmented-skipgram/data/sampled_skipgram_bnc_full_proc_data_shffl_sub-1_val.npy
+Constructing vocabulary from counts file in /home/diegor/knowledge-augmented-skipgram/data/counts_bnc_full_proc_data_shffl_sub-1.csv
+45769 unique tokens in vocabulary with (with minimum frequency 5)
+Augmenting Skip-gram training dataset at /home/diegor/knowledge-augmented-skipgram/data/skipgram_augm_bnc_full_proc_data_shffl_sub-1_train.npy from sampled training data at /home/diegor/knowledge-augmented-skipgram/data/sampled_skipgram_bnc_full_proc_data_shffl_sub-1_train.npy
+Skipping header: ['focus_word', 'context_word', 'sent_num', 'focus_index', 'context_position']
+100000 word pairs processed
+200000 word pairs processed
+300000 word pairs processed
+400000 word pairs processed
+500000 word pairs processed
+600000 word pairs processed
+700000 word pairs processed
+800000 word pairs processed
+900000 word pairs processed
+1000000 word pairs processed
+1100000 word pairs processed
+1200000 word pairs processed
+1300000 word pairs processed
+1400000 word pairs processed
+1500000 word pairs processed
+1600000 word pairs processed
+1700000 word pairs processed
+1800000 word pairs processed
+1900000 word pairs processed
+2000000 word pairs processed
+2100000 word pairs processed
+2200000 word pairs processed
+2300000 word pairs processed
+2400000 word pairs processed
+2500000 word pairs processed
+2600000 word pairs processed
+2700000 word pairs processed
+2800000 word pairs processed
+2900000 word pairs processed
+3000000 word pairs processed
+3100000 word pairs processed
+3200000 word pairs processed
+3300000 word pairs processed
+3400000 word pairs processed
+3500000 word pairs processed
+3600000 word pairs processed
+3700000 word pairs processed
+3800000 word pairs processed
+3900000 word pairs processed
+4000000 word pairs processed
+4100000 word pairs processed
+4200000 word pairs processed
+4300000 word pairs processed
+4400000 word pairs processed
+4500000 word pairs processed
+4600000 word pairs processed
+4700000 word pairs processed
+4800000 word pairs processed
+4900000 word pairs processed
+5000000 word pairs processed
+5100000 word pairs processed
+5200000 word pairs processed
+5300000 word pairs processed
+5400000 word pairs processed
+5500000 word pairs processed
+5600000 word pairs processed
+5700000 word pairs processed
+5800000 word pairs processed
+5900000 word pairs processed
+6000000 word pairs processed
+6100000 word pairs processed
+6200000 word pairs processed
+6300000 word pairs processed
+6400000 word pairs processed
+6500000 word pairs processed
+6600000 word pairs processed
+6700000 word pairs processed
+6800000 word pairs processed
+6900000 word pairs processed
+7000000 word pairs processed
+7100000 word pairs processed
+7200000 word pairs processed
+7300000 word pairs processed
+7400000 word pairs processed
+7500000 word pairs processed
+7600000 word pairs processed
+7700000 word pairs processed
+7800000 word pairs processed
+7900000 word pairs processed
+8000000 word pairs processed
+8100000 word pairs processed
+8200000 word pairs processed
+8300000 word pairs processed
+8400000 word pairs processed
+8500000 word pairs processed
+8600000 word pairs processed
+8700000 word pairs processed
+8800000 word pairs processed
+8900000 word pairs processed
+9000000 word pairs processed
+9100000 word pairs processed
+9200000 word pairs processed
+9300000 word pairs processed
+9400000 word pairs processed
+9500000 word pairs processed
+9600000 word pairs processed
+9700000 word pairs processed
+9800000 word pairs processed
+9900000 word pairs processed
+10000000 word pairs processed
+10100000 word pairs processed
+10200000 word pairs processed
+10300000 word pairs processed
+10400000 word pairs processed
+10500000 word pairs processed
+10600000 word pairs processed
+10700000 word pairs processed
+10800000 word pairs processed
+10900000 word pairs processed
+11000000 word pairs processed
+11100000 word pairs processed
+11200000 word pairs processed
+11300000 word pairs processed
+11400000 word pairs processed
+11500000 word pairs processed
+11600000 word pairs processed
+11700000 word pairs processed
+11800000 word pairs processed
+11900000 word pairs processed
+12000000 word pairs processed
+12100000 word pairs processed
+12200000 word pairs processed
+12300000 word pairs processed
+12400000 word pairs processed
+12500000 word pairs processed
+12600000 word pairs processed
+12700000 word pairs processed
+12800000 word pairs processed
+12900000 word pairs processed
+13000000 word pairs processed
+13100000 word pairs processed
+13200000 word pairs processed
+13300000 word pairs processed
+13400000 word pairs processed
+13500000 word pairs processed
+13600000 word pairs processed
+13700000 word pairs processed
+13800000 word pairs processed
+13900000 word pairs processed
+14000000 word pairs processed
+14100000 word pairs processed
+14200000 word pairs processed
+14300000 word pairs processed
+14400000 word pairs processed
+14500000 word pairs processed
+14600000 word pairs processed
+14700000 word pairs processed
+14800000 word pairs processed
+14900000 word pairs processed
+15000000 word pairs processed
+15100000 word pairs processed
+15200000 word pairs processed
+15300000 word pairs processed
+15400000 word pairs processed
+15500000 word pairs processed
+15600000 word pairs processed
+15700000 word pairs processed
+15800000 word pairs processed
+15900000 word pairs processed
+16000000 word pairs processed
+16100000 word pairs processed
+16200000 word pairs processed
+16300000 word pairs processed
+16400000 word pairs processed
+16500000 word pairs processed
+16600000 word pairs processed
+16700000 word pairs processed
+16800000 word pairs processed
+16900000 word pairs processed
+17000000 word pairs processed
+17100000 word pairs processed
+17200000 word pairs processed
+17300000 word pairs processed
+17400000 word pairs processed
+17500000 word pairs processed
+17600000 word pairs processed
+17700000 word pairs processed
+17800000 word pairs processed
+17900000 word pairs processed
+18000000 word pairs processed
+18100000 word pairs processed
+18200000 word pairs processed
+18300000 word pairs processed
+18400000 word pairs processed
+18500000 word pairs processed
+18600000 word pairs processed
+18700000 word pairs processed
+18800000 word pairs processed
+18900000 word pairs processed
+19000000 word pairs processed
+19100000 word pairs processed
+19200000 word pairs processed
+19300000 word pairs processed
+19400000 word pairs processed
+19500000 word pairs processed
+19600000 word pairs processed
+19700000 word pairs processed
+19800000 word pairs processed
+19900000 word pairs processed
+20000000 word pairs processed
+20100000 word pairs processed
+20200000 word pairs processed
+20300000 word pairs processed
+20400000 word pairs processed
+20500000 word pairs processed
+20600000 word pairs processed
+20700000 word pairs processed
+20800000 word pairs processed
+20900000 word pairs processed
+21000000 word pairs processed
+21100000 word pairs processed
+21200000 word pairs processed
+21300000 word pairs processed
+21400000 word pairs processed
+21500000 word pairs processed
+21600000 word pairs processed
+21700000 word pairs processed
+21800000 word pairs processed
+21900000 word pairs processed
+22000000 word pairs processed
+22100000 word pairs processed
+22200000 word pairs processed
+22300000 word pairs processed
+22400000 word pairs processed
+22500000 word pairs processed
+22600000 word pairs processed
+22700000 word pairs processed
+22800000 word pairs processed
+22900000 word pairs processed
+23000000 word pairs processed
+23100000 word pairs processed
+23200000 word pairs processed
+23300000 word pairs processed
+23400000 word pairs processed
+23500000 word pairs processed
+23600000 word pairs processed
+23700000 word pairs processed
+23800000 word pairs processed
+23900000 word pairs processed
+24000000 word pairs processed
+24100000 word pairs processed
+24200000 word pairs processed
+24300000 word pairs processed
+24400000 word pairs processed
+24500000 word pairs processed
+24600000 word pairs processed
+24700000 word pairs processed
+24800000 word pairs processed
+24900000 word pairs processed
+25000000 word pairs processed
+25100000 word pairs processed
+25200000 word pairs processed
+25300000 word pairs processed
+25400000 word pairs processed
+25500000 word pairs processed
+25600000 word pairs processed
+25700000 word pairs processed
+25800000 word pairs processed
+25900000 word pairs processed
+26000000 word pairs processed
+26100000 word pairs processed
+26200000 word pairs processed
+26300000 word pairs processed
+26400000 word pairs processed
+26500000 word pairs processed
+26600000 word pairs processed
+26700000 word pairs processed
+26800000 word pairs processed
+26900000 word pairs processed
+27000000 word pairs processed
+27100000 word pairs processed
+27200000 word pairs processed
+27300000 word pairs processed
+27400000 word pairs processed
+27500000 word pairs processed
+27600000 word pairs processed
+27700000 word pairs processed
+27800000 word pairs processed
+27900000 word pairs processed
+28000000 word pairs processed
+28100000 word pairs processed
+28200000 word pairs processed
+28300000 word pairs processed
+28400000 word pairs processed
+28500000 word pairs processed
+28600000 word pairs processed
+28700000 word pairs processed
+28800000 word pairs processed
+28900000 word pairs processed
+29000000 word pairs processed
+29100000 word pairs processed
+29200000 word pairs processed
+29300000 word pairs processed
+29400000 word pairs processed
+29500000 word pairs processed
+29600000 word pairs processed
+29700000 word pairs processed
+29800000 word pairs processed
+29900000 word pairs processed
+30000000 word pairs processed
+30100000 word pairs processed
+30200000 word pairs processed
+30300000 word pairs processed
+30400000 word pairs processed
+30500000 word pairs processed
+30600000 word pairs processed
+30700000 word pairs processed
+30800000 word pairs processed
+30900000 word pairs processed
+31000000 word pairs processed
+31100000 word pairs processed
+31200000 word pairs processed
+31300000 word pairs processed
+31400000 word pairs processed
+31500000 word pairs processed
+31600000 word pairs processed
+31700000 word pairs processed
+31800000 word pairs processed
+31900000 word pairs processed
+32000000 word pairs processed
+32100000 word pairs processed
+32200000 word pairs processed
+32300000 word pairs processed
+32400000 word pairs processed
+32500000 word pairs processed
+32600000 word pairs processed
+32700000 word pairs processed
+32800000 word pairs processed
+32900000 word pairs processed
+33000000 word pairs processed
+33100000 word pairs processed
+33200000 word pairs processed
+33300000 word pairs processed
+33400000 word pairs processed
+33500000 word pairs processed
+33600000 word pairs processed
+33700000 word pairs processed
+33800000 word pairs processed
+33900000 word pairs processed
+34000000 word pairs processed
+34100000 word pairs processed
+34200000 word pairs processed
+34300000 word pairs processed
+34400000 word pairs processed
+34500000 word pairs processed
+34600000 word pairs processed
+34700000 word pairs processed
+34800000 word pairs processed
+34900000 word pairs processed
+35000000 word pairs processed
+35100000 word pairs processed
+35200000 word pairs processed
+35300000 word pairs processed
+35400000 word pairs processed
+35500000 word pairs processed
+35600000 word pairs processed
+35700000 word pairs processed
+35800000 word pairs processed
+35900000 word pairs processed
+36000000 word pairs processed
+36100000 word pairs processed
+36200000 word pairs processed
+36300000 word pairs processed
+36400000 word pairs processed
+36500000 word pairs processed
+36600000 word pairs processed
+36700000 word pairs processed
+36800000 word pairs processed
+36900000 word pairs processed
+37000000 word pairs processed
+37100000 word pairs processed
+37200000 word pairs processed
+37300000 word pairs processed
+37400000 word pairs processed
+37500000 word pairs processed
+37600000 word pairs processed
+37700000 word pairs processed
+37800000 word pairs processed
+37900000 word pairs processed
+38000000 word pairs processed
+38100000 word pairs processed
+38200000 word pairs processed
+38300000 word pairs processed
+38400000 word pairs processed
+38500000 word pairs processed
+38600000 word pairs processed
+38700000 word pairs processed
+38800000 word pairs processed
+38900000 word pairs processed
+39000000 word pairs processed
+39100000 word pairs processed
+39200000 word pairs processed
+39300000 word pairs processed
+39400000 word pairs processed
+39500000 word pairs processed
+39600000 word pairs processed
+39700000 word pairs processed
+39800000 word pairs processed
+39900000 word pairs processed
+40000000 word pairs processed
+40100000 word pairs processed
+40200000 word pairs processed
+40300000 word pairs processed
+40400000 word pairs processed
+40500000 word pairs processed
+40600000 word pairs processed
+40700000 word pairs processed
+40800000 word pairs processed
+40900000 word pairs processed
+41000000 word pairs processed
+41100000 word pairs processed
+41200000 word pairs processed
+41300000 word pairs processed
+41400000 word pairs processed
+41500000 word pairs processed
+41600000 word pairs processed
+41700000 word pairs processed
+41800000 word pairs processed
+41900000 word pairs processed
+42000000 word pairs processed
+42100000 word pairs processed
+42200000 word pairs processed
+42300000 word pairs processed
+42400000 word pairs processed
+42500000 word pairs processed
+42600000 word pairs processed
+42700000 word pairs processed
+42800000 word pairs processed
+42900000 word pairs processed
+43000000 word pairs processed
+43100000 word pairs processed
+43200000 word pairs processed
+43300000 word pairs processed
+43400000 word pairs processed
+43500000 word pairs processed
+43600000 word pairs processed
+43700000 word pairs processed
+43800000 word pairs processed
+43900000 word pairs processed
+44000000 word pairs processed
+44100000 word pairs processed
+44200000 word pairs processed
+44300000 word pairs processed
+44400000 word pairs processed
+44500000 word pairs processed
+44600000 word pairs processed
+44700000 word pairs processed
+44800000 word pairs processed
+44900000 word pairs processed
+45000000 word pairs processed
+45100000 word pairs processed
+45200000 word pairs processed
+45300000 word pairs processed
+45400000 word pairs processed
+45500000 word pairs processed
+45600000 word pairs processed
+45700000 word pairs processed
+45800000 word pairs processed
+45900000 word pairs processed
+46000000 word pairs processed
+46100000 word pairs processed
+46200000 word pairs processed
+Saving 19536942 augmented Skip-gram datapoints to /home/diegor/knowledge-augmented-skipgram/data/skipgram_augm_bnc_full_proc_data_shffl_sub-1_train.npy
+Augmenting Skip-gram validation dataset at /home/diegor/knowledge-augmented-skipgram/data/skipgram_augm_bnc_full_proc_data_shffl_sub-1_val.npy from sampled validationg data at /home/diegor/knowledge-augmented-skipgram/data/sampled_skipgram_bnc_full_proc_data_shffl_sub-1_val.npy
+Skipping header: ['focus_word', 'context_word', 'sent_num', 'focus_index', 'context_position']
+100000 word pairs processed
+200000 word pairs processed
+300000 word pairs processed
+400000 word pairs processed
+500000 word pairs processed
+600000 word pairs processed
+700000 word pairs processed
+800000 word pairs processed
+900000 word pairs processed
+1000000 word pairs processed
+1100000 word pairs processed
+1200000 word pairs processed
+1300000 word pairs processed
+1400000 word pairs processed
+1500000 word pairs processed
+1600000 word pairs processed
+1700000 word pairs processed
+1800000 word pairs processed
+1900000 word pairs processed
+2000000 word pairs processed
+2100000 word pairs processed
+2200000 word pairs processed
+2300000 word pairs processed
+2400000 word pairs processed
+2500000 word pairs processed
+2600000 word pairs processed
+2700000 word pairs processed
+2800000 word pairs processed
+2900000 word pairs processed
+3000000 word pairs processed
+3100000 word pairs processed
+3200000 word pairs processed
+3300000 word pairs processed
+3400000 word pairs processed
+3500000 word pairs processed
+3600000 word pairs processed
+3700000 word pairs processed
+3800000 word pairs processed
+3900000 word pairs processed
+4000000 word pairs processed
+4100000 word pairs processed
+4200000 word pairs processed
+4300000 word pairs processed
+4400000 word pairs processed
+4500000 word pairs processed
+4600000 word pairs processed
+4700000 word pairs processed
+4800000 word pairs processed
+4900000 word pairs processed
+5000000 word pairs processed
+Saving 2155478 augmented Skip-gram datapoints to /home/diegor/knowledge-augmented-skipgram/data/skipgram_augm_bnc_full_proc_data_shffl_sub-1_val.npy

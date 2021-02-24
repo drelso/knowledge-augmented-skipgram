@@ -14,9 +14,12 @@ from collections import Counter
 import contextlib
 
 import numpy as np
+from numpy.core.numeric import False_
 
+import spacy
 from nltk.corpus import wordnet as wn
 
+import torch
 import torchtext
 
 from .funcs import sample_files, process_gutenberg_data, lightweight_dataset
@@ -101,6 +104,98 @@ def shuffle_and_subset_dataset(data_path, tags_path, subset_data_path, subset_ta
         print(f'POS tags at line {random_ix}: \n {verification_tags}')
 
 
+def process_all_datafiles(data_dir, dataset_savefile, tags_savefile=None, use_headwords=False, replace_nums=False, replace_unclass=False):
+    """
+    Given a data directory (for BNC XML files)
+    go through all files in the directory, process
+    them, and append them to the processed data
+    save file
+    
+    Parameters
+    ----------
+    data_dir : str
+        directory containing all subdirectories
+        and BNC XML files
+    dataset_savefile : str
+        filepath to the processed data file to
+        save to
+    use_headwords : bool, optional
+        whether to use headwords or the raw
+        version of the words (default: False)
+    replace_nums : bool, optional
+        whether to replace numbers with a default
+        tag <NUM> (default: False)
+    replace_unclass : bool, optional
+        whether to replace "unclassified" (i.e.) with a
+        default tag <UNC> (default: False)
+    """
+    for path in os.listdir(data_dir):
+        full_path = data_dir + path
+        if os.path.isdir(full_path):
+            print('Opening ', full_path, 'directory')
+            items = os.listdir(full_path)
+            print(f'Directory contains {len(items)} files')
+            for item in items:
+                dir_path = full_path + '/' + item
+                if item.endswith('.xml'):
+                    print('Processing file', dir_path)
+                    construct_dataset(dir_path, dataset_savefile, tags_savefile=tags_savefile, use_headwords=use_headwords, replace_nums=replace_nums, replace_unclass=replace_unclass)
+                elif os.path.isdir(dir_path):
+                    files = os.listdir(dir_path)
+                    for file in files:
+                        filepath = dir_path + '/' + file
+                        print('Processing file', filepath)
+                        construct_dataset(filepath, dataset_savefile, tags_savefile=tags_savefile, use_headwords=use_headwords, replace_nums=replace_nums, replace_unclass=replace_unclass)
+
+
+def construct_dataset(bnc_xml_filename, dataset_savefile, tags_savefile=None, use_headwords=False, include_heads=False, replace_nums=False, replace_unclass=False):
+    """
+    Opens a BNC XML data file, processes the text
+    and appends it to a save file
+    
+    Parameters
+    ----------
+    bnc_xml_filename : str
+        filepath to the BNC XML file to process
+    dataset_savefile : str
+        filepath to the file to save the processed
+        data to
+    tags_savefile : str, optional
+        filepath to the file to save the POS tag
+        data to (default: None)
+    use_headwords : bool, optional
+        whether to use headwords or the raw
+        version of the words (default: False)
+    include_heads : bool, optional
+        whether to include the headings (e.g.
+        titles) or only process the body of the
+        text (default: True)
+    replace_nums : bool, optional
+        whether to replace numbers with a default
+        tag <NUM> (default: False)
+    replace_unclass : bool, optional
+        whether to replace "unclassified" (i.e.) with a
+        default tag <UNC> (default: False)
+    """
+    
+    if tags_savefile:
+        open_tags_file = open(tags_savefile, 'a+')
+    else:
+        print('No tags file, skipping')
+        open_tags_file = dummy_context_mgr()
+    
+    with open(dataset_savefile, 'a+', encoding='utf-8') as savefile, \
+        open_tags_file as tags_file:
+        print('Reading data from', bnc_xml_filename)
+        text, tags = raw_text_from_elem_tree(bnc_xml_filename, use_headwords=use_headwords, replace_nums=replace_nums, replace_unclass=replace_unclass)
+        print('Writing text data to', dataset_savefile)
+        savefile.write(text)
+        if tags_savefile:
+            print('Writing POS tag data to', tags_savefile)
+            tags_file.write(tags)
+        print('Done writing')
+
+
 def build_vocabulary(counts_file, vocab_ixs_file, min_freq=1):
     ''''
     Builds a torchtext.vocab object from a CSV file of word
@@ -152,7 +247,281 @@ def build_vocabulary(counts_file, vocab_ixs_file, min_freq=1):
     return vocabulary
 
 
-def numericalise_dataset(data_path, save_path, vocabulary, write_batch=100000, has_header=True):
+def raw_text_from_elem_tree(filename, use_headwords=False, replace_nums=False, replace_unclass=False):
+    """
+    This function only processes the words in
+    a sentence, skips punctuation, and can
+    optionally use headwords instead of raw text.
+    Headwords are the (lowercase) root form of
+    the word, e.g. the word "Said" has headword
+    "say".
+    
+    Requirements
+    ------------
+    import xml.etree.ElementTree as ET
+    
+    Parameters
+    ----------
+    filename : str
+        path to XML file to parse
+    use_headwords : bool, optional
+        whether to use headwords or the raw
+        version of the words (default: False)
+    replace_nums : bool, optional
+        whether to replace numbers with a default
+        tag <NUM> (default: False)
+    replace_unclass : bool, optional
+        whether to replace "unclassified" (i.e.) with a
+        default tag <UNC> (default: False)
+    
+    Returns
+    -------
+    str
+        full processed text
+    """
+    
+    root = ET.parse(filename).getroot()
+    text = ''
+    tags = ''
+
+    for sent in root.iter(tag='s'):
+        # Gets all text, ignores all the rest
+        # print([w for w in sent.itertext()])
+        
+        tokens = []
+        sent_text = ''
+        sent_tags = ''
+
+        for token in sent:
+            if token.tag == 'mw':
+                for w in token:
+                    tokens.append(w)
+            else:
+                tokens.append(token)
+        
+        word = ''
+        tag = ''
+
+        for token in tokens:
+            # Skip empty words
+            if token.text is None: continue 
+            word = token.text.strip()
+            
+            if token.tag == 'w':
+                tag = token.attrib['pos']
+                # Replace word with head word (lemma)
+                if use_headwords:
+                    word = token.attrib['hw']
+
+                # Replace numbers with <NUM>
+                if replace_nums and token.attrib['c5'] == 'CRD':
+                    word = '<NUM>'
+                
+                # Replace "unclassified" words with <UNC>
+                if replace_unclass and token.attrib['c5'] == 'UNC':
+                    word = '<UNC>'
+            elif token.tag == 'c':
+                # For punctuation use C5 tag
+                tag = token.attrib['c5']
+            
+            if word and tag:
+                sent_text += word + ' '
+                sent_tags += tag + ' '
+        
+        if sent_text and sent_tags:
+            text += sent_text + '\n'
+            tags += sent_tags + '\n'
+
+    # @DEBUG:
+    # with open(filename, 'r') as f:
+    #     xml_lines = f.readlines()
+    #     print(f'Lines in XML:{len(xml_lines)}')
+
+    text_lines = text.count("\n")+1
+    tag_lines = tags.count("\n")+1
+    if text_lines != tag_lines:
+        print(f'Lines in text:{text_lines} \t and tags: {tag_lines}')
+    
+    return text, tags
+
+
+def transform_token(token, to_lower=True, replace_num=True, remove_punct=False):
+    """
+    Perform preliminary transformations
+    to spaCy token
+
+    Parameters
+    ----------
+    token : spaCy token object
+        object containing the token text and tags
+    to_lower : bool
+        whether to convert tokens to lowercase
+        (default: True)
+    replace_num : bool
+        whether to replace numbers with number
+        format, e.g. 12.5 => ##.# (default: True)
+    remove_punct : bool
+        whether to remove punctuation tokens
+        (default: False)
+    """
+    # Skip punctuation token
+    if remove_punct and token.pos_ == 'PUNCT':
+        return None
+
+    token_text = token.lower_ if to_lower else token.text
+    
+    if replace_num and token.pos_ == 'NUM':
+        token_text = format_num(token_text)
+    
+    return token_text
+
+
+def format_num(number):
+    """
+    Change number string to a placeholder
+    format. For example:
+        12.43 => ##.##
+
+    Requirements
+    ------------
+    import re
+
+    Parameters
+    ----------
+    number : str
+        number to format
+    """
+
+    return re.sub(r"[0-9]", '#', number)
+
+
+def seqlist_from_raw_text(datafile, dataset_savefile, to_lower=True, replace_num=True, remove_punct=False):
+    """
+    Convert a raw text file into a dependency tree and a sequence
+    list dictionary and save it to file
+
+    Requirements
+    ------------
+    import spacy
+    import numpy as np
+
+    Parameters
+    ----------
+    datafile : str
+        path to the raw text data file
+    dataset_savefile : str
+        path to save the new dataset file to
+    to_lower : bool
+        whether to convert tokens to lowercase
+        (default: True)
+    replace_num : bool
+        whether to replace numbers with number
+        format, e.g. 12.5 => ##.# (default: True)
+    remove_punct : bool
+        whether to remove punctuation tokens
+        (default: False)
+    """
+    with open(datafile, 'r', encoding='utf-8') as d:
+        print(f'Reading data in {datafile}')
+        data = d.read().splitlines()
+
+    print(f'Data size: {len(data)}')
+    
+    spacy.prefer_gpu()
+    nlp = spacy.load('en_core_web_sm', disable=['ner', 'textcat'])
+
+    tok_dataset = []
+
+    # with open(dataset_savefile, 'w+', encoding='utf-8') as s:
+    for i, sent in enumerate(data):
+        doc = nlp(sent)
+        seq = []
+
+        for token in doc:
+            token_text = transform_token(token, to_lower=to_lower, replace_num=replace_num, remove_punct=remove_punct)
+
+            # Skip empty strings and None values
+            if token_text: seq.append([token_text, token.pos_])
+
+        # s.write(seq)
+        # s.write('\n')
+        tok_dataset.append(seq)
+
+        if i % (len(data)/10) == 0:
+            print(f'{i} sentences processed', flush=True)
+    
+    print(f'Saving data ({len(tok_dataset)} sentences) to {dataset_savefile}')
+    np.save(dataset_savefile, tok_dataset)
+
+
+def numericalise_dataset(skipgram_dataset, num_data_file, vocabulary, to_tensor=False, device=torch.device('cpu'), write_batch=1000000, has_header=True):
+    '''
+    FUNCTION FOR SKIP GRAM DATASET
+    Convert Skip gram CSV dataset from words to the
+    corresponding indices in the provided vocabulary 
+
+    Requirements
+    ------------
+    import torch
+    
+    Parameters
+    ----------
+    skipgram_dataset : str
+        path to the file containing the NPY dataset
+        with the Skip-gram dataset
+    num_data_file : str
+        path to save the numericalised data to
+    vocabulary : torchtext.vocab
+        vocabulary object to use to numericalise
+    to_tensor : bool, optional
+        whether to save numericalised data as tensors
+        (default: False)
+    device : torch.device, optional
+        device for tensor construction
+        (default: torch.device('cpu'))
+    write_batch : int, optional
+        how many datapoints to write per operation
+        (default: 1000000)
+    has_header : bool, optional
+        whether the CSV data file has a header, so
+        the first row can be skipped (default: True)
+    '''
+    data = np.load(skipgram_dataset)
+    num_dataset = []
+
+    WORD_IX = 0
+    is_augmented = False
+
+    for i, row in enumerate(data):
+        if len(row) == 5:
+            focus, ctx, sent_num, focus_i, ctx_pos = row
+        elif len(row) == 6:
+            synonym, ctx, sent_num, focus_i, ctx_pos, focus = row
+            is_augmented = True
+        if has_header and i == 0:
+            print(f'Skipping header: {row}')
+            continue
+        
+        focus_word = focus[WORD_IX] if not is_augmented else synonym
+        focus_ix = vocabulary.stoi[focus_word]
+        ctx_ix = vocabulary.stoi[ctx[WORD_IX]]
+
+        num_dataset.append([focus_ix, ctx_ix])
+
+        if not i % write_batch:
+            print(f'{i} word pairs numericalised', flush=True)
+    
+    del data
+
+    if to_tensor:
+        print(f'Saving {len(num_dataset)} numericalised Skip-gram datapoints to tensor file at {num_data_file}')
+        tensor_data = torch.tensor(num_dataset, device=device, dtype=torch.long)
+        torch.save(tensor_data, num_data_file)
+    else:
+        print(f'Saving {len(num_dataset)} numericalised Skip-gram datapoints to NPY file at {num_data_file}')
+        np.save(num_data_file, num_dataset)
+
+def numericalise_dataset_csv(data_path, save_path, vocabulary, write_batch=100000, has_header=True):
     '''
     FUNCTION FOR SKIP GRAM DATASET
     Convert Skip gram CSV dataset from words to the
@@ -285,7 +654,50 @@ def numeric_csv_to_npy(source_file, save_file):
         np.save(save_file, rows)
 
 
-def train_validate_split(clean_data_file, train_savefile, val_savefile, tags_data_file=None, train_tags_savefile=None, val_tags_savefile=None, proportion=0.85):
+def train_validate_split(tokenised_npy_file, train_savefile, val_savefile, proportion=0.85):
+    """
+    Splits the raw data into a training and a
+    validation set according to a specified
+    proportion and saves each set to a separate
+    file
+    
+    Requirements
+    ------------
+    import numpy as np
+    
+    Parameters
+    ----------
+    tokenised_npy_file : str
+        filepath to the tokenised NPY file (assumed
+        to be a list of sentences, which are lists
+        of words)
+    train_savefile : str
+        filepath to the file to save the training
+        data to
+    val_savefile : str
+        filepath to the file to save the validation
+        data to
+    proportion : float, optional
+        proportion of training data to sample from
+        the full dataset (default: 0.85)
+    
+    NOTE: memory intensive, possibly due to NumPy indexing
+    """
+    print(f'Train ({proportion})/Validate ({1-proportion}) split for {tokenised_npy_file}')
+    full_dataset = np.load(tokenised_npy_file)
+    split_mask = np.random.choice(a=[True, False], size=(len(full_dataset)), p=[proportion, 1-proportion])
+
+    num_training = np.sum(split_mask)
+    num_validation = len(full_dataset) - num_training
+
+    print(f'Writing {num_training} training samples to {train_savefile}')
+    np.save(train_savefile, full_dataset[split_mask])
+
+    print(f'Writing {num_validation} validation samples to {val_savefile}')
+    np.save(val_savefile, full_dataset[~split_mask])
+
+
+def raw_text_train_validate_split(clean_data_file, train_savefile, val_savefile, tags_data_file=None, train_tags_savefile=None, val_tags_savefile=None, proportion=0.85):
     """
     Splits the raw data into a training and a
     validation set according to a specified
@@ -751,6 +1163,348 @@ def select_synonyms(data_file, save_file, vocabulary, syn_selection='ml'):
 @contextlib.contextmanager
 def dummy_context_mgr():
     yield None
+
+
+
+def seqlist_to_skipgram_data(seqlist_dataset, skipgram_dataset, ctx_size=5, write_batch=10000):
+    """
+    Generate datasets in the Skip Gram format
+    (Mikolov et al., 2013): word pairs
+    consisting of a centre or 'focus' word and
+    the words within its context window
+
+    The seqlist dataset is an NPY file expected
+    to be an array of sentences, where each sentence
+    is a list of [word, POS_tag] tuples
+    
+    The dataset is saved to an NPY file with the
+    following columns:
+        - 0 : focus_word (word, POS_tag)
+        - 1 : context_word (word, POS_tag)
+        - 2 : sent_num
+        - 3 : focus_index
+        - 4 : context_position
+    
+    Requirements
+    ------------
+    import numpy as np
+    
+    Parameters
+    ----------
+    seqlist_data_file : str
+        path to raw text source file
+    skipgram_data_file : str
+        path to dataset save file
+    ctx_size : int, optional
+        context window size (default: 5)
+    write_batch : int, optional
+        how many datapoints to write per operation
+        (default: 10000)
+    """
+    skipgram_data = [['focus_word', 'context_word', 'sent_num', 'focus_index', 'context_position']]
+
+    data = np.load(seqlist_dataset)
+
+    # Go through all sentences tokenised by spaCy
+    # Word pairs are constrained to sentence appearances,
+    # i.e. no inter-sentence word pairs
+    for sent_i, sent in enumerate(data):
+        num_tokens = len(sent)
+        if num_tokens < 2: continue
+
+        for focus_i, focus_word in enumerate(sent):
+            ctx_min = max((focus_i - ctx_size), 0)
+            ctx_max = min((focus_i + ctx_size), num_tokens-1)
+
+            word_pairs = []
+
+            # Go through every context word in the window
+            for ctx_i in range(ctx_min, ctx_max+1):
+                if ctx_i == focus_i: continue
+                ctx_word = sent[ctx_i]
+                ctx_pos = ctx_i - focus_i
+
+                if focus_word and ctx_word:
+                    word_pairs.append([
+                            focus_word,
+                            ctx_word,
+                            sent_i,
+                            focus_i,
+                            ctx_pos
+                        ])
+            
+            if word_pairs: skipgram_data.extend(word_pairs)
+            
+        if sent_i == 0:
+            print(f'First sentence: {sent} \nWord pairs:\n{skipgram_data}\n')
+
+        if not sent_i % write_batch:
+            print(f'{sent_i} sentences processed', flush=True)
+
+    del data
+
+    print(f'Saving {len(skipgram_data)} Skip-gram datapoints to {skipgram_dataset}')
+    np.save(skipgram_dataset, skipgram_data)
+
+
+def skipgram_sampling(skipgram_dataset, skipgram_sampled_dataset, max_context=5, has_header=True):
+    """
+    From existing SkipGram word pair dataset
+    sample through the context position
+
+    %%%, align sampled pairs with augmented pairs and sample a single synonym from this alignment
+    
+    Input files are expected to be NPY files with
+    the following format:
+        - 0 : focus_word (word, POS_tag)
+        - 1 : context_word (word, POS_tag)
+        - 2 : sent_num
+        - 3 : focus_index
+        - 4 : context_position
+    
+    Requirements
+    ------------
+    import numpy as np
+
+    import re
+    import random
+    
+    Parameters
+    ----------
+    skipgram_dataset : str
+        path to source dataset file
+    skipgram_sampled_dataset : str
+        path to write sampled dataset file to
+    max_context : int, optional
+        maximum size of the context window, all
+        samples will be taken by sampling from 1
+        to this number (default: 5)
+    """
+    data = np.load(skipgram_dataset)
+    
+    if has_header: sampled_data = [['focus_word', 'context_word', 'sent_num', 'focus_index', 'context_position']]
+    
+    # Sample a random number between 1 and the
+    # full context size for every word pair
+    # ()
+    rand_contexts = np.random.choice(a=np.arange(1, max_context+1), size=len(data), replace=True)
+
+    for i, [focus, ctx, sent_num, focus_i, ctx_pos] in enumerate(data):
+        if has_header and i == 0:
+            print(f'Skipping header: {[focus, ctx, sent_num, focus_i, ctx_pos]}')
+            sampled_data = [[focus, ctx, sent_num, focus_i, ctx_pos]]
+            continue
+        
+        # If sampled number is smaller than context position
+        # add word pair to dataset
+        if rand_contexts[i] >= abs(ctx_pos):
+            sampled_data.append([focus, ctx, sent_num, focus_i, ctx_pos])
+    
+    del data
+
+    print(f'Saving {len(sampled_data)} sampled Skip-gram datapoints to {skipgram_sampled_dataset}')
+    np.save(skipgram_sampled_dataset, sampled_data)
+
+
+def augment_npy_skipgram(skipgram_dataset, augm_dataset_file, vocabulary, ctx_size=5, write_batch=1000000, has_header=True, syn_selection='s1'):
+    """
+    Augment a Skip-gram dataset with synonyms
+    for the focus word. Synonyms are extracted
+    from synsets of the WordNet knowledge base
+    that match the word and POS tag of the focus
+    word. The Skip-gram dataset is an NPY file
+    with the following columns:
+        - 0 : focus_word (word, POS_tag)
+        - 1 : context_word (word, POS_tag)
+        - 2 : sent_num
+        - 3 : focus_index
+        - 4 : context_position
+        
+    
+    Save augmented dataset to an NPY filw with the
+    following columns:
+        - 0 : synonym (word, POS_tag)
+        - 1 : context_word (word, POS_tag)
+        - 2 : sent_num
+        - 3 : focus_index
+        - 4 : context_position
+        - 5 : focus_word (word, POS_tag)
+    
+    Requirements
+    ------------
+    synonym_selection (local function)
+    import numpy as np
+    from nltk.corpus import wordnet as wn
+        WordNet object from NLTK
+    
+    Parameters
+    ----------
+    skipgram_dataset : str
+        path to Skip-gram NPY dataset
+    augm_dataset_file : str
+        path to augmented dataset save file
+    vocabulary : torchtext.Vocab
+        torchtext vocabulary object
+    ctx_size : int, optional
+        context window size (default: 5)
+    write_batch : int, optional
+        how many datapoints to write per operation
+        (default: 1000000)
+    has_header : bool, optional
+        whether the dataset has a header row
+        (default: True)
+    syn_selection : str, optional
+        synonym selection strategy, possible
+        values are:
+        - ml - maximum likelihood
+        - s1 - randomly sample one
+        - sn - randomly sample any number of syns
+        - sw - randomly sample one (weighted by freq)
+        - swn - randomly sample any number of syns
+                (weighted by freq)
+        (default: 's1')
+    """
+    
+    # dataset = [['focus_word', 'context_word', 'sent_num', 'focus_index', 'context_position']]
+    augm_dataset = [['synonym', 'context_word', 'sent_num', 'focus_index', 'context_position', 'focus_word']]
+    # Convert universal POS tags to WordNet types
+    # https://universaldependencies.org/u/pos/all.html
+    # (skip proper nouns)
+    wn_tags = {
+        'ADJ': wn.ADJ,
+        'ADV': wn.ADV,
+        'NOUN': wn.NOUN,
+        #'PROPN': wn.NOUN,
+        'VERB': wn.VERB
+    }
+
+    data = np.load(skipgram_dataset)
+    
+    WORD_IX = 0
+    TAG_IX = 1
+    
+    synonym = ''
+    prev_word = ''
+    prev_sent = -1
+    prev_ix = -1
+
+    for i, [focus, ctx, sent_num, focus_i, ctx_pos] in enumerate(data):
+        if has_header and i == 0:
+            print(f'Skipping header: {[focus, ctx, sent_num, focus_i, ctx_pos]}')
+            continue
+        
+        focus_word = focus[WORD_IX]
+        focus_tag = focus[TAG_IX]
+        context_word = ctx[WORD_IX]
+        context_tag = ctx[TAG_IX]
+
+        # If the POS tag is part of the
+        # pre-specified tags
+        if focus_tag in wn_tags:
+            # If focus word is the same, repeat the same synonym
+            if prev_word != focus_word or prev_sent != sent_num or prev_ix != focus_i:
+                synsets = wn.synsets(focus_word, wn_tags[focus_tag])
+                # Single occurrence of every synonym
+                synonym_set = set()
+                
+                for syn in synsets:
+                    for lem in syn.lemmas():
+                        # Get the synonym in lowercase
+                        synonym_set.add(lem.name().lower())
+
+                synonym = synonym_selection(
+                            synonym_set,
+                            vocabulary,
+                            syn_selection=syn_selection)
+            else:
+                prev_word = focus_word
+                prev_sent = sent_num
+                prev_ix = focus_i
+
+            if synonym:
+                augm_dataset.append([synonym, [context_word, context_tag], sent_num, focus_i, ctx_pos, [focus_word, focus_tag]])
+
+        if not i % write_batch:
+            print(f'{i} word pairs processed', flush=True)
+    
+    del data
+
+    print(f'Saving {len(augm_dataset)} augmented Skip-gram datapoints to {augm_dataset_file}')
+    np.save(augm_dataset_file, augm_dataset)
+            
+
+
+def synonym_selection(synonym_set, vocabulary, syn_selection='s1'):
+    """
+    Given a set of synonyms, select one
+    or a subset based on specific criteria
+    like their frequency in the data or
+    random selection
+    
+    Requirements
+    ------------
+    import numpy as np
+    import random
+    import csv
+    
+    Parameters
+    ----------
+    synonym_set : set
+        set of available synonyms
+    vocabulary : torchtext.Vocab
+        torchtext vocabulary object
+    syn_selection : str, optional
+        synonym selection strategy, possible
+        values are:
+        - ml - maximum likelihood
+        - s1 - randomly sample one
+        - sn - randomly sample any number of syns
+        - sw - randomly sample one (weighted by freq)
+        - swn - randomly sample any number of syns
+                (weighted by freq)
+        (default: 's1')
+    """
+    potential_syns = []
+    syn_freqs = []
+    
+    for syn in synonym_set:
+        # if syn in vocabulary:
+        if syn in vocabulary.stoi.keys():
+            potential_syns.append(syn)
+            syn_freqs.append(vocabulary.freqs[syn])
+
+    syn_freqs /= np.sum(syn_freqs)
+
+    if len(potential_syns) == 0: return []
+    if len(potential_syns) == 1: return potential_syns[0]
+
+    # Maximum likelihood, select synonym with
+    # the highest frequency in the vocabulary
+    if syn_selection == 'ml':
+        return potential_syns[np.argmax(syn_freqs)]
+
+    # Pick one synonym randomly
+    if syn_selection == 's1':
+        return np.random.choice(potential_syns)
+    
+    # Pick one synonym randomly, weighted by
+    # its frequency in the dataset
+    if syn_selection == 'sw':
+        return np.random.choice(potential_syns, p=syn_freqs)
+    
+    num_syns = np.random.randint(1, len(potential_syns)+1)
+    
+    # Pick a random number of synonyms randomly
+    if syn_selection == 'sn':
+        return np.random.choice(potential_syns, size=num_syns, replace=False)
+    
+    # Pick a random number of synonyms randomly,
+    # weighted by their frequencies in the dataset
+    if syn_selection == 'swn':
+        return np.random.choice(potential_syns, p=syn_freqs, size=num_syns, replace=False)
+    else:
+        raise ValueError(f'Unrecognised syn_selection {syn_selection}')
+
 
 def process_bnc_data(raw_data_file, dataset_file, tags_file=None, augm_dataset_file=None, ctx_size=5, write_batch=10000):
     """

@@ -1,0 +1,133 @@
+nohup: ignoring input
+
+=================== MODEL PARAMETERS: =================== 
+
+general_data_dir:                /home/diegor/data/
+data_dir:                        /home/diegor/knowledge-augmented-skipgram/data/
+word_embeddings_dir:             /home/diegor/data/word_embeddings/
+vocab_cutoff:                    5
+w2v_path:                        None
+data_augmentation_ratio:         0.25
+w2v_init:                        False
+syn_augm:                        True
+split_ratio:                     0.9
+embedding_size:                  300
+epochs:                          10
+batch_size:                      20
+ctx_size:                        5
+num_neg_samples:                 5
+learning_rate:                   0.01
+model_name:                      rand_init-syns-25r-10e-voc5-emb300
+all_models_dir:                  /home/diegor/knowledge-augmented-skipgram/model/
+model_dir:                       /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/
+model_file:                      /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/rand_init-syns-25r-10e-voc5-emb300.pth
+checkpoints_dir:                 /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/checkpoints/
+input_emb_file:                  /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/rand_init-syns-25r-10e-voc5-emb300
+load_model:                      False
+bnc_texts_dir:                   /home/diegor/data/British_National_Corpus/Texts/
+bnc_data_dir:                    /home/diegor/data/British_National_Corpus/bnc_full_processed_data/
+bnc_data:                        /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data.txt
+bnc_tags:                        /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_tags.txt
+use_data_subset:                 True
+data_subset_size:                0.1
+bnc_subset_data:                 /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_shffl_sub-1.txt
+bnc_subset_tags:                 /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_shffl_sub-1_tags.txt
+tokenised_data:                  /home/diegor/knowledge-augmented-skipgram/data/tok_bnc_full_proc_data_shffl_sub-1.npy
+counts_file:                     /home/diegor/knowledge-augmented-skipgram/data/counts_bnc_full_proc_data_shffl_sub-1.csv
+to_lower:                        True
+replace_num:                     True
+remove_punct:                    True
+train_data:                      /home/diegor/knowledge-augmented-skipgram/data/bnc_full_proc_data_shffl_sub-1_train.npy
+val_data:                        /home/diegor/knowledge-augmented-skipgram/data/bnc_full_proc_data_shffl_sub-1_val.npy
+train_skipgram_data:             /home/diegor/knowledge-augmented-skipgram/data/skipgram_bnc_full_proc_data_shffl_sub-1_train.npy
+train_skipgram_augm_data:        /home/diegor/knowledge-augmented-skipgram/data/skipgram_augm_bnc_full_proc_data_shffl_sub-1_train.npy
+val_skipgram_data:               /home/diegor/knowledge-augmented-skipgram/data/skipgram_bnc_full_proc_data_shffl_sub-1_val.npy
+val_skipgram_augm_data:          /home/diegor/knowledge-augmented-skipgram/data/skipgram_augm_bnc_full_proc_data_shffl_sub-1_val.npy
+train_skipgram_sampled_data:     /home/diegor/knowledge-augmented-skipgram/data/sampled_skipgram_bnc_full_proc_data_shffl_sub-1_train.npy
+train_skipgram_augm_sampled_data:  /home/diegor/knowledge-augmented-skipgram/data/sampled_skipgram_augm_bnc_full_proc_data_shffl_sub-1_train.npy
+val_skipgram_sampled_data:       /home/diegor/knowledge-augmented-skipgram/data/sampled_skipgram_bnc_full_proc_data_shffl_sub-1_val.npy
+val_skipgram_augm_sampled_data:  /home/diegor/knowledge-augmented-skipgram/data/sampled_skipgram_augm_bnc_full_proc_data_shffl_sub-1_val.npy
+synonym_selection:               s1
+num_to_tensor:                   True
+num_train_skipgram_sampled_data:  /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_sampled_skipgram_bnc_full_proc_data_shffl_sub-1_train.pt
+num_train_skipgram_augm_data:    /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_syns-s1_sampled_skipgram_bnc_full_proc_data_shffl_sub-1_train.pt
+num_val_skipgram_sampled_data:   /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_sampled_skipgram_bnc_full_proc_data_shffl_sub-1_val.pt
+num_val_skipgram_augm_data:      /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_syns-s1_sampled_skipgram_bnc_full_proc_data_shffl_sub-1_val.pt
+vocabulary_indices:              /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/vocabulary-5_wordixs_num_voc-5_syns-s1_sampled_skipgram_bnc_full_proc_data_shffl_sub-1.csv
+
+=================== / MODEL PARAMETERS: =================== 
+
+Processed simple text file found at /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data.txt
+Using data subset: 10.0% of full dataset
+Found existing dataset subset at /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_shffl_sub-1.txt and /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_shffl_sub-1_tags.txt 
+
+Found existing dependency trees and sequence lists dataset file at /home/diegor/knowledge-augmented-skipgram/data/tok_bnc_full_proc_data_shffl_sub-1.npy
+
+Found existing word counts file at /home/diegor/knowledge-augmented-skipgram/data/counts_bnc_full_proc_data_shffl_sub-1.csv
+
+Found existing train/validation datasets at: 
+ - /home/diegor/knowledge-augmented-skipgram/data/bnc_full_proc_data_shffl_sub-1_train.npy 
+ - /home/diegor/knowledge-augmented-skipgram/data/bnc_full_proc_data_shffl_sub-1_val.npy
+Context-sampled skip gram training data file found at /home/diegor/knowledge-augmented-skipgram/data/sampled_skipgram_bnc_full_proc_data_shffl_sub-1_train.npy
+Context-sampled Skip-gram validation data file found at /home/diegor/knowledge-augmented-skipgram/data/sampled_skipgram_bnc_full_proc_data_shffl_sub-1_val.npy
+Constructing vocabulary from counts file in /home/diegor/knowledge-augmented-skipgram/data/counts_bnc_full_proc_data_shffl_sub-1.csv
+45769 unique tokens in vocabulary with (with minimum frequency 5)
+Augmented Skip-gram training data file found at /home/diegor/knowledge-augmented-skipgram/data/skipgram_augm_bnc_full_proc_data_shffl_sub-1_train.npy
+Augmented Skip-gram validation data file found at /home/diegor/knowledge-augmented-skipgram/data/skipgram_augm_bnc_full_proc_data_shffl_sub-1_val.npy
+Numericalised files as PyTorch tensors for device cuda
+No numericalised Skip-gram training sampled data file found at /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_sampled_skipgram_bnc_full_proc_data_shffl_sub-1_train.pt, creating numericalised file from dataset at /home/diegor/knowledge-augmented-skipgram/data/sampled_skipgram_bnc_full_proc_data_shffl_sub-1_train.npy
+Skipping header: ['focus_word', 'context_word', 'sent_num', 'focus_index', 'context_position']
+1000000 word pairs numericalised
+2000000 word pairs numericalised
+3000000 word pairs numericalised
+4000000 word pairs numericalised
+5000000 word pairs numericalised
+6000000 word pairs numericalised
+7000000 word pairs numericalised
+8000000 word pairs numericalised
+9000000 word pairs numericalised
+10000000 word pairs numericalised
+11000000 word pairs numericalised
+12000000 word pairs numericalised
+13000000 word pairs numericalised
+14000000 word pairs numericalised
+15000000 word pairs numericalised
+16000000 word pairs numericalised
+17000000 word pairs numericalised
+18000000 word pairs numericalised
+19000000 word pairs numericalised
+20000000 word pairs numericalised
+21000000 word pairs numericalised
+22000000 word pairs numericalised
+23000000 word pairs numericalised
+24000000 word pairs numericalised
+25000000 word pairs numericalised
+26000000 word pairs numericalised
+27000000 word pairs numericalised
+28000000 word pairs numericalised
+29000000 word pairs numericalised
+30000000 word pairs numericalised
+31000000 word pairs numericalised
+32000000 word pairs numericalised
+33000000 word pairs numericalised
+34000000 word pairs numericalised
+35000000 word pairs numericalised
+36000000 word pairs numericalised
+37000000 word pairs numericalised
+38000000 word pairs numericalised
+39000000 word pairs numericalised
+40000000 word pairs numericalised
+41000000 word pairs numericalised
+42000000 word pairs numericalised
+43000000 word pairs numericalised
+44000000 word pairs numericalised
+45000000 word pairs numericalised
+46000000 word pairs numericalised
+Saving 46211699 numericalised Skip-gram datapoints to tensor file at /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_sampled_skipgram_bnc_full_proc_data_shffl_sub-1_train.pt
+No numericalised Skip-gram training augmented data file found at /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_syns-s1_sampled_skipgram_bnc_full_proc_data_shffl_sub-1_train.pt, creating numericalised file from dataset at /home/diegor/knowledge-augmented-skipgram/data/skipgram_augm_bnc_full_proc_data_shffl_sub-1_train.npy
+Traceback (most recent call last):
+  File "preprocessing.py", line 196, in <module>
+    device=DEVICE)
+  File "/home/diegor/knowledge-augmented-skipgram/utils/dataset_utils.py", line 493, in numericalise_dataset
+    for i, [focus, ctx, sent_num, focus_i, ctx_pos] in enumerate(data):
+ValueError: too many values to unpack (expected 5)

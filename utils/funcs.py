@@ -25,6 +25,8 @@ from nltk.corpus import wordnet as wn # process_data
 
 from collections import Counter # process_data
 
+import torch
+
 def dir_validation(dir_path):
     '''
     Model directory housekeeping: make sure
@@ -74,6 +76,38 @@ def print_parameters(parameters):
         spaces = ' ' * num_spaces
         print(f'{name}: {spaces} {value}')
     print('\n=================== / MODEL PARAMETERS: =================== \n')
+
+
+def memory_stats(device=torch.device('cpu')):
+    '''
+    Memory usage for a specific device
+    (ONLY WRITTEN FOR GPU MEMORY)
+    TODO: implement for CPU
+
+    Parameters
+    ----------
+    device : torch.device, optional
+        the torch device to track memory for
+        (default: torch.device('cpu'))
+    '''
+    conversion_rate = 2**30 # CONVERT TO GB
+    # print('\n +++++++++++ torch.cuda.memory_stats\n')
+    # print(torch.cuda.memory_stats(device=device))
+    
+    print('\n +++++++++++ torch.cuda.memory_summary\n')
+    print(torch.cuda.memory_summary(device=device))
+    
+    # print('\n +++++++++++ torch.cuda.memory_snapshot\n')
+    # print(torch.cuda.memory_snapshot())
+
+    print('\n\n +++++++++++ torch.cuda.memory_allocated\n')
+    print((torch.cuda.memory_allocated(device=device)/conversion_rate), 'GB')
+    print('\n\n +++++++++++ torch.cuda.max_memory_allocated\n')
+    print((torch.cuda.max_memory_allocated(device=device)/conversion_rate), 'GB')
+    print('\n\n +++++++++++ torch.cuda.memory_reserved\n')
+    print((torch.cuda.memory_reserved(device=device)/conversion_rate), 'GB')
+    print('\n\n +++++++++++ torch.cuda.max_memory_reserved\n')
+    print((torch.cuda.max_memory_reserved(device=device)/conversion_rate), 'GB')
 
 
 def get_stop_words():
@@ -623,24 +657,40 @@ def get_word_knowledge(word, verbose=False):
     return frames, synsets
 
 
-def memory_usage(legend='Memory usage'):
-    '''
-    Prints present CPU memory usage in percentage
+# def memory_usage(legend='Memory usage'):
+#     '''
+#     Prints present CPU memory usage in percentage
 
-    Requirements
-    ------------
-    import os
-    import psutil
+#     Requirements
+#     ------------
+#     import os
+#     import psutil
 
-    Parameters
-    ----------
-    legend : str, optional
-        legend to print with the usage information
-    '''
-    process = psutil.Process(os.getpid())
-    print(f'\n{"=" * 16} {legend} {"=" * 16}')
-    print(process.memory_percent())
-    print(f'{"=" * 16} {legend} {"=" * 16}\n')
+#     Parameters
+#     ----------
+#     legend : str, optional
+#         legend to print with the usage information
+#     '''
+#     process = psutil.Process(os.getpid())
+#     print(f'\n{"=" * 16} {legend} {"=" * 16}')
+#     print(process.memory_percent())
+#     print(f'{"=" * 16} {legend} {"=" * 16}\n')
+
+def mem_check(device, legend=0):
+    conversion_rate = 2**30 # CONVERT TO GB
+    print(f'\n\n Mem check {legend}\n')
+    print('GPU Usage:')
+    mem_alloc = torch.cuda.memory_allocated(device=device) / conversion_rate
+    mem_reserved = torch.cuda.memory_reserved(device=device) / conversion_rate
+    os.system('nvidia-smi')
+    print(f' +++++++++++ torch.cuda.memory_allocated {mem_alloc}GB', flush=True)
+    print(f' +++++++++++ torch.cuda.memory_reserved {mem_reserved}GB \n', flush=True)
+    print('\n\nCPU Usage:')
+    pid = os.getpid()
+    proc = psutil.Process(pid)
+    mem_gb = "{:.2f}".format(proc.memory_info()[0]/2.**30)
+    mem_percent = "{:.2f}".format(proc.memory_percent())
+    print(f' +++++++++++ CPU used: {mem_gb}GB \t {mem_percent}%')
 
 
 def lightweight_dataset(data_file, vocab_file, save_file):

@@ -14,7 +14,7 @@ import random
 import numpy as np
 
 from config import parameters
-from utils.funcs import print_parameters, dir_validation, memory_usage
+from utils.funcs import print_parameters, dir_validation, mem_check
 from utils.dataset_utils import build_vocabulary, csv_reader_check_header
 
 import torch
