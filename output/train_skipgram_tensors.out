@@ -1,0 +1,576 @@
+nohup: ignoring input
+/home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/ directory does not exist, making directory
+/home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/checkpoints/ directory does not exist, making directory
+Copied config file /home/diegor/knowledge-augmented-skipgram/config.py to /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/
+
+=================== MODEL PARAMETERS: =================== 
+
+general_data_dir:                /home/diegor/data/
+data_dir:                        /home/diegor/knowledge-augmented-skipgram/data/
+word_embeddings_dir:             /home/diegor/data/word_embeddings/
+vocab_cutoff:                    5
+w2v_path:                        None
+data_augmentation_ratio:         0.25
+w2v_init:                        False
+syn_augm:                        True
+split_ratio:                     0.9
+embedding_size:                  300
+epochs:                          10
+batch_size:                      20
+ctx_size:                        5
+num_neg_samples:                 5
+learning_rate:                   0.01
+model_name:                      rand_init-syns-25r-10e-voc5-emb300
+all_models_dir:                  /home/diegor/knowledge-augmented-skipgram/model/
+model_dir:                       /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/
+model_file:                      /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/rand_init-syns-25r-10e-voc5-emb300.pth
+checkpoints_dir:                 /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/checkpoints/
+input_emb_file:                  /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/rand_init-syns-25r-10e-voc5-emb300
+load_model:                      False
+bnc_texts_dir:                   /home/diegor/data/British_National_Corpus/Texts/
+bnc_data_dir:                    /home/diegor/data/British_National_Corpus/bnc_full_processed_data/
+bnc_data:                        /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data.txt
+bnc_tags:                        /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_tags.txt
+use_data_subset:                 True
+data_subset_size:                0.1
+bnc_subset_data:                 /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_shffl_sub-1.txt
+bnc_subset_tags:                 /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_shffl_sub-1_tags.txt
+tokenised_data:                  /home/diegor/knowledge-augmented-skipgram/data/tok_bnc_full_proc_data_shffl_sub-1.npy
+counts_file:                     /home/diegor/knowledge-augmented-skipgram/data/counts_bnc_full_proc_data_shffl_sub-1.csv
+to_lower:                        True
+replace_num:                     True
+remove_punct:                    True
+train_data:                      /home/diegor/knowledge-augmented-skipgram/data/bnc_full_proc_data_shffl_sub-1_train.npy
+val_data:                        /home/diegor/knowledge-augmented-skipgram/data/bnc_full_proc_data_shffl_sub-1_val.npy
+train_skipgram_data:             /home/diegor/knowledge-augmented-skipgram/data/skipgram_bnc_full_proc_data_shffl_sub-1_train.npy
+train_skipgram_augm_data:        /home/diegor/knowledge-augmented-skipgram/data/skipgram_augm_bnc_full_proc_data_shffl_sub-1_train.npy
+val_skipgram_data:               /home/diegor/knowledge-augmented-skipgram/data/skipgram_bnc_full_proc_data_shffl_sub-1_val.npy
+val_skipgram_augm_data:          /home/diegor/knowledge-augmented-skipgram/data/skipgram_augm_bnc_full_proc_data_shffl_sub-1_val.npy
+train_skipgram_sampled_data:     /home/diegor/knowledge-augmented-skipgram/data/sampled_skipgram_bnc_full_proc_data_shffl_sub-1_train.npy
+train_skipgram_augm_sampled_data:  /home/diegor/knowledge-augmented-skipgram/data/sampled_skipgram_augm_bnc_full_proc_data_shffl_sub-1_train.npy
+val_skipgram_sampled_data:       /home/diegor/knowledge-augmented-skipgram/data/sampled_skipgram_bnc_full_proc_data_shffl_sub-1_val.npy
+val_skipgram_augm_sampled_data:  /home/diegor/knowledge-augmented-skipgram/data/sampled_skipgram_augm_bnc_full_proc_data_shffl_sub-1_val.npy
+synonym_selection:               s1
+num_to_tensor:                   True
+num_train_skipgram_sampled_data:  /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_sampled_skipgram_bnc_full_proc_data_shffl_sub-1_train.pt
+num_train_skipgram_augm_data:    /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_syns-s1_sampled_skipgram_bnc_full_proc_data_shffl_sub-1_train.pt
+num_val_skipgram_sampled_data:   /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_sampled_skipgram_bnc_full_proc_data_shffl_sub-1_val.pt
+num_val_skipgram_augm_data:      /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_syns-s1_sampled_skipgram_bnc_full_proc_data_shffl_sub-1_val.pt
+vocabulary_indices:              /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/vocabulary-5_wordixs_num_voc-5_syns-s1_sampled_skipgram_bnc_full_proc_data_shffl_sub-1.csv
+
+=================== / MODEL PARAMETERS: =================== 
+
+Running on device: cuda
+Data dims: torch.Size([46211699, 2])
+Syns dims: torch.Size([19536941, 2])
+Val: torch.Size([5099536, 2])
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+VOCABULARY CONSTRUCTION
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Constructing vocabulary from counts file in /home/diegor/knowledge-augmented-skipgram/data/counts_bnc_full_proc_data_shffl_sub-1.csv
+45769 unique tokens in vocabulary with minimum frequency 5 (32.45% of 141044 unique tokens in full dataset)
+9728672 of 9879226 words, vocabulary coverage of 98.48%
+Writing vocabulary indices to /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/vocabulary-5_wordixs_num_voc-5_syns-s1_sampled_skipgram_bnc_full_proc_data_shffl_sub-1.csv
+Constructed vocabulary with 45769 distinct tokens from file at /home/diegor/knowledge-augmented-skipgram/data/counts_bnc_full_proc_data_shffl_sub-1.csv
+vocab_words[:10]: ['<unk>', '<sos>', '<eos>', '<pad>', 'the', 'of', 'and', 'to', 'a', 'in']
+vocab_counts: [0, 0, 0, 0, 601852, 303678, 261012, 260550, 215176, 194470]
+checking frequencies: freqs["and"] ---> 261012 == 261012
+Size of sample table:  99999401
+Total distinct words:  45769
+Elapsed time before training: 18.73056125640869
+
+ ######################## 
+ 		 EPOCH NUMBER 0 
+ ########################
+Training (57764623 word pairs)...
+0/2888231.15 batches processed (elapsed time: 24.055368423461914)
+144411/2888231.15 batches processed (elapsed time: 735.5735919475555)
+288822/2888231.15 batches processed (elapsed time: 1446.0722630023956)
+433233/2888231.15 batches processed (elapsed time: 2157.1001811027527)
+577644/2888231.15 batches processed (elapsed time: 2868.7844903469086)
+722055/2888231.15 batches processed (elapsed time: 3580.180047750473)
+866466/2888231.15 batches processed (elapsed time: 4291.979528427124)
+1010877/2888231.15 batches processed (elapsed time: 5001.829713582993)
+1155288/2888231.15 batches processed (elapsed time: 5711.228127717972)
+1299699/2888231.15 batches processed (elapsed time: 6422.8645396232605)
+1444110/2888231.15 batches processed (elapsed time: 7132.690102338791)
+1588521/2888231.15 batches processed (elapsed time: 7843.517085075378)
+1732932/2888231.15 batches processed (elapsed time: 8555.487395048141)
+1877343/2888231.15 batches processed (elapsed time: 9265.8853161335)
+2021754/2888231.15 batches processed (elapsed time: 9976.208975553513)
+2166165/2888231.15 batches processed (elapsed time: 10687.090213775635)
+2310576/2888231.15 batches processed (elapsed time: 11399.503738164902)
+2454987/2888231.15 batches processed (elapsed time: 12109.816274881363)
+2599398/2888231.15 batches processed (elapsed time: 12820.511280059814)
+2743809/2888231.15 batches processed (elapsed time: 13530.831074237823)
+2888220/2888231.15 batches processed (elapsed time: 14241.65041422844)
+Validation (5099536 word pairs)...
+0/5099536 lines processed
+254976/5099536 lines processed
+509952/5099536 lines processed
+764928/5099536 lines processed
+1019904/5099536 lines processed
+1274880/5099536 lines processed
+1529856/5099536 lines processed
+1784832/5099536 lines processed
+2039808/5099536 lines processed
+2294784/5099536 lines processed
+2549760/5099536 lines processed
+2804736/5099536 lines processed
+3059712/5099536 lines processed
+3314688/5099536 lines processed
+3569664/5099536 lines processed
+3824640/5099536 lines processed
+4079616/5099536 lines processed
+4334592/5099536 lines processed
+4589568/5099536 lines processed
+4844544/5099536 lines processed
+5099520/5099536 lines processed
+
+ >>>>>>>>>>>>>>>> 	 EPOCH LOSS: 4.894912901053246 	 VAL LOSS: 3.1640093278902985 <<<<<<<<<<<<<<<< 
+
+Elapsed time after epoch 0: 14623.57329916954
+Saving checkpoint file: /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/checkpoints/0-epoch-chkpt.tar 
+
+
+ ######################## 
+ 		 EPOCH NUMBER 1 
+ ########################
+Training (57764623 word pairs)...
+0/2888231.15 batches processed (elapsed time: 14630.032901763916)
+144411/2888231.15 batches processed (elapsed time: 15341.151721000671)
+288822/2888231.15 batches processed (elapsed time: 16051.827579259872)
+433233/2888231.15 batches processed (elapsed time: 16763.02321600914)
+577644/2888231.15 batches processed (elapsed time: 17473.341572523117)
+722055/2888231.15 batches processed (elapsed time: 18183.96337747574)
+866466/2888231.15 batches processed (elapsed time: 18895.247841835022)
+1010877/2888231.15 batches processed (elapsed time: 19606.087450504303)
+1155288/2888231.15 batches processed (elapsed time: 20317.875600337982)
+1299699/2888231.15 batches processed (elapsed time: 21029.767957687378)
+1444110/2888231.15 batches processed (elapsed time: 21741.421758413315)
+1588521/2888231.15 batches processed (elapsed time: 22453.40189218521)
+1732932/2888231.15 batches processed (elapsed time: 23165.132044792175)
+1877343/2888231.15 batches processed (elapsed time: 23876.442747354507)
+2021754/2888231.15 batches processed (elapsed time: 24588.875752925873)
+2166165/2888231.15 batches processed (elapsed time: 25299.835932970047)
+2310576/2888231.15 batches processed (elapsed time: 26011.050814390182)
+2454987/2888231.15 batches processed (elapsed time: 26721.86297249794)
+2599398/2888231.15 batches processed (elapsed time: 27432.12704849243)
+2743809/2888231.15 batches processed (elapsed time: 28143.123916864395)
+2888220/2888231.15 batches processed (elapsed time: 28853.959137678146)
+Validation (5099536 word pairs)...
+0/5099536 lines processed
+254976/5099536 lines processed
+509952/5099536 lines processed
+764928/5099536 lines processed
+1019904/5099536 lines processed
+1274880/5099536 lines processed
+1529856/5099536 lines processed
+1784832/5099536 lines processed
+2039808/5099536 lines processed
+2294784/5099536 lines processed
+2549760/5099536 lines processed
+2804736/5099536 lines processed
+3059712/5099536 lines processed
+3314688/5099536 lines processed
+3569664/5099536 lines processed
+3824640/5099536 lines processed
+4079616/5099536 lines processed
+4334592/5099536 lines processed
+4589568/5099536 lines processed
+4844544/5099536 lines processed
+5099520/5099536 lines processed
+
+ >>>>>>>>>>>>>>>> 	 EPOCH LOSS: 2.9211674506175833 	 VAL LOSS: 2.8445192034435016 <<<<<<<<<<<<<<<< 
+
+Elapsed time after epoch 1: 29240.53367304802
+Saving checkpoint file: /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/checkpoints/1-epoch-chkpt.tar 
+
+
+ ######################## 
+ 		 EPOCH NUMBER 2 
+ ########################
+Training (57764623 word pairs)...
+0/2888231.15 batches processed (elapsed time: 29246.027834892273)
+144411/2888231.15 batches processed (elapsed time: 29957.852590560913)
+288822/2888231.15 batches processed (elapsed time: 30668.933755636215)
+433233/2888231.15 batches processed (elapsed time: 31379.44567966461)
+577644/2888231.15 batches processed (elapsed time: 32091.23227930069)
+722055/2888231.15 batches processed (elapsed time: 32802.37352800369)
+866466/2888231.15 batches processed (elapsed time: 33512.76564645767)
+1010877/2888231.15 batches processed (elapsed time: 34224.65742754936)
+1155288/2888231.15 batches processed (elapsed time: 34936.2891292572)
+1299699/2888231.15 batches processed (elapsed time: 35646.01242303848)
+1444110/2888231.15 batches processed (elapsed time: 36357.49796819687)
+1588521/2888231.15 batches processed (elapsed time: 37064.8230202198)
+1732932/2888231.15 batches processed (elapsed time: 37780.1338891983)
+1877343/2888231.15 batches processed (elapsed time: 38477.905160188675)
+2021754/2888231.15 batches processed (elapsed time: 39175.72056174278)
+2166165/2888231.15 batches processed (elapsed time: 39873.75078082085)
+2310576/2888231.15 batches processed (elapsed time: 40572.18258047104)
+2454987/2888231.15 batches processed (elapsed time: 41310.21903896332)
+2599398/2888231.15 batches processed (elapsed time: 42021.58740258217)
+2743809/2888231.15 batches processed (elapsed time: 42734.0054795742)
+2888220/2888231.15 batches processed (elapsed time: 43443.97514820099)
+Validation (5099536 word pairs)...
+0/5099536 lines processed
+254976/5099536 lines processed
+509952/5099536 lines processed
+764928/5099536 lines processed
+1019904/5099536 lines processed
+1274880/5099536 lines processed
+1529856/5099536 lines processed
+1784832/5099536 lines processed
+2039808/5099536 lines processed
+2294784/5099536 lines processed
+2549760/5099536 lines processed
+2804736/5099536 lines processed
+3059712/5099536 lines processed
+3314688/5099536 lines processed
+3569664/5099536 lines processed
+3824640/5099536 lines processed
+4079616/5099536 lines processed
+4334592/5099536 lines processed
+4589568/5099536 lines processed
+4844544/5099536 lines processed
+5099520/5099536 lines processed
+
+ >>>>>>>>>>>>>>>> 	 EPOCH LOSS: 2.655697228644712 	 VAL LOSS: 2.721145350672736 <<<<<<<<<<<<<<<< 
+
+Elapsed time after epoch 2: 43947.152507543564
+Saving checkpoint file: /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/checkpoints/2-epoch-chkpt.tar 
+
+
+ ######################## 
+ 		 EPOCH NUMBER 3 
+ ########################
+Training (57764623 word pairs)...
+0/2888231.15 batches processed (elapsed time: 43952.59947323799)
+144411/2888231.15 batches processed (elapsed time: 44662.93913888931)
+288822/2888231.15 batches processed (elapsed time: 45372.39433813095)
+433233/2888231.15 batches processed (elapsed time: 46082.367262125015)
+577644/2888231.15 batches processed (elapsed time: 46794.09157514572)
+722055/2888231.15 batches processed (elapsed time: 47504.99016165733)
+866466/2888231.15 batches processed (elapsed time: 48215.73894119263)
+1010877/2888231.15 batches processed (elapsed time: 48926.55935359001)
+1155288/2888231.15 batches processed (elapsed time: 49637.37606596947)
+1299699/2888231.15 batches processed (elapsed time: 50346.34408330917)
+1444110/2888231.15 batches processed (elapsed time: 51055.7684905529)
+1588521/2888231.15 batches processed (elapsed time: 51766.895898103714)
+1732932/2888231.15 batches processed (elapsed time: 52478.159829854965)
+1877343/2888231.15 batches processed (elapsed time: 53189.115048885345)
+2021754/2888231.15 batches processed (elapsed time: 53899.66163468361)
+2166165/2888231.15 batches processed (elapsed time: 54610.22478222847)
+2310576/2888231.15 batches processed (elapsed time: 55320.813973903656)
+2454987/2888231.15 batches processed (elapsed time: 56031.65115785599)
+2599398/2888231.15 batches processed (elapsed time: 56742.74707746506)
+2743809/2888231.15 batches processed (elapsed time: 57452.15193271637)
+2888220/2888231.15 batches processed (elapsed time: 58161.90076494217)
+Validation (5099536 word pairs)...
+0/5099536 lines processed
+254976/5099536 lines processed
+509952/5099536 lines processed
+764928/5099536 lines processed
+1019904/5099536 lines processed
+1274880/5099536 lines processed
+1529856/5099536 lines processed
+1784832/5099536 lines processed
+2039808/5099536 lines processed
+2294784/5099536 lines processed
+2549760/5099536 lines processed
+2804736/5099536 lines processed
+3059712/5099536 lines processed
+3314688/5099536 lines processed
+3569664/5099536 lines processed
+3824640/5099536 lines processed
+4079616/5099536 lines processed
+4334592/5099536 lines processed
+4589568/5099536 lines processed
+4844544/5099536 lines processed
+5099520/5099536 lines processed
+
+ >>>>>>>>>>>>>>>> 	 EPOCH LOSS: 2.5293043317862085 	 VAL LOSS: 2.651956140031877 <<<<<<<<<<<<<<<< 
+
+Elapsed time after epoch 3: 58547.98603272438
+Saving checkpoint file: /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/checkpoints/3-epoch-chkpt.tar 
+
+
+ ######################## 
+ 		 EPOCH NUMBER 4 
+ ########################
+Training (57764623 word pairs)...
+0/2888231.15 batches processed (elapsed time: 58553.48159456253)
+144411/2888231.15 batches processed (elapsed time: 59262.53213095665)
+288822/2888231.15 batches processed (elapsed time: 59973.66466999054)
+433233/2888231.15 batches processed (elapsed time: 60684.52505683899)
+577644/2888231.15 batches processed (elapsed time: 61394.00591945648)
+722055/2888231.15 batches processed (elapsed time: 62103.80497121811)
+866466/2888231.15 batches processed (elapsed time: 62812.508843660355)
+1010877/2888231.15 batches processed (elapsed time: 63548.00919055939)
+1155288/2888231.15 batches processed (elapsed time: 64246.24566602707)
+1299699/2888231.15 batches processed (elapsed time: 64944.87433004379)
+1444110/2888231.15 batches processed (elapsed time: 65643.5649266243)
+1588521/2888231.15 batches processed (elapsed time: 66342.29452705383)
+1732932/2888231.15 batches processed (elapsed time: 67040.7981300354)
+1877343/2888231.15 batches processed (elapsed time: 67739.86831784248)
+2021754/2888231.15 batches processed (elapsed time: 68438.13858103752)
+2166165/2888231.15 batches processed (elapsed time: 69148.49004340172)
+2310576/2888231.15 batches processed (elapsed time: 69871.78099441528)
+2454987/2888231.15 batches processed (elapsed time: 70602.07101941109)
+2599398/2888231.15 batches processed (elapsed time: 71752.28114938736)
+2743809/2888231.15 batches processed (elapsed time: 73105.9071817398)
+2888220/2888231.15 batches processed (elapsed time: 74022.25226807594)
+Validation (5099536 word pairs)...
+0/5099536 lines processed
+254976/5099536 lines processed
+509952/5099536 lines processed
+764928/5099536 lines processed
+1019904/5099536 lines processed
+1274880/5099536 lines processed
+1529856/5099536 lines processed
+1784832/5099536 lines processed
+2039808/5099536 lines processed
+2294784/5099536 lines processed
+2549760/5099536 lines processed
+2804736/5099536 lines processed
+3059712/5099536 lines processed
+3314688/5099536 lines processed
+3569664/5099536 lines processed
+3824640/5099536 lines processed
+4079616/5099536 lines processed
+4334592/5099536 lines processed
+4589568/5099536 lines processed
+4844544/5099536 lines processed
+5099520/5099536 lines processed
+
+ >>>>>>>>>>>>>>>> 	 EPOCH LOSS: 2.4540653627903337 	 VAL LOSS: 2.611862920126968 <<<<<<<<<<<<<<<< 
+
+Elapsed time after epoch 4: 74524.45513176918
+Saving checkpoint file: /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/checkpoints/4-epoch-chkpt.tar 
+
+
+ ######################## 
+ 		 EPOCH NUMBER 5 
+ ########################
+Training (57764623 word pairs)...
+0/2888231.15 batches processed (elapsed time: 74529.92187070847)
+144411/2888231.15 batches processed (elapsed time: 75240.46527123451)
+288822/2888231.15 batches processed (elapsed time: 75951.75874257088)
+433233/2888231.15 batches processed (elapsed time: 76689.04269123077)
+577644/2888231.15 batches processed (elapsed time: 77415.07945919037)
+722055/2888231.15 batches processed (elapsed time: 78143.12676739693)
+866466/2888231.15 batches processed (elapsed time: 78870.67799186707)
+1010877/2888231.15 batches processed (elapsed time: 79597.52975654602)
+1155288/2888231.15 batches processed (elapsed time: 80321.67865681648)
+1299699/2888231.15 batches processed (elapsed time: 81047.28622579575)
+1444110/2888231.15 batches processed (elapsed time: 81773.47309732437)
+1588521/2888231.15 batches processed (elapsed time: 82499.41776657104)
+1732932/2888231.15 batches processed (elapsed time: 83226.48973274231)
+1877343/2888231.15 batches processed (elapsed time: 83952.7374355793)
+2021754/2888231.15 batches processed (elapsed time: 84678.38855981827)
+2166165/2888231.15 batches processed (elapsed time: 85403.34544682503)
+2310576/2888231.15 batches processed (elapsed time: 86130.93234372139)
+2454987/2888231.15 batches processed (elapsed time: 86857.16116523743)
+2599398/2888231.15 batches processed (elapsed time: 87582.15567135811)
+2743809/2888231.15 batches processed (elapsed time: 88309.85977387428)
+2888220/2888231.15 batches processed (elapsed time: 89034.70223331451)
+Validation (5099536 word pairs)...
+0/5099536 lines processed
+254976/5099536 lines processed
+509952/5099536 lines processed
+764928/5099536 lines processed
+1019904/5099536 lines processed
+1274880/5099536 lines processed
+1529856/5099536 lines processed
+1784832/5099536 lines processed
+2039808/5099536 lines processed
+2294784/5099536 lines processed
+2549760/5099536 lines processed
+2804736/5099536 lines processed
+3059712/5099536 lines processed
+3314688/5099536 lines processed
+3569664/5099536 lines processed
+3824640/5099536 lines processed
+4079616/5099536 lines processed
+4334592/5099536 lines processed
+4589568/5099536 lines processed
+4844544/5099536 lines processed
+5099520/5099536 lines processed
+
+ >>>>>>>>>>>>>>>> 	 EPOCH LOSS: 2.4044404202521763 	 VAL LOSS: 2.583461729731841 <<<<<<<<<<<<<<<< 
+
+Elapsed time after epoch 5: 89421.5140349865
+Saving checkpoint file: /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/checkpoints/5-epoch-chkpt.tar 
+
+
+ ######################## 
+ 		 EPOCH NUMBER 6 
+ ########################
+Training (57764623 word pairs)...
+0/2888231.15 batches processed (elapsed time: 89426.95709991455)
+144411/2888231.15 batches processed (elapsed time: 90154.22605705261)
+288822/2888231.15 batches processed (elapsed time: 90878.61725568771)
+433233/2888231.15 batches processed (elapsed time: 91604.51823401451)
+577644/2888231.15 batches processed (elapsed time: 92331.9957947731)
+722055/2888231.15 batches processed (elapsed time: 93059.26166796684)
+866466/2888231.15 batches processed (elapsed time: 93785.2853012085)
+1010877/2888231.15 batches processed (elapsed time: 94511.50037765503)
+1155288/2888231.15 batches processed (elapsed time: 95237.18622946739)
+1299699/2888231.15 batches processed (elapsed time: 95961.82376289368)
+1444110/2888231.15 batches processed (elapsed time: 96687.81232786179)
+1588521/2888231.15 batches processed (elapsed time: 97413.78583049774)
+1732932/2888231.15 batches processed (elapsed time: 98139.30064177513)
+1877343/2888231.15 batches processed (elapsed time: 98865.19047904015)
+2021754/2888231.15 batches processed (elapsed time: 99592.77342605591)
+2166165/2888231.15 batches processed (elapsed time: 100317.79019141197)
+2310576/2888231.15 batches processed (elapsed time: 101043.78718781471)
+2454987/2888231.15 batches processed (elapsed time: 101769.5050110817)
+2599398/2888231.15 batches processed (elapsed time: 102495.55234694481)
+2743809/2888231.15 batches processed (elapsed time: 103221.87990164757)
+2888220/2888231.15 batches processed (elapsed time: 103947.84161376953)
+Validation (5099536 word pairs)...
+0/5099536 lines processed
+254976/5099536 lines processed
+509952/5099536 lines processed
+764928/5099536 lines processed
+1019904/5099536 lines processed
+1274880/5099536 lines processed
+1529856/5099536 lines processed
+1784832/5099536 lines processed
+2039808/5099536 lines processed
+2294784/5099536 lines processed
+2549760/5099536 lines processed
+2804736/5099536 lines processed
+3059712/5099536 lines processed
+3314688/5099536 lines processed
+3569664/5099536 lines processed
+3824640/5099536 lines processed
+4079616/5099536 lines processed
+4334592/5099536 lines processed
+4589568/5099536 lines processed
+4844544/5099536 lines processed
+5099520/5099536 lines processed
+
+ >>>>>>>>>>>>>>>> 	 EPOCH LOSS: 2.36886607206714 	 VAL LOSS: 2.5610327636632544 <<<<<<<<<<<<<<<< 
+
+Elapsed time after epoch 6: 104341.63840460777
+Saving checkpoint file: /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/checkpoints/6-epoch-chkpt.tar 
+
+
+ ######################## 
+ 		 EPOCH NUMBER 7 
+ ########################
+Training (57764623 word pairs)...
+0/2888231.15 batches processed (elapsed time: 104347.14729118347)
+144411/2888231.15 batches processed (elapsed time: 105073.44143986702)
+288822/2888231.15 batches processed (elapsed time: 105799.02717614174)
+433233/2888231.15 batches processed (elapsed time: 106525.19909620285)
+577644/2888231.15 batches processed (elapsed time: 107249.93118166924)
+722055/2888231.15 batches processed (elapsed time: 107976.15256094933)
+866466/2888231.15 batches processed (elapsed time: 108703.63354539871)
+1010877/2888231.15 batches processed (elapsed time: 109431.39996600151)
+1155288/2888231.15 batches processed (elapsed time: 110156.86222314835)
+1299699/2888231.15 batches processed (elapsed time: 110884.67629241943)
+1444110/2888231.15 batches processed (elapsed time: 111610.30939745903)
+1588521/2888231.15 batches processed (elapsed time: 112336.94666695595)
+1732932/2888231.15 batches processed (elapsed time: 113063.26621699333)
+1877343/2888231.15 batches processed (elapsed time: 113789.3443748951)
+2021754/2888231.15 batches processed (elapsed time: 114515.55010819435)
+2166165/2888231.15 batches processed (elapsed time: 115240.57255339622)
+2310576/2888231.15 batches processed (elapsed time: 115965.77834296227)
+2454987/2888231.15 batches processed (elapsed time: 116692.55038404465)
+2599398/2888231.15 batches processed (elapsed time: 117419.92156028748)
+2743809/2888231.15 batches processed (elapsed time: 118146.29665398598)
+2888220/2888231.15 batches processed (elapsed time: 118873.39612150192)
+Validation (5099536 word pairs)...
+0/5099536 lines processed
+254976/5099536 lines processed
+509952/5099536 lines processed
+764928/5099536 lines processed
+1019904/5099536 lines processed
+1274880/5099536 lines processed
+1529856/5099536 lines processed
+1784832/5099536 lines processed
+2039808/5099536 lines processed
+2294784/5099536 lines processed
+2549760/5099536 lines processed
+2804736/5099536 lines processed
+3059712/5099536 lines processed
+3314688/5099536 lines processed
+3569664/5099536 lines processed
+3824640/5099536 lines processed
+4079616/5099536 lines processed
+4334592/5099536 lines processed
+4589568/5099536 lines processed
+4844544/5099536 lines processed
+5099520/5099536 lines processed
+
+ >>>>>>>>>>>>>>>> 	 EPOCH LOSS: 2.3425029634513157 	 VAL LOSS: 2.5475275359951097 <<<<<<<<<<<<<<<< 
+
+Elapsed time after epoch 7: 119265.1403169632
+Saving checkpoint file: /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/checkpoints/7-epoch-chkpt.tar 
+
+
+ ######################## 
+ 		 EPOCH NUMBER 8 
+ ########################
+Training (57764623 word pairs)...
+0/2888231.15 batches processed (elapsed time: 119270.63511753082)
+144411/2888231.15 batches processed (elapsed time: 119999.16228961945)
+288822/2888231.15 batches processed (elapsed time: 120726.7789375782)
+433233/2888231.15 batches processed (elapsed time: 121451.96330833435)
+577644/2888231.15 batches processed (elapsed time: 122177.96056842804)
+722055/2888231.15 batches processed (elapsed time: 122904.29720830917)
+866466/2888231.15 batches processed (elapsed time: 123630.60602402687)
+1010877/2888231.15 batches processed (elapsed time: 124356.80025911331)
+1155288/2888231.15 batches processed (elapsed time: 125083.37162351608)
+1299699/2888231.15 batches processed (elapsed time: 125809.4888150692)
+1444110/2888231.15 batches processed (elapsed time: 126535.40406131744)
+1588521/2888231.15 batches processed (elapsed time: 127258.53728795052)
+1732932/2888231.15 batches processed (elapsed time: 127969.16946959496)
+1877343/2888231.15 batches processed (elapsed time: 128680.01504826546)
+2021754/2888231.15 batches processed (elapsed time: 129390.39783120155)
+2166165/2888231.15 batches processed (elapsed time: 130100.163169384)
+2310576/2888231.15 batches processed (elapsed time: 130810.55644726753)
+2454987/2888231.15 batches processed (elapsed time: 131519.60646748543)
+2599398/2888231.15 batches processed (elapsed time: 132229.62728452682)
+2743809/2888231.15 batches processed (elapsed time: 132939.66976356506)
+2888220/2888231.15 batches processed (elapsed time: 133649.66697359085)
+Validation (5099536 word pairs)...
+0/5099536 lines processed
+254976/5099536 lines processed
+509952/5099536 lines processed
+764928/5099536 lines processed
+1019904/5099536 lines processed
+1274880/5099536 lines processed
+1529856/5099536 lines processed
+1784832/5099536 lines processed
+2039808/5099536 lines processed
+2294784/5099536 lines processed
+2549760/5099536 lines processed
+2804736/5099536 lines processed
+3059712/5099536 lines processed
+3314688/5099536 lines processed
+3569664/5099536 lines processed
+3824640/5099536 lines processed
+4079616/5099536 lines processed
+4334592/5099536 lines processed
+4589568/5099536 lines processed
+4844544/5099536 lines processed
+5099520/5099536 lines processed
+
+ >>>>>>>>>>>>>>>> 	 EPOCH LOSS: 2.321876385093394 	 VAL LOSS: 2.5336993689241534 <<<<<<<<<<<<<<<< 
+
+Elapsed time after epoch 8: 134033.6603126526
+Saving checkpoint file: /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/checkpoints/8-epoch-chkpt.tar 
+
+
+ ######################## 
+ 		 EPOCH NUMBER 9 
+ ########################
+Training (57764623 word pairs)...
+0/2888231.15 batches processed (elapsed time: 134039.12523961067)
+144411/2888231.15 batches processed (elapsed time: 134749.5824224949)
+288822/2888231.15 batches processed (elapsed time: 135461.7134552002)
+433233/2888231.15 batches processed (elapsed time: 136173.29041671753)
+577644/2888231.15 batches processed (elapsed time: 136884.36420035362)

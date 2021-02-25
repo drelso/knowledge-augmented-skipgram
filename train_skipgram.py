@@ -36,7 +36,8 @@ if __name__ == '__main__':
     parameters['checkpoints_dir'] = dir_validation(parameters['checkpoints_dir'])
 
     home = str(Path.home())
-    CONFIG_FILE_PATH = home + '/Scratch/knowledge-augmented-skipgram/config.py' # TODO: CHANGE FOR DIS FILESYSTEM
+    # CONFIG_FILE_PATH = home + '/Scratch/knowledge-augmented-skipgram/config.py' # TODO: CHANGE FOR DIS FILESYSTEM
+    CONFIG_FILE_PATH = home + '/knowledge-augmented-skipgram/config.py' # TODO: CHANGE FOR DIS FILESYSTEM
     shutil.copy(CONFIG_FILE_PATH, parameters['model_dir'])
     print(f'Copied config file {CONFIG_FILE_PATH} to {parameters["model_dir"]}')
 
@@ -50,9 +51,13 @@ if __name__ == '__main__':
         torch.set_default_tensor_type(torch.cuda.FloatTensor)
     
     # MEMORY-MAPPED DATASET READING 
-    data        = np.load(parameters['num_train_skipgram_npy'], mmap_mode='r')
-    syns        = np.load(parameters['num_train_skipgram_syns_npy'], mmap_mode='r')
-    val_data    = np.load(parameters['num_val_skipgram_npy'], mmap_mode='r')
+    # data        = np.load(parameters['num_train_skipgram_npy'], mmap_mode='r')
+    # syns        = np.load(parameters['num_train_skipgram_syns_npy'], mmap_mode='r')
+    # val_data    = np.load(parameters['num_val_skipgram_npy'], mmap_mode='r')
+
+    data        = torch.load(parameters['num_train_skipgram_sampled_data'])
+    syns        = torch.load(parameters['num_train_skipgram_augm_data'])
+    val_data    = torch.load(parameters['num_val_skipgram_sampled_data'])
 
     num_data = data.shape[0]
     num_syns = syns.shape[0]
@@ -103,9 +108,13 @@ if __name__ == '__main__':
     FOCUS_COL = 0
     CONTEXT_COL = 1
 
-    model = SkipGram(len(VOCABULARY), parameters['embedding_size'], w2v_init=parameters['w2v_init'], w2v_path=parameters['w2v_path'])    
-    if DEVICE == torch.device('cuda'):
-        model.cuda()
+    model = SkipGram(
+                len(VOCABULARY),
+                parameters['embedding_size'],
+                w2v_init=parameters['w2v_init'],
+                w2v_path=parameters['w2v_path'])    
+    
+    if DEVICE == torch.device('cuda'): model.cuda()
         
     optimiser = optim.SGD(model.parameters(),lr=parameters['learning_rate'])
     

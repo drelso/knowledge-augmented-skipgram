@@ -362,6 +362,15 @@ def run_model(data_iter, model, optimizer, criterion, vocabulary, device=torch.d
             if phase == 'train':
                 loss.backward()
                 # mem_check(device, num=8) # MEM DEBUGGING
+
+                # PARTITIONED EMBEDDINGS
+                # If a value for embedding partition is defined
+                # and the current row is a synonym, zero the
+                # gradient for the partition of the embedding
+                # if emb_partition and is_syn:
+                #     for name, param in model.named_parameters():
+                #         param.grad[:,emb_partition:] = 0
+
                 optimizer.step()
                 # mem_check(device, num=9) # MEM DEBUGGING
             

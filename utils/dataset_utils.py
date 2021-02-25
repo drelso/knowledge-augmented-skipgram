@@ -223,20 +223,33 @@ def build_vocabulary(counts_file, vocab_ixs_file, min_freq=1):
     '''
     counts_dict = {}
 
+    print(f'{"@" * 30}\nVOCABULARY CONSTRUCTION\n{"@" * 30}')
     print(f'Constructing vocabulary from counts file in {counts_file}')
+
+    num_inc = 0
+    num_exc = 0
 
     with open(counts_file, 'r', encoding='utf-8') as f:
         reader = csv.reader(f)
         for row in reader:
             # FIRST COLUMN IS ASSUMED TO BE THE WORD AND
             # THE SECOND COLUMN IS ASSUMED TO BE THE COUNT
-            counts_dict[row[0]] = int(row[1])
+            w_count = int(row[1])
+            counts_dict[row[0]] = w_count
+            if w_count < min_freq:
+                num_exc += w_count
+            else:
+                num_inc += w_count
 
     counts = Counter(counts_dict)
     del counts_dict
     
     vocabulary = torchtext.vocab.Vocab(counts, min_freq=min_freq, specials=['<unk>', '<sos>', '<eos>', '<pad>'])
-    print(f'{len(vocabulary)} unique tokens in vocabulary with (with minimum frequency {min_freq})')
+    perc_toks = "{:.2f}".format((len(vocabulary) / len(counts)) * 100) + '%'
+    print(f'{len(vocabulary)} unique tokens in vocabulary with minimum frequency {min_freq} ({perc_toks} of {len(counts)} unique tokens in full dataset)')
+
+    perc_inc = "{:.2f}".format((num_inc / (num_inc + num_exc)) * 100) + '%'
+    print(f'{num_inc} of {(num_inc + num_exc)} words, vocabulary coverage of {perc_inc}')
     
     # SAVE LIST OF VOCABULARY ITEMS AND INDICES TO FILE
     with open(vocab_ixs_file, 'w+', encoding='utf-8') as v:
@@ -521,6 +534,7 @@ def numericalise_dataset(skipgram_dataset, num_data_file, vocabulary, to_tensor=
         print(f'Saving {len(num_dataset)} numericalised Skip-gram datapoints to NPY file at {num_data_file}')
         np.save(num_data_file, num_dataset)
 
+
 def numericalise_dataset_csv(data_path, save_path, vocabulary, write_batch=100000, has_header=True):
     '''
     FUNCTION FOR SKIP GRAM DATASET
@@ -584,7 +598,6 @@ def numericalise_dataset_csv(data_path, save_path, vocabulary, write_batch=10000
                     skipgram_data = []
         
         print(f'Finished writing file: {i} lines')
-
 
 
 def csv_reader_check_header(file_pointer):
@@ -812,8 +825,6 @@ def raw_text_train_validate_split(clean_data_file, train_savefile, val_savefile,
         print('Train size', train_size)
         print('Val size', val_size)
         
-
-
 
 def dataset_sampling(data_file, augm_data_file, dataset_file, augm_dataset_file, max_context=5):
     """
@@ -1802,6 +1813,7 @@ def word_counts(tokenised_data, save_file):
     with open(save_file, 'w+', encoding='utf-8', newline='') as s:
         writer = csv.writer(s)
         writer.writerows(counts_list)
+
 
 def sample_and_process_books(gutenberg_path, processed_books_path, num_books=10, verbose=True):
     """
