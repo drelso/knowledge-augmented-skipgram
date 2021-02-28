@@ -33,6 +33,9 @@ class SkipGram(nn.Module):
     w2v_init : bool, optional
         whether to initialise the embeddings
         with word2vec vectors (default: True)
+    w2v_embeds : torch.tensor
+        tensor of pretrained word embeddings
+        of size |V| x D
     
     Methods
     -------
@@ -44,7 +47,7 @@ class SkipGram(nn.Module):
         the loss of the full batch as described in
         Mikolov et al., 2013
     """
-    def __init__(self, vocab_size, embedding_size, w2v_init=True, w2v_path=None):
+    def __init__(self, vocab_size, embedding_size, w2v_init=True, w2v_embeds=None):
         super(SkipGram, self).__init__()
         
         self.vocab_size = vocab_size
@@ -55,10 +58,14 @@ class SkipGram(nn.Module):
         
         if w2v_init:
             # Initialising weights to word2vec Google News 300 pretrained
-            if w2v_path is None:
-                self.i_embedding.weight.data.copy_(get_word2vec_vectors())
-            else:
-                self.i_embedding.weight.data.copy_(get_word2vec_vectors(w2v_path))
+            # (Assume w2v_embeds are given)
+            print(f'Initialising input embeddings with pre-trained word embeddings in tensor of size {w2v_embeds.shape}')
+            self.i_embedding.weight.data.copy_(w2v_embeds)
+                
+            # if w2v_path is None:
+            #     self.i_embedding.weight.data.copy_(get_word2vec_vectors())
+            # else:
+            #     self.i_embedding.weight.data.copy_(get_word2vec_vectors(w2v_path))
         
         # Sanity check: does first vector match
         # the first vector in Word2Vec?

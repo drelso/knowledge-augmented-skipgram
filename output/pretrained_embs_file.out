@@ -1,0 +1,89 @@
+nohup: ignoring input
+/pytorch/torch/csrc/utils/tensor_numpy.cpp:141: UserWarning: The given NumPy array is not writeable, and PyTorch does not support non-writeable tensors. This means you can write to the underlying (supposedly non-writeable) NumPy array using the tensor. You may want to copy the array to protect its data or make it writeable before converting it to a tensor. This type of warning will be suppressed for the rest of this program.
+/home/diegor/knowledge-augmented-skipgram/model/w2v_init-syns-25r-10e-voc5-emb300/ directory does not exist, making directory
+/home/diegor/knowledge-augmented-skipgram/model/w2v_init-syns-25r-10e-voc5-emb300/checkpoints/ directory does not exist, making directory
+Copied config file /home/diegor/knowledge-augmented-skipgram/config.py to /home/diegor/knowledge-augmented-skipgram/model/w2v_init-syns-25r-10e-voc5-emb300/
+
+=================== MODEL PARAMETERS: =================== 
+
+config_file:                     /home/diegor/knowledge-augmented-skipgram/config.py
+general_data_dir:                /home/diegor/data/
+data_dir:                        /home/diegor/knowledge-augmented-skipgram/data/
+word_embeddings_dir:             /home/diegor/data/word_embeddings/
+vocab_cutoff:                    5
+w2v_path:                        None
+data_augmentation_ratio:         0.25
+w2v_init:                        True
+embs_to_tensor:                  True
+pretrained_embs:                 word2vec-google-news-300
+w2v_embs_file:                   word2vec-google-news-300_voc5.py
+syn_augm:                        True
+split_ratio:                     0.9
+embedding_size:                  300
+epochs:                          10
+batch_size:                      20
+ctx_size:                        5
+num_neg_samples:                 5
+learning_rate:                   0.01
+model_name:                      w2v_init-syns-25r-10e-voc5-emb300
+all_models_dir:                  /home/diegor/knowledge-augmented-skipgram/model/
+model_dir:                       /home/diegor/knowledge-augmented-skipgram/model/w2v_init-syns-25r-10e-voc5-emb300/
+model_file:                      /home/diegor/knowledge-augmented-skipgram/model/w2v_init-syns-25r-10e-voc5-emb300/w2v_init-syns-25r-10e-voc5-emb300.pth
+checkpoints_dir:                 /home/diegor/knowledge-augmented-skipgram/model/w2v_init-syns-25r-10e-voc5-emb300/checkpoints/
+input_emb_file:                  /home/diegor/knowledge-augmented-skipgram/model/w2v_init-syns-25r-10e-voc5-emb300/w2v_init-syns-25r-10e-voc5-emb300
+load_model:                      False
+bnc_texts_dir:                   /home/diegor/data/British_National_Corpus/Texts/
+bnc_data_dir:                    /home/diegor/data/British_National_Corpus/bnc_full_processed_data/
+bnc_data:                        /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data.txt
+bnc_tags:                        /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_tags.txt
+use_data_subset:                 True
+data_subset_size:                0.1
+bnc_subset_data:                 /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_shffl_sub-1.txt
+bnc_subset_tags:                 /home/diegor/data/British_National_Corpus/bnc_full_processed_data/bnc_full_proc_data_shffl_sub-1_tags.txt
+tokenised_data:                  /home/diegor/knowledge-augmented-skipgram/data/tok_bnc_full_proc_data_shffl_sub-1.npy
+counts_file:                     /home/diegor/knowledge-augmented-skipgram/data/counts_bnc_full_proc_data_shffl_sub-1.csv
+to_lower:                        True
+replace_num:                     True
+remove_punct:                    True
+train_data:                      /home/diegor/knowledge-augmented-skipgram/data/bnc_full_proc_data_shffl_sub-1_train.npy
+val_data:                        /home/diegor/knowledge-augmented-skipgram/data/bnc_full_proc_data_shffl_sub-1_val.npy
+train_skipgram_data:             /home/diegor/knowledge-augmented-skipgram/data/skipgram_bnc_full_proc_data_shffl_sub-1_train.npy
+train_skipgram_augm_data:        /home/diegor/knowledge-augmented-skipgram/data/skipgram_augm_bnc_full_proc_data_shffl_sub-1_train.npy
+val_skipgram_data:               /home/diegor/knowledge-augmented-skipgram/data/skipgram_bnc_full_proc_data_shffl_sub-1_val.npy
+val_skipgram_augm_data:          /home/diegor/knowledge-augmented-skipgram/data/skipgram_augm_bnc_full_proc_data_shffl_sub-1_val.npy
+train_skipgram_sampled_data:     /home/diegor/knowledge-augmented-skipgram/data/sampled_skipgram_bnc_full_proc_data_shffl_sub-1_train.npy
+train_skipgram_augm_sampled_data:  /home/diegor/knowledge-augmented-skipgram/data/sampled_skipgram_augm_bnc_full_proc_data_shffl_sub-1_train.npy
+val_skipgram_sampled_data:       /home/diegor/knowledge-augmented-skipgram/data/sampled_skipgram_bnc_full_proc_data_shffl_sub-1_val.npy
+val_skipgram_augm_sampled_data:  /home/diegor/knowledge-augmented-skipgram/data/sampled_skipgram_augm_bnc_full_proc_data_shffl_sub-1_val.npy
+synonym_selection:               s1
+num_to_tensor:                   True
+num_train_skipgram_sampled_data:  /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_sampled_skipgram_bnc_full_proc_data_shffl_sub-1_train.pt
+num_train_skipgram_augm_data:    /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_syns-s1_sampled_skipgram_bnc_full_proc_data_shffl_sub-1_train.pt
+num_val_skipgram_sampled_data:   /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_sampled_skipgram_bnc_full_proc_data_shffl_sub-1_val.pt
+num_val_skipgram_augm_data:      /home/diegor/knowledge-augmented-skipgram/data/num_voc-5_syns-s1_sampled_skipgram_bnc_full_proc_data_shffl_sub-1_val.pt
+vocabulary_indices:              /home/diegor/knowledge-augmented-skipgram/model/w2v_init-syns-25r-10e-voc5-emb300/vocabulary-5_wordixs_num_voc-5_syns-s1_sampled_skipgram_bnc_full_proc_data_shffl_sub-1.csv
+
+=================== / MODEL PARAMETERS: =================== 
+
+Running on device: cuda
+Data dims: torch.Size([46211699, 2])
+Syns dims: torch.Size([19536941, 2])
+Val: torch.Size([5099536, 2])
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+VOCABULARY CONSTRUCTION
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Constructing vocabulary from counts file in /home/diegor/knowledge-augmented-skipgram/data/counts_bnc_full_proc_data_shffl_sub-1.csv
+45769 unique tokens in vocabulary with minimum frequency 5 (32.45% of 141044 unique tokens in full dataset)
+9728672 of 9879226 words, vocabulary coverage of 98.48%
+Writing vocabulary indices to /home/diegor/knowledge-augmented-skipgram/model/w2v_init-syns-25r-10e-voc5-emb300/vocabulary-5_wordixs_num_voc-5_syns-s1_sampled_skipgram_bnc_full_proc_data_shffl_sub-1.csv
+Constructed vocabulary with 45769 distinct tokens from file at /home/diegor/knowledge-augmented-skipgram/data/counts_bnc_full_proc_data_shffl_sub-1.csv
+vocab_words[:10]: ['<unk>', '<sos>', '<eos>', '<pad>', 'the', 'of', 'and', 'to', 'a', 'in']
+vocab_counts: [0, 0, 0, 0, 601852, 303678, 261012, 260550, 215176, 194470]
+checking frequencies: freqs["and"] ---> 261012 == 261012
+Size of sample table:  99999401
+Total distinct words:  45769
+
+No pre-trained embeddings file for vocabulary 5 found at word2vec-google-news-300_voc5.py, creating embeddings file
+Loading pre-trained embeddings for model word2vec-google-news-300
+Constructing embeddings file (45769 tokens)
+Saving 45769 word embeddings as PyTorch tensor to file at word2vec-google-news-300_voc5.py

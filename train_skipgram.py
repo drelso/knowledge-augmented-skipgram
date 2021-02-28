@@ -15,7 +15,7 @@ import numpy as np
 
 from config import parameters
 from utils.funcs import print_parameters, dir_validation, mem_check
-from utils.dataset_utils import build_vocabulary, csv_reader_check_header
+from utils.dataset_utils import build_vocabulary, csv_reader_check_header, get_word_embs_for_vocab
 
 import torch
 import torch.nn as nn
@@ -35,11 +35,11 @@ if __name__ == '__main__':
     parameters['model_dir'] = dir_validation(parameters['model_dir'])
     parameters['checkpoints_dir'] = dir_validation(parameters['checkpoints_dir'])
 
-    home = str(Path.home())
+    # home = str(Path.home())
     # CONFIG_FILE_PATH = home + '/Scratch/knowledge-augmented-skipgram/config.py' # TODO: CHANGE FOR DIS FILESYSTEM
-    CONFIG_FILE_PATH = home + '/knowledge-augmented-skipgram/config.py' # TODO: CHANGE FOR DIS FILESYSTEM
-    shutil.copy(CONFIG_FILE_PATH, parameters['model_dir'])
-    print(f'Copied config file {CONFIG_FILE_PATH} to {parameters["model_dir"]}')
+    # CONFIG_FILE_PATH = home + '/knowledge-augmented-skipgram/config.py' # TODO: CHANGE FOR DIS FILESYSTEM
+    shutil.copy(parameters['config_file'], parameters['model_dir'])
+    print(f'Copied config file {parameters["config_file"]} to {parameters["model_dir"]}')
 
     start_time = time.time()
     
@@ -66,7 +66,10 @@ if __name__ == '__main__':
     print("Syns dims:", syns.shape)
     print("Val:", val_data.shape)
     
-    VOCABULARY = build_vocabulary(parameters['counts_file'], parameters['vocabulary_indices'], min_freq=parameters['vocab_cutoff'])
+    VOCABULARY = build_vocabulary(
+                    parameters['counts_file'],
+                    parameters['vocabulary_indices'],
+                    min_freq=parameters['vocab_cutoff'])
     print(f'Constructed vocabulary with {len(VOCABULARY)} distinct tokens from file at {parameters["counts_file"]}')
 
     vocab_words = VOCABULARY.itos
@@ -88,6 +91,25 @@ if __name__ == '__main__':
     
     print('Size of sample table: ', sample_table.size)
     print('Total distinct words: ', len(VOCABULARY))
+
+    # PRE-TRAINED EMBEDDINGS INIT
+    if parameters['w2v_init']:
+        if not os.path.exists(parameters['w2v_embs_file']):
+            print(f'\nNo pre-trained embeddings file for vocabulary {parameters["vocab_cutoff"]} found at {parameters["w2v_embs_file"]}, creating embeddings file')
+
+            pretrained_embs = get_word_embs_for_vocab(
+                VOCABULARY,
+                parameters['w2v_embs_file'],
+                emb_name=parameters['pretrained_embs'],
+                to_tensor=parameters['embs_to_tensor'],
+                device=DEVICE)
+        else:
+            print(f'\nPre-trained embeddings file for vocabulary {parameters["vocab_cutoff"]} found at {parameters["w2v_embs_file"]}')
+            if parameters['embs_to_tensor']:
+                pretrained_embs_dict = torch.load(parameters['w2v_embs_file'])
+            else:
+                pretrained_embs_dict = np.load(parameters['w2v_embs_file'])
+            pretrained_embs = torch.stack(list(pretrained_embs_dict.values()))
 
     # SYNONYM SWITCH LIST: BOOLEAN LIST TO RANDOMLY DETERMINE
     # WHEN TO PROCESS SYNONYMS AND WHEN TO PROCESS NATURAL
@@ -112,12 +134,15 @@ if __name__ == '__main__':
                 len(VOCABULARY),
                 parameters['embedding_size'],
                 w2v_init=parameters['w2v_init'],
-                w2v_path=parameters['w2v_path'])    
+                w2v_embeds=pretrained_embs)
+                #w2v_path=parameters['w2v_path'])    
     
     if DEVICE == torch.device('cuda'): model.cuda()
         
     optimiser = optim.SGD(model.parameters(),lr=parameters['learning_rate'])
     
+    exit() # DEBUGGING
+
     ## LOADING MODELS
     if parameters['load_model']:
         if parameters['load_model'].find('checkpoints') > -1:

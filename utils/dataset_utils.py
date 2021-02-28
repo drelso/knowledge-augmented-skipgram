@@ -18,6 +18,7 @@ from numpy.core.numeric import False_
 
 import spacy
 from nltk.corpus import wordnet as wn
+import gensim.downloader
 
 import torch
 import torchtext
@@ -196,7 +197,7 @@ def construct_dataset(bnc_xml_filename, dataset_savefile, tags_savefile=None, us
         print('Done writing')
 
 
-def build_vocabulary(counts_file, vocab_ixs_file, min_freq=1):
+def build_vocabulary(counts_file, vocab_ixs_file=None, min_freq=1):
     ''''
     Builds a torchtext.vocab object from a CSV file of word
     counts and an optionally specified frequency threshold
@@ -211,6 +212,9 @@ def build_vocabulary(counts_file, vocab_ixs_file, min_freq=1):
     ----------
     counts_file : str
         path to counts CSV file
+    vocab_ixs_file : str, optional
+        path to save the vocabulary indices
+        CSV file to (default: None)
     min_freq : int, optional
         frequency threshold, words with counts lower
         than this will not be included in the vocabulary
@@ -251,14 +255,74 @@ def build_vocabulary(counts_file, vocab_ixs_file, min_freq=1):
     perc_inc = "{:.2f}".format((num_inc / (num_inc + num_exc)) * 100) + '%'
     print(f'{num_inc} of {(num_inc + num_exc)} words, vocabulary coverage of {perc_inc}')
     
-    # SAVE LIST OF VOCABULARY ITEMS AND INDICES TO FILE
-    with open(vocab_ixs_file, 'w+', encoding='utf-8') as v:
-        vocabulary_indices = [[i, w] for i,w in enumerate(vocabulary.itos)]
-        print(f'Writing vocabulary indices to {vocab_ixs_file}')
-        csv.writer(v).writerows(vocabulary_indices)
+    if vocab_ixs_file:
+        # SAVE LIST OF VOCABULARY ITEMS AND INDICES TO FILE
+        with open(vocab_ixs_file, 'w+', encoding='utf-8') as v:
+            vocabulary_indices = [[i, w] for i,w in enumerate(vocabulary.itos)]
+            print(f'Writing vocabulary indices to {vocab_ixs_file}')
+            csv.writer(v).writerows(vocabulary_indices)
 
     return vocabulary
 
+
+def get_word_embs_for_vocab(vocabulary, word_embs_file, emb_name='word2vec-google-news-300', to_tensor=False, device=torch.device('cpu')):
+    """
+    Get pre-trained word embeddings for a
+    given vocabulary
+
+    Requirements
+    ------------
+    import numpy as np (if saving as .npy)
+    import torch (if saving as .pt)
+    import gensim.downloader
+    
+    Parameters
+    ----------
+    vocabulary : torchtext.vocab
+        vocabulary object to embed
+    word_embs_file : str
+        path to save the embeddings to
+    emb_name : string, optional
+        pre-trained embedding model name
+        (default: 'word2vec-google-news-300')
+        (a list of available model names can be
+        accessed with
+        print(list(gensim.downloader.info()['models'].keys())))
+    to_tensor : bool, optional
+        whether to save numericalised data as tensors
+        (default: False)
+    device : torch.device, optional
+        device for tensor construction
+        (default: torch.device('cpu'))
+    
+    Returns
+    -------
+    torch.tensor
+        Pre-trained embeddings for every element
+        in the vocabulary
+    """
+    print(f'Loading pre-trained embeddings for model {emb_name}')
+    embs = gensim.downloader.load(emb_name)
+    data = {}
+
+    print(f'Constructing embeddings file ({len(vocabulary)} tokens)')
+    for ix in range(len(vocabulary)):
+        word = vocabulary.itos[ix]
+        if word in embs.vocab:
+            data[word] = torch.tensor(embs[word], device=device) if to_tensor else embs[word]
+        else:
+            data[word] = torch.zeros(embs.vector_size, device=device) if to_tensor else np.zeros(embs.vector_size)
+
+    emb_format = 'PyTorch tensor' if to_tensor else 'NumPy array'
+    print(f'Saving {len(data)} word embeddings as {emb_format} to file at {word_embs_file}')
+    if to_tensor:
+        torch.save(data, word_embs_file)
+    else:
+        np.save(word_embs_file, data)
+    
+    #return data
+    return torch.stack(list(data.values()))
+    
 
 def raw_text_from_elem_tree(filename, use_headwords=False, replace_nums=False, replace_unclass=False):
     """

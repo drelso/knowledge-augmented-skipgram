@@ -6,11 +6,19 @@
 import os
 from pathlib import Path
 
+run_on_myriad = False
+
 home = str(Path.home())
+dir_name = '/knowledge-augmented-skipgram/'
+if run_on_myriad: dir_name = '/Scratch' + dir_name
+
 # root_dir = home + '/Scratch/knowledge-augmented-skipgram/' ## TODO: CHANGE FOR DIS FILE STRUCTURE
-root_dir = home + '/knowledge-augmented-skipgram/' ## TODO: CHANGE FOR DIS FILE STRUCTURE
+# ## TODO: CHANGE FOR DIS FILE STRUCTURE
+root_dir = home + dir_name
 
 parameters = {}
+
+parameters['config_file'] = root_dir + 'config.py'
 
 parameters['general_data_dir'] = home + '/data/'
 parameters['data_dir'] = os.path.abspath(root_dir + 'data/') + '/'
@@ -25,7 +33,14 @@ parameters['vocab_cutoff'] = 5
 parameters['w2v_path'] = None
 
 parameters['data_augmentation_ratio'] = .25
-parameters['w2v_init'] = False
+
+parameters['w2v_init'] = True
+
+parameters['embs_to_tensor'] = True
+embs_suffix = '.pt' if parameters['embs_to_tensor'] else '.npy'
+parameters['pretrained_embs'] = 'word2vec-google-news-300'
+parameters['w2v_embs_file'] = parameters['data_dir'] + parameters['pretrained_embs'] + '_voc' + str(parameters['vocab_cutoff']) + embs_suffix
+
 parameters['syn_augm'] = True
 
 parameters['split_ratio'] = .9

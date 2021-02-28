@@ -574,3 +574,60 @@ Training (57764623 word pairs)...
 288822/2888231.15 batches processed (elapsed time: 135461.7134552002)
 433233/2888231.15 batches processed (elapsed time: 136173.29041671753)
 577644/2888231.15 batches processed (elapsed time: 136884.36420035362)
+722055/2888231.15 batches processed (elapsed time: 137594.47884821892)
+866466/2888231.15 batches processed (elapsed time: 138305.02093458176)
+1010877/2888231.15 batches processed (elapsed time: 139015.12016677856)
+1155288/2888231.15 batches processed (elapsed time: 139724.0233783722)
+1299699/2888231.15 batches processed (elapsed time: 140434.66831564903)
+1444110/2888231.15 batches processed (elapsed time: 141143.8995578289)
+1588521/2888231.15 batches processed (elapsed time: 141854.61516857147)
+1732932/2888231.15 batches processed (elapsed time: 142564.4293539524)
+1877343/2888231.15 batches processed (elapsed time: 143275.0832104683)
+2021754/2888231.15 batches processed (elapsed time: 143985.56711792946)
+2166165/2888231.15 batches processed (elapsed time: 144696.14798855782)
+2310576/2888231.15 batches processed (elapsed time: 145406.8903543949)
+2454987/2888231.15 batches processed (elapsed time: 146117.42235708237)
+2599398/2888231.15 batches processed (elapsed time: 146827.84416341782)
+2743809/2888231.15 batches processed (elapsed time: 147538.1106505394)
+2888220/2888231.15 batches processed (elapsed time: 148248.39435005188)
+Validation (5099536 word pairs)...
+0/5099536 lines processed
+254976/5099536 lines processed
+509952/5099536 lines processed
+764928/5099536 lines processed
+1019904/5099536 lines processed
+1274880/5099536 lines processed
+1529856/5099536 lines processed
+1784832/5099536 lines processed
+2039808/5099536 lines processed
+2294784/5099536 lines processed
+2549760/5099536 lines processed
+2804736/5099536 lines processed
+3059712/5099536 lines processed
+3314688/5099536 lines processed
+3569664/5099536 lines processed
+3824640/5099536 lines processed
+4079616/5099536 lines processed
+4334592/5099536 lines processed
+4589568/5099536 lines processed
+4844544/5099536 lines processed
+5099520/5099536 lines processed
+
+ >>>>>>>>>>>>>>>> 	 EPOCH LOSS: 2.3053700772036283 	 VAL LOSS: 2.5236279490134472 <<<<<<<<<<<<<<<< 
+
+Elapsed time after epoch 9: 148657.80569028854
+Saving checkpoint file: /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/checkpoints/9-epoch-chkpt.tar 
+
+
+
+Saving model to /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/rand_init-syns-25r-10e-voc5-emb300.pth
+Saved  i_embedding  to  /home/diegor/knowledge-augmented-skipgram/model/rand_init-syns-25r-10e-voc5-emb300/rand_init-syns-25r-10e-voc5-emb300
+Train losses:
+[4.894912901053246, 2.9211674506175833, 2.655697228644712, 2.5293043317862085, 2.4540653627903337, 2.4044404202521763, 2.36886607206714, 2.3425029634513157, 2.321876385093394, 2.3053700772036283]
+Validation losses:
+[3.1640093278902985, 2.8445192034435016, 2.721145350672736, 2.651956140031877, 2.611862920126968, 2.583461729731841, 2.5610327636632544, 2.5475275359951097, 2.5336993689241534, 2.5236279490134472]
+Average run time per epoch:  81660.34594037532
+ ======================================== 
+	 Total elapsed time: 148658.34220457077 
+ ======================================== 
+
