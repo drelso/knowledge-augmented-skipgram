@@ -56,7 +56,7 @@ class SkipGram(nn.Module):
         self.i_embedding = nn.Embedding(vocab_size, embedding_size)
         self.o_embedding = nn.Embedding(vocab_size, embedding_size)
         
-        if w2v_init:
+        if w2v_embeds:
             # Initialising weights to word2vec Google News 300 pretrained
             # (Assume w2v_embeds are given)
             print(f'Initialising input embeddings with pre-trained word embeddings in tensor of size {w2v_embeds.shape}')

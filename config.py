@@ -51,7 +51,7 @@ parameters['epochs'] = 10
 parameters['batch_size'] = 20
 parameters['ctx_size'] = 5
 parameters['num_neg_samples'] = 5
-parameters['learning_rate'] = 0.01
+parameters['learning_rate'] = .1
 
 parameters['model_name'] =  ('w2v_init' if parameters['w2v_init'] else 'rand_init') + '-' + \
                             ('syns' if parameters['syn_augm'] else 'no_syns') + '-' + \

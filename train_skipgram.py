@@ -110,6 +110,8 @@ if __name__ == '__main__':
             else:
                 pretrained_embs_dict = np.load(parameters['w2v_embs_file'])
             pretrained_embs = torch.stack(list(pretrained_embs_dict.values()))
+    else:
+        pretrained_embs = None
 
     # SYNONYM SWITCH LIST: BOOLEAN LIST TO RANDOMLY DETERMINE
     # WHEN TO PROCESS SYNONYMS AND WHEN TO PROCESS NATURAL
@@ -133,7 +135,7 @@ if __name__ == '__main__':
     model = SkipGram(
                 len(VOCABULARY),
                 parameters['embedding_size'],
-                w2v_init=parameters['w2v_init'],
+                # w2v_init=parameters['w2v_init'],
                 w2v_embeds=pretrained_embs)
                 #w2v_path=parameters['w2v_path'])    
     
@@ -141,8 +143,6 @@ if __name__ == '__main__':
         
     optimiser = optim.SGD(model.parameters(),lr=parameters['learning_rate'])
     
-    exit() # DEBUGGING
-
     ## LOADING MODELS
     if parameters['load_model']:
         if parameters['load_model'].find('checkpoints') > -1:
@@ -224,7 +224,8 @@ if __name__ == '__main__':
                 context_ixs.append(datapoint[CONTEXT_COL])
                 
                 if not i % int(num_val_data / PRINT_INTERVAL):
-                    print(f'{i}/{num_val_data} lines processed', flush=True)
+                    print(f'{num_batches}/{num_val_data / parameters["batch_size"]} batches processed (elapsed time: {elapsed_time})', flush=True)
+                    # print(f'{i}/{num_val_data} lines processed', flush=True)
                 
                 if len(focus_ixs) == parameters['batch_size']:
                     batches_loss += process_word_pair_batch(focus_ixs, context_ixs, model, optimiser, sample_table, parameters['num_neg_samples'], parameters['batch_size'], phase='validate')
