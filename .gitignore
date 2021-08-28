@@ -1,7 +1,11 @@
 # Ignore datasets and models
 /data
 /model
-
+/output
+/myriad_output
+/myriad_venv
+/old_files
+/envs
 # Ignore pycache
 # from https://github.com/martinohanlon/flightlight/issues/1
 # Byte-compiled / optimized / DLL files

@@ -78,7 +78,7 @@ def print_parameters(parameters):
     print('\n=================== / MODEL PARAMETERS: =================== \n')
 
 
-def memory_stats(device=torch.device('cpu')):
+def memory_stats(device=None): #torch.device('cpu')):
     '''
     Memory usage for a specific device
     (ONLY WRITTEN FOR GPU MEMORY)
@@ -90,6 +90,7 @@ def memory_stats(device=torch.device('cpu')):
         the torch device to track memory for
         (default: torch.device('cpu'))
     '''
+    if device is None: device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     conversion_rate = 2**30 # CONVERT TO GB
     # print('\n +++++++++++ torch.cuda.memory_stats\n')
     # print(torch.cuda.memory_stats(device=device))

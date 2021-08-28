@@ -6,23 +6,18 @@
 import os
 from pathlib import Path
 
-run_on_myriad = True
-
 home = str(Path.home())
-dir_name = '/knowledge-augmented-skipgram/'
-if run_on_myriad: dir_name = '/Scratch' + dir_name
-
-# root_dir = home + '/Scratch/knowledge-augmented-skipgram/' ## TODO: CHANGE FOR DIS FILE STRUCTURE
-# ## TODO: CHANGE FOR DIS FILE STRUCTURE
-root_dir = home + dir_name
+root_dir = home + '/Scratch/knowledge-augmented-skipgram/' ## TODO: CHANGE FOR DIS FILE STRUCTURE
+# root_dir = home + '/knowledge-augmented-skipgram/' ## TODO: CHANGE FOR DIS FILE STRUCTURE
 
 parameters = {}
-
-parameters['config_file'] = root_dir + 'config.py'
 
 parameters['general_data_dir'] = home + '/data/'
 parameters['data_dir'] = os.path.abspath(root_dir + 'data/') + '/'
 parameters['word_embeddings_dir'] = os.path.abspath(parameters['general_data_dir'] + 'word_embeddings/') + '/'
+
+parameters['use_data_subset'] = True
+parameters['data_subset_size'] = 0.1
 
 parameters['vocab_cutoff'] = 5
 
@@ -32,15 +27,8 @@ parameters['vocab_cutoff'] = 5
 # parameters['w2v_path'] = os.path.abspath(parameters['word_embeddings_dir'] + 'word2vec-google-news-300_voc' + str(parameters['vocab_cutoff']) + '.csv')
 parameters['w2v_path'] = None
 
-parameters['data_augmentation_ratio'] = .12 #.25
-
+parameters['data_augmentation_ratio'] = .25
 parameters['w2v_init'] = False
-
-parameters['embs_to_tensor'] = True
-embs_suffix = '.pt' if parameters['embs_to_tensor'] else '.npy'
-parameters['pretrained_embs'] = 'word2vec-google-news-300'
-parameters['w2v_embs_file'] = parameters['data_dir'] + parameters['pretrained_embs'] + '_voc' + str(parameters['vocab_cutoff']) + embs_suffix
-
 parameters['syn_augm'] = True
 
 parameters['split_ratio'] = .9
@@ -51,14 +39,16 @@ parameters['epochs'] = 10
 parameters['batch_size'] = 20
 parameters['ctx_size'] = 5
 parameters['num_neg_samples'] = 5
-parameters['learning_rate'] = .1
+parameters['learning_rate'] = .04
 
 parameters['model_name'] =  ('w2v_init' if parameters['w2v_init'] else 'rand_init') + '-' + \
                             ('syns' if parameters['syn_augm'] else 'no_syns') + '-' + \
-                            str(parameters['data_augmentation_ratio']).strip("0").strip(".") + 'r-' + \
+                            ('sub' + str(parameters['data_subset_size']).strip("0").strip(".") if parameters['use_data_subset'] else 'full') + '-' + \
+                            str(parameters['data_augmentation_ratio']).strip(".") + 'r-' + \
                             str(parameters['epochs']) + 'e-' + \
-                            'voc' + str(parameters['vocab_cutoff']) + \
-                            '-emb' + str(parameters['embedding_size'])
+                            str(parameters['learning_rate']).strip(".") + 'lr-' + \
+                            str(parameters['vocab_cutoff']) + 'voc-' + \
+                            str(parameters['embedding_size']) + 'emb'
 
 parameters['all_models_dir'] = os.path.abspath(root_dir + 'model/') + '/'
 parameters['model_dir'] = parameters['all_models_dir'] + parameters['model_name'] + '/'
@@ -87,8 +77,8 @@ parameters['bnc_data_dir'] = os.path.abspath(parameters['general_data_dir'] + 'B
 parameters['bnc_data'] = parameters['bnc_data_dir'] + bnc_data_name + '.txt'
 parameters['bnc_tags'] = parameters['bnc_data_dir'] + bnc_data_name + '_tags.txt'
 
-parameters['use_data_subset'] = True
-parameters['data_subset_size'] = 0.1
+#parameters['use_data_subset'] = True
+#parameters['data_subset_size'] = 0.1
 bnc_subset_data_name = bnc_data_name + '_shffl_sub-' + str(parameters['data_subset_size']).strip("0").strip(".")
 parameters['bnc_subset_data'] = parameters['bnc_data_dir'] + bnc_subset_data_name + '.txt'
 parameters['bnc_subset_tags'] = parameters['bnc_data_dir'] + bnc_subset_data_name + '_tags.txt'
