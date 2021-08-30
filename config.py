@@ -33,6 +33,7 @@ parameters['vocab_cutoff'] = 5
 parameters['w2v_path'] = None
 
 parameters['data_augmentation_ratio'] = .12 #.25
+parameters['emb_partition'] = .5
 
 parameters['w2v_init'] = False
 

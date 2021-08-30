@@ -9,7 +9,7 @@ import csv
 import torch
 
 
-def process_word_pair_batch(focus_ixs, context_ixs, model, optimiser, sample_table, num_neg_samples, batch_size, phase='train'):
+def process_word_pair_batch(focus_ixs, context_ixs, model, optimiser, sample_table, num_neg_samples, batch_size, phase='train', emb_partition=None, is_syn=False):
     """
     Construct the negative sampling batch and run
     model on the resulting batch, return the average
@@ -55,7 +55,18 @@ def process_word_pair_batch(focus_ixs, context_ixs, model, optimiser, sample_tab
     
     if phase == 'train':
         optimiser.zero_grad()
+
         loss.backward()
+
+        # PARTITIONED EMBEDDINGS
+        # If a value for embedding partition is defined
+        # and the current row is a synonym, zero the
+        # gradient for the partition of the embedding
+        # (must happen after backward and before optimisation)
+        if emb_partition and is_syn:
+            for name, param in model.named_parameters():
+                param.grad[:,emb_partition:] = 0
+        
         optimiser.step()
     
     return batch_loss
